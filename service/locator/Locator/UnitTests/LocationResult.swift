@@ -20,12 +20,12 @@ final class ResultSpec: XCTestCase {
         }
         
         // Then
-        XCTAssertEqual(result.error, error as NSError)
+        XCTAssertEqual(result.error(), error as NSError)
     }
     
     func testGivenAnErrorIsThrownItWrapsIt() throws {
         // Given
-        let data = Location(longitude: 24, latitude: 23)
+        let data = AppleLocation(longitude: 24, latitude: 23)
         
         // When
         let result = LocationResult {
@@ -33,6 +33,7 @@ final class ResultSpec: XCTestCase {
         }
         
         // Then
-        XCTAssertEqual(result.success, data)
+        XCTAssertEqual(result.success()?.latitude, data.latitude)
+        XCTAssertEqual(result.success()?.longitude, data.longitude)
     }
 }

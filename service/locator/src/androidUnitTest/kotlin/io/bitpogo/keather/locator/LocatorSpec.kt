@@ -1,6 +1,5 @@
 package io.bitpogo.keather.locator
 
-import Locator
 import android.location.Location
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient

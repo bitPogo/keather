@@ -64,12 +64,12 @@ kotlin {
         val libraryPath = "$rootDir/service/locator/$libraryName/build/Build/Products/Release-$platform"
         val frameworksPath = libraryPath
 
-        println(libraryPath)
-
         compilations.getByName("main") {
             cinterops.create("Locator") {
-                val interopTask = tasks[interopProcessingTaskName]
-                interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+                if (!file("service/locator/Locator/build${platform.capitalize()}").exists()) {
+                    val interopTask = tasks[interopProcessingTaskName]
+                    interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+                }
 
                 // Path to .def file
                 defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
@@ -79,8 +79,10 @@ kotlin {
 
         compilations.getByName("test") {
             cinterops.create("Locator") {
-                val interopTask = tasks[interopProcessingTaskName]
-                interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+                if (!file("service/locator/Locator/build${platform.capitalize()}").exists()) {
+                    val interopTask = tasks[interopProcessingTaskName]
+                    interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+                }
 
                 // Path to .def file
                 defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
@@ -131,7 +133,6 @@ kotlin {
         }
 
         val androidUnitTest by getting {
-            dependsOn(androidMain)
             dependencies {
                 implementation(antibytesCatalog.android.test.junit.core)
                 implementation(antibytesCatalog.jvm.test.kotlin.junit4)

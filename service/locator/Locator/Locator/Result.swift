@@ -6,19 +6,31 @@
 //
 import Foundation
 
+@objc public protocol LocationResultContract {
+    func success() -> AppleLocationContract?
+    func error() -> NSError?
+}
+
 // object-c does not allow a proper ResultType (like Rust)
-@objc public class LocationResult: NSObject {
+@objc public class LocationResult: NSObject, LocationResultContract {
+    private var _success: AppleLocationContract?
+    private var _error: NSError?
     
-    @objc public private(set) var success: Location?
-    @objc public private(set) var error: NSError?
-    
-    private init(_ success: Location?, _ failure: NSError?) {
+    private init(_ success: AppleLocationContract?, _ failure: NSError?) {
         super.init()
-        self.success = success
-        self.error = failure
+        self._success = success
+        self._error = failure
     }
     
-    public convenience init(success: Location) {
+    public func success() -> AppleLocationContract? {
+        return _success
+    }
+    
+    public func error() -> NSError? {
+        return _error
+    }
+    
+    public convenience init(success: AppleLocationContract) {
         self.init(success, nil)
     }
     
@@ -26,7 +38,7 @@ import Foundation
         self.init(nil, error)
     }
     
-    public convenience init(_ block: () throws -> Location) {
+    public convenience init(_ block: () throws -> AppleLocationContract) {
         do {
             let data = try block()
             self.init(success: data)

@@ -4,8 +4,9 @@
  * Use of this source code is governed by Apache v2.0
  */
 
+package io.bitpogo.keather.locator
+
 import android.annotation.SuppressLint
-import android.location.Location as DTO
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -14,10 +15,10 @@ import com.google.android.gms.tasks.Tasks
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.Longitude
-import io.bitpogo.keather.locator.LocatorContract
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import android.location.Location as DTO
 
 internal class Locator(
     private val client: FusedLocationProviderClient,

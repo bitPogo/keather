@@ -364,6 +364,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQD5APPN83;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Let me use your location to find the right weather info";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let me use your location to find the right weather info";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -378,6 +380,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RQD5APPN83;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Let me use your location to find the right weather info";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Let me use your location to find the right weather info";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

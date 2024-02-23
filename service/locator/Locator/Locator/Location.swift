@@ -7,7 +7,12 @@
 
 import Foundation
 
-@objc public class Location: NSObject {
+@objc public protocol AppleLocationContract {
+    var longitude: Double { get }
+    var latitude: Double { get }
+}
+
+@objc public class AppleLocation: NSObject, AppleLocationContract {
     public let longitude: Double
     public let latitude: Double
     

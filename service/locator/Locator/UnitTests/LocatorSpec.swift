@@ -37,7 +37,7 @@ final class LocatorSpec: XCTestCase {
         // When
         AppleLocator(locationManager: fake).locate { result in
             // Then
-            XCTAssertEqual(result.error, error as NSError)
+            XCTAssertEqual(result.error(), error as NSError)
         }
     }
     
@@ -56,7 +56,7 @@ final class LocatorSpec: XCTestCase {
         // When
         AppleLocator(locationManager: fake).locate { result in
             // Then
-            let location = result.success!
+            let location = result.success()!
             
             XCTAssertEqual(
                 location.longitude,

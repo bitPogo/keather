@@ -11,13 +11,13 @@ import CoreLocation
 @objc class LocatorDelegate : NSObject, CLLocationManagerDelegate {
     private var callback: (LocationResult) -> Void
     
-    public convenience init(callback: @escaping (LocationResult) -> Void) {
+    public convenience init(callback: @escaping (LocationResultContract) -> Void) {
         self.init()
         self.callback = callback
     }
     
     public override init() {
-        self.callback = { (_: LocationResult) in return; }
+        self.callback = { (_: LocationResultContract) in return; }
     }
     
     
@@ -31,7 +31,7 @@ import CoreLocation
             
             callback(
                 LocationResult.init(
-                    success: Location(
+                    success: AppleLocation(
                         longitude: longitude,
                         latitude: latitude
                     )
@@ -49,7 +49,7 @@ import CoreLocation
 }
 
 @objc public protocol AppleLocatorContract {
-    func locate(callback: @escaping (LocationResult) -> Void)
+    func locate(callback: @escaping (LocationResultContract) -> Void)
 }
 
 @objc public class AppleLocator: NSObject, AppleLocatorContract {
@@ -62,7 +62,7 @@ import CoreLocation
         self.init(locationManager:  CLLocationManager())
     }
     
-    public func locate(callback: @escaping (LocationResult) -> Void) {
+    public func locate(callback: @escaping (LocationResultContract) -> Void) {
         let delegate = LocatorDelegate(callback: callback)
         let locationManager = CLLocationManager()
         locationManager.delegate = delegate

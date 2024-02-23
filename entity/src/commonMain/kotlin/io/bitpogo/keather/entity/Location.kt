@@ -9,7 +9,7 @@ package io.bitpogo.keather.entity
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class Longitude(val lat: Double)
+value class Longitude(val long: Double)
 
 @JvmInline
 value class Latitude(val lat: Double)
