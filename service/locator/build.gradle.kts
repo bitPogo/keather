@@ -16,7 +16,7 @@ plugins {
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather"
+val projectPackage = "io.bitpogo.keather.locator"
 
 android {
     namespace = projectPackage
@@ -54,7 +54,48 @@ kotlin {
         }
     }
 
-    iosx()
+    iosx {
+        val platform = if (name == "iosArm64") {
+            "iphoneos"
+        } else {
+            "iphonesimulator"
+        }
+        val libraryName = "Locator"
+        val libraryPath = "$rootDir/service/locator/$libraryName/build/Build/Products/Release-$platform"
+        val frameworksPath = libraryPath
+
+        println(libraryPath)
+
+        compilations.getByName("main") {
+            cinterops.create("Locator") {
+                val interopTask = tasks[interopProcessingTaskName]
+                interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+
+                // Path to .def file
+                defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
+                includeDirs(libraryPath)
+            }
+        }
+
+        compilations.getByName("test") {
+            cinterops.create("Locator") {
+                val interopTask = tasks[interopProcessingTaskName]
+                interopTask.dependsOn(":service:locator:Locator:build${platform.capitalize()}")
+
+                // Path to .def file
+                defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
+                includeDirs.headerFilterOnly(libraryPath)
+            }
+        }
+
+        binaries.all {
+            linkerOpts(
+                "-rpath", frameworksPath,
+                "-L$libraryPath", "-l$libraryName",
+                "-F$frameworksPath"
+            )
+        }
+    }
     ensureAppleDeviceCompatibility()
 
     sourceSets {

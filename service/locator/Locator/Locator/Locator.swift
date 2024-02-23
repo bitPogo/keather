@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class LocatorDelegate : NSObject, CLLocationManagerDelegate {
+@objc class LocatorDelegate : NSObject, CLLocationManagerDelegate {
     private var callback: (LocationResult) -> Void
     
     public convenience init(callback: @escaping (LocationResult) -> Void) {

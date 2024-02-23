@@ -82,6 +82,7 @@ include(
 // Adapters
 include(
     ":service:locator",
+    ":service:locator:Locator",
 )
 
 // Domain

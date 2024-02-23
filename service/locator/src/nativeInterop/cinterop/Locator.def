@@ -1,0 +1,15 @@
+package = io.bitpogo.keather.locator
+language = Objective-C
+
+headers = include/Locator/Locator-Swift.h
+headerFilter = include/Locator/*
+
+staticLibraries = libLocator.a
+libraryPaths.ios_x64 = Locator/build/Build/Products/Release-iphonesimulator
+libraryPaths.ios_arm64 = Locator/build/Build/Products/Release-iphoneos
+libraryPaths.ios = Locator/build/Build/Products/Release-iphonesimulator
+
+linkerOpts = -L/usr/lib/swift
+linkerOpts.ios = -ios_simulator_version_min 14.0.0 -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/
+linkerOpts.ios_x64 = -ios_simulator_version_min 14.0.0 -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/
+linkerOpts.ios_arm64 = -iphoneos_version_min 14.0.0 -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/
