@@ -1,0 +1,114 @@
+# taken from https://github.com/bitfunk/gradle-plugins/blob/main/docs/mkdocs.yml
+site_name: Title
+site_description: Description
+site_author: Matthias Geisler
+site_url: https://bitpogo.github.io/repro/
+
+repo_name: bitPogo/repro
+repo_url: https://github.com/bitPogo/repro
+edit_uri: tree/main/docs/src/
+
+copyright: Copyright &copy; 2024 Matthias Geisler
+
+docs_dir: src
+
+extra_css:
+  - assets/extra.css
+
+theme:
+  name: 'material'
+  font: false
+  language: en
+  # logo: assets/images/logo.svg
+  # favicon: assets/images/logo.svg
+  custom_dir: theme
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: light dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+  social:
+    - type: 'github'
+      link: 'https://github.com/bitPogo/kmock'
+  features:
+    #- navigation.tabs
+    #- navigation.tabs.sticky
+    #- navigation.instant
+    - navigation.tracking
+    - navigation.top
+
+plugins:
+  - search
+  - redirects
+  - kroki
+  - include-markdown
+  - markdownextradata
+  - minify:
+      minify_html: true
+      htmlmin_opts:
+        remove_comments: true
+
+extra:
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+
+  version:
+    provider: mike
+
+  repo: https://github.com/bitPogo/repro
+
+  latest: v0.1.0
+
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/bitPogo/repro
+
+markdown_extensions:
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - Changelog: changelog.md
+  - Contribution Guide: contributing.md
+  - Code of Conduct: codeOfConduct.md
+  - Security Policy: security.md
+  - License: license.md
