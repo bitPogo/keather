@@ -44,6 +44,7 @@ dependencyResolutionManagement {
             version("kmock", "0.3.0-rc08-SNAPSHOT")
             version("kotlinx-coroutines-core", "1.7.1")
             version("kotlinx-coroutines-test", "1.7.1")
+            version("google-android-playservice-location", "21.1.0")
 
             library("kfixture", "tech.antibytes.kfixture", "core").versionRef("kfixture")
             library("testUtils-core", "tech.antibytes.test-utils-kmp", "test-utils").versionRef("testUtils")
@@ -58,16 +59,16 @@ dependencyResolutionManagement {
                 "test-utils-coroutine",
             ).versionRef("testUtils")
             library(
-                "testUtils-coroutine",
-                "tech.antibytes.test-utils-kmp",
-                "test-utils-coroutine",
-            ).versionRef("testUtils")
-            library(
                 "kmock",
                 "tech.antibytes.kmock",
                 "kmock",
             ).versionRef("kmock")
             plugin("kmock", "tech.antibytes.kmock.kmock-gradle").versionRef("kmock")
+            library(
+                "android-google-android-playservice-location",
+                "com.google.android.gms",
+                "play-services-location",
+            ).versionRef("google-android-playservice-location")
         }
     }
 }
@@ -78,8 +79,18 @@ include(
     // ":docs",
 )
 
+// Adapters
+include(
+    ":service:locator",
+)
+
+// Domain
+include(
+    ":entity"
+)
+
 buildCache {
     fullCache(rootDir)
 }
 
-rootProject.name = "template-project"
+rootProject.name = "keather"

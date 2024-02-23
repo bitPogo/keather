@@ -12,7 +12,6 @@ plugins {
     id("tech.antibytes.gradle.setup")
 
     alias(antibytesCatalog.plugins.gradle.antibytes.dependencyHelper)
-    // alias(antibytesCatalog.plugins.gradle.antibytes.publishing)
     alias(antibytesCatalog.plugins.gradle.antibytes.quality)
 }
 
