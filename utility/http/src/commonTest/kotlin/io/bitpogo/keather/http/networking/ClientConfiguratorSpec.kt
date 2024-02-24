@@ -16,13 +16,12 @@ import io.ktor.util.AttributeKey
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.test.runTest
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.kmock.KMock
 import tech.antibytes.kmock.KMockExperimental
 import tech.antibytes.kmock.verification.assertProxy
-import tech.antibytes.util.test.coroutine.runBlockingTestInContext
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe
 
@@ -48,7 +47,7 @@ class ClientConfiguratorSpec {
 
     @Test
     @JsName("fn1a")
-    fun `Given configure is called with a ClientConfigurator and null it does nothing`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given configure is called with a ClientConfigurator and null it does nothing`() = runTest {
         // Given
         val plugin: HttpClientPluginMock<Any, Any> = kmock(
             templateType = HttpClientPlugin::class,
@@ -88,7 +87,7 @@ class ClientConfiguratorSpec {
 
     @Test
     @JsName("fn1")
-    fun `Given configure is called with a ClientConfigurator and a Set of Plugin it installs a given Plugin`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given configure is called with a ClientConfigurator and a Set of Plugin it installs a given Plugin`() = runTest {
         // Given
         val plugin: HttpClientPluginMock<Any, Any> = kmock(
             templateType = HttpClientPlugin::class,
@@ -140,7 +139,7 @@ class ClientConfiguratorSpec {
 
     @Test
     @JsName("fn2")
-    fun `Given configure is called with a ClientConfigurator and a List of HttpFeatureInstaller it installs a arbitrary number of Plugins`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given configure is called with a ClientConfigurator and a List of HttpFeatureInstaller it installs a arbitrary number of Plugins`() = runTest {
         // Given
         val pluginConfigurator: PluginConfiguratorMock<Any, Any?> = kmock(
             relaxUnitFun = true,

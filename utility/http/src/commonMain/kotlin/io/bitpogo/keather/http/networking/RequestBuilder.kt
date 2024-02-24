@@ -119,14 +119,16 @@ internal class RequestBuilder private constructor(
     override fun prepare(
         method: NetworkingContract.Method,
         path: Path,
-    ): HttpStatement {
-        return HttpStatement(
-            buildQuery(
-                HttpRequestBuilder(),
-                method,
-                path,
-            ),
-            client,
+    ): HttpCall {
+        return HttpCall(
+            HttpStatement(
+                buildQuery(
+                    HttpRequestBuilder(),
+                    method,
+                    path,
+                ),
+                client,
+            )
         )
     }
 

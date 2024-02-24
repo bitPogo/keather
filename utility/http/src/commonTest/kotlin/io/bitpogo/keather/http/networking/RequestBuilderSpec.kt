@@ -23,13 +23,12 @@ import kotlin.js.JsName
 import kotlin.math.absoluteValue
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.test.runTest
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.kfixture.listFixture
 import tech.antibytes.kfixture.pairFixture
 import tech.antibytes.kfixture.qualifier.qualifiedBy
-import tech.antibytes.util.test.coroutine.runBlockingTestInContext
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.ktor.KtorMockClientFactory
 import tech.antibytes.util.test.mustBe
@@ -97,7 +96,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn2")
-    fun `Given a Request was prepared and executed it uses GET by default`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed it uses GET by default`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -105,15 +104,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn3")
-    fun `Given a Request was prepared and executed it calls the given Host`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed it calls the given Host`() = runTest {
         // Given
         val host: String = fixture.fixture(ascii)
         val client = createMockClientWithAssertion { request ->
@@ -122,15 +123,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn4")
-    fun `Given a Request was prepared and executed it calls the root by default`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed it calls the root by default`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -138,15 +141,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn5")
-    fun `Given a Request was prepared and executed with a Path it calls the given path`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed with a Path it calls the given path`() = runTest {
         // Given
         val path = fixture.listFixture<String>(ascii, size = 3)
 
@@ -156,15 +161,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare(path = path).execute()
+        ).create().prepare(path = path)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn6")
-    fun `Given a Request was executed it calls the given Host via HTTPS`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was executed it calls the given Host via HTTPS`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -172,15 +179,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn7")
-    fun `Given a Request was executed it calls the given Host and HTTP if instructed to`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was executed it calls the given Host and HTTP if instructed to`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -188,16 +197,18 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
             protocol = URLProtocol.HTTP,
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn8")
-    fun `Given a Request was prepared and executed it uses the default Port`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed it uses the default Port`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -205,15 +216,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn9")
-    fun `Given a instance was create with a Environment and a Port and it was prepared and executed it uses the given Port`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a instance was create with a Environment and a Port and it was prepared and executed it uses the given Port`() = runTest {
         // Given
         val port = fixture.fixture<Short>().toInt().absoluteValue
         val host: String = fixture.fixture(ascii)
@@ -224,16 +237,18 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
             port = port,
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn10")
-    fun `Given a Request was prepared and executed it sets no custom headers to the request by default`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed it sets no custom headers to the request by default`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -244,15 +259,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn11")
-    fun `Given a instance was create with a Environment setHeaders was called with Headers and it was prepared and executed itsets the given headers to the request`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a instance was create with a Environment setHeaders was called with Headers and it was prepared and executed itsets the given headers to the request`() = runTest {
         // Given
         val headers = mapOf<String, String>(
             fixture.pairFixture(ascii, ascii),
@@ -272,15 +289,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setHeaders(headers).prepare().execute()
+        ).create().setHeaders(headers).prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn12")
-    fun `Given a Request was prepared and executed itsets no custom parameter to the request by default`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed itsets no custom parameter to the request by default`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -288,15 +307,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn13")
-    fun `Given a instance was create with a Environment setParameter was called with parameter and it was prepared and executed itsets custom parameter to the request`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a instance was create with a Environment setParameter was called with parameter and it was prepared and executed itsets custom parameter to the request`() = runTest {
         // Given
         val parameter = mapOf<String, String>(
             fixture.pairFixture(ascii, ascii),
@@ -315,15 +336,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setParameter(parameter).prepare().execute()
+        ).create().setParameter(parameter).prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn14")
-    fun `Given a Request was prepared and executed ithas no Body by default`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed ithas no Body by default`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -331,15 +354,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare().execute()
+        ).create().prepare()
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn15")
-    fun `Given a Requests setBody is called with a Payload and it was prepared and executed with GET it fails`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody is called with a Payload and it was prepared and executed with GET it fails`() = runTest {
         // Given
         val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
 
@@ -358,7 +383,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn16")
-    fun `Given a Requests setBody is called with a Payload and it was prepared and executed with HEAD it fails`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody is called with a Payload and it was prepared and executed with HEAD it fails`() = runTest {
         // Given
         val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture())
 
@@ -377,7 +402,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn17")
-    fun `Given a Requests setBody was not called and it was prepared and executed with POST it fails`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was not called and it was prepared and executed with POST it fails`() = runTest {
         // Given
         val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
 
@@ -396,7 +421,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn18")
-    fun `Given a Requests setBody was not called and it was prepared and executed with PUT it fails`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was not called and it was prepared and executed with PUT it fails`() = runTest {
         // Given
         val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
 
@@ -415,7 +440,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn19")
-    fun `Given Requests setBody was not called and it was prepared and executed with DELETE it fails`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given Requests setBody was not called and it was prepared and executed with DELETE it fails`() = runTest {
         // Given
         val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
 
@@ -434,7 +459,7 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn20")
-    fun `Given a Request was prepared and executed with HEAD it uses head`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Request was prepared and executed with HEAD it uses head`() = runTest {
         // Given
         val client = createMockClientWithAssertion { request ->
             // Then
@@ -442,15 +467,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             fixture.fixture(ascii),
-        ).create().prepare(NetworkingContract.Method.HEAD).execute()
+        ).create().prepare(NetworkingContract.Method.HEAD)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn21")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with POST it uses post`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with POST it uses post`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -460,15 +487,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.POST).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.POST)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn22")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with POST it attaches the body to the request`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with POST it attaches the body to the request`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -483,15 +512,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.POST).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.POST)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn23")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with PUT it uses put`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with PUT it uses put`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -501,15 +532,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.PUT).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.PUT)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn24")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with PUT it attaches the body to the request`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with PUT it attaches the body to the request`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -524,15 +557,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.PUT).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.PUT)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn26")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with DELETE it uses delete`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with DELETE it uses delete`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -542,15 +577,17 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE)
+
+        (call as HttpCall).httpStatement.execute()
     }
 
     @Test
     @JsName("fn27")
-    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with DELETE it attaches the body to the request`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
+    fun `Given a Requests setBody was called with a Payload and it was prepared and executed with DELETE it attaches the body to the request`() = runTest {
         // Given
         val payload: String = fixture.fixture(ascii)
 
@@ -566,9 +603,11 @@ class RequestBuilderSpec {
         }
 
         // When
-        RequestBuilder.Factory(
+        val call = RequestBuilder.Factory(
             client,
             host,
-        ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE).execute()
+        ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE)
+
+        (call as HttpCall).httpStatement.execute()
     }
 }

@@ -97,9 +97,7 @@ kotlin {
                 implementation(antibytesCatalog.jvm.kotlin.stdlib.jdk8)
                 implementation(antibytesCatalog.android.ktor.client)
                 implementation(antibytesCatalog.jvm.ktor.client.okhttp)
-
-                implementation(antibytesCatalog.android.ktx.viewmodel.core)
-                implementation(antibytesCatalog.android.ktx.viewmodel.compose)
+                implementation(antibytesCatalog.jvm.test.mockk)
             }
         }
 

@@ -8,13 +8,12 @@ package io.bitpogo.keather.http.networking
 
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpClientPlugin
-import io.ktor.client.statement.HttpStatement
 
 internal typealias Header = Map<String, String>
 internal typealias Parameter = Map<String, Any?>
 internal typealias Path = List<String>
 
-internal interface NetworkingContract {
+interface NetworkingContract {
     fun interface PluginConfigurator<PluginConfiguration : Any, SubConfiguration> {
         fun configure(pluginConfiguration: PluginConfiguration, subConfiguration: SubConfiguration)
     }
@@ -40,6 +39,8 @@ internal interface NetworkingContract {
         PUT("put"),
     }
 
+    sealed interface HttpCall
+
     interface RequestBuilder {
         fun setHeaders(header: Header): RequestBuilder
         fun setParameter(parameter: Parameter): RequestBuilder
@@ -48,7 +49,7 @@ internal interface NetworkingContract {
         fun prepare(
             method: Method = Method.GET,
             path: Path = listOf(""),
-        ): HttpStatement
+        ): HttpCall
 
         companion object {
             val BODYLESS_METHODS = listOf(Method.HEAD, Method.GET)
@@ -57,5 +58,15 @@ internal interface NetworkingContract {
 
     interface RequestBuilderFactory {
         fun create(): RequestBuilder
+    }
+
+    fun interface ConnectivityManager {
+        fun hasConnection(): Boolean
+    }
+
+    interface Logger : io.ktor.client.plugins.logging.Logger {
+        fun info(message: String)
+        fun warn(message: String)
+        fun error(exception: Throwable, message: String?)
     }
 }

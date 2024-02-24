@@ -6,9 +6,9 @@
 
 package io.bitpogo.keather.http.networking.plugin
 
-import io.bitpogo.keather.HttpContract
 import io.bitpogo.keather.LoggerMock
 import io.bitpogo.keather.http.kmock
+import io.bitpogo.keather.http.networking.NetworkingContract
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import kotlin.js.JsName
@@ -21,7 +21,7 @@ import tech.antibytes.util.test.sameAs
 
 @OptIn(KMockExperimental::class)
 @KMock(
-    HttpContract.Logger::class,
+    NetworkingContract.Logger::class,
 )
 class LoggingConfiguratorSpec {
     @Test

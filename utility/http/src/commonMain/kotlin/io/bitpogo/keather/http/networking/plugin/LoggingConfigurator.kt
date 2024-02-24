@@ -6,12 +6,12 @@
 
 package io.bitpogo.keather.http.networking.plugin
 
-import io.bitpogo.keather.HttpContract
+import io.bitpogo.keather.http.networking.NetworkingContract
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 
 internal class LoggingConfigurator : KtorPluginsContract.LoggingConfigurator {
-    override fun configure(pluginConfiguration: Logging.Config, subConfiguration: HttpContract.Logger) {
+    override fun configure(pluginConfiguration: Logging.Config, subConfiguration: NetworkingContract.Logger) {
         pluginConfiguration.logger = subConfiguration
         pluginConfiguration.level = LogLevel.ALL
     }
