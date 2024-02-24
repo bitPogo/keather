@@ -89,6 +89,7 @@ include(
 
 // Repository
 include(
+    ":interactor:repository",
     ":repository:locator",
     ":repository:locator:Locator",
 )

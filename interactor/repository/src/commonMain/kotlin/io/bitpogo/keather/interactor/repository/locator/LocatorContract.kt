@@ -1,4 +1,4 @@
-package io.bitpogo.keather.repository.locator
+package io.bitpogo.keather.interactor.repository.locator
 
 import io.bitpogo.keather.entity.Location
 

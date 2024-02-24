@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic

@@ -6,6 +6,7 @@
 
 package io.bitpogo.keather.repository.locator
 
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import tech.antibytes.kfixture.fixture

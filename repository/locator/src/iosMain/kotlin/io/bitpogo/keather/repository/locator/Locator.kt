@@ -9,6 +9,7 @@ package io.bitpogo.keather.repository.locator
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.Longitude
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import io.bitpogo.keather.locator.AppleLocatorContractProtocol
 import io.bitpogo.keather.locator.LocationResultContractProtocol
 import kotlinx.cinterop.ExperimentalForeignApi

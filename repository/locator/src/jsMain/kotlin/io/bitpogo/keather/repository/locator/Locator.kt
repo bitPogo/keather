@@ -9,6 +9,7 @@ package io.bitpogo.keather.repository.locator
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.Longitude
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch

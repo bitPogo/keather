@@ -6,6 +6,7 @@
 
 package io.bitpogo.keather.repository.locator
 
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import io.bitpogo.keather.locator.AppleLocationContractProtocol
 import io.bitpogo.keather.locator.LocationResultContractProtocol
 import kotlin.test.BeforeTest

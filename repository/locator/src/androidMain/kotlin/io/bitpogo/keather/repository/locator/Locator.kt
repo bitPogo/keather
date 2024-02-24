@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Tasks
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.Longitude
+import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
