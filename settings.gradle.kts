@@ -40,7 +40,7 @@ dependencyResolutionManagement {
         getByName("antibytesCatalog") {
             version("minSdk", "21")
             version("kfixture", "0.4.0-SNAPSHOT")
-            version("testUtils", "b6c6e6c")
+            version("testUtils", "86ec4d6")
             version("kmock", "0.3.0-rc08-SNAPSHOT")
             version("kotlinx-coroutines-core", "1.7.1")
             version("kotlinx-coroutines-test", "1.7.1")
@@ -62,6 +62,11 @@ dependencyResolutionManagement {
                 "testUtils-ktor",
                 "tech.antibytes.test-utils-kmp",
                 "test-utils-ktor",
+            ).versionRef("testUtils")
+            library(
+                "testUtils-resourceloader",
+                "tech.antibytes.test-utils-kmp",
+                "test-utils-resourceloader",
             ).versionRef("testUtils")
             library(
                 "kmock",

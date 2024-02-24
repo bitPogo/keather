@@ -22,7 +22,7 @@ internal data class Realtime(
     @SerialName("temp_f")
     val temperatureInFahrenheit: Double,
     @SerialName("is_day")
-    val isDay: Boolean,
+    val isDay: Int,
     @SerialName("wind_mph")
     val windSpeedInMilesPerHour: Double,
     @SerialName("wind_kph")

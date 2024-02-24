@@ -8,7 +8,7 @@ package io.bitpogo.keather.http.networking.plugin
 
 import io.ktor.client.plugins.HttpCallValidator
 
-internal class ResponseValidatorConfigurator : KtorPluginsContract.ResponseValidatorConfigurator {
+object ResponseValidatorConfigurator : KtorPluginsContract.ResponseValidatorConfigurator {
     override fun configure(
         pluginConfiguration: HttpCallValidator.Config,
         subConfiguration: KtorPluginsContract.ErrorMapper,

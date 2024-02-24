@@ -66,10 +66,10 @@ class RequestBuilderSpec {
     @JsName("fn0")
     fun `It fulfils RequestBuilderFactory`() {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture())
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>())
 
         // When
-        val builder: Any = RequestBuilder.Factory(
+        val builder: Any = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         )
@@ -82,10 +82,10 @@ class RequestBuilderSpec {
     @JsName("fn1")
     fun `Given create is called it returns a RequestBuilder`() {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture())
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>())
 
         // When
-        val builder: Any = RequestBuilder.Factory(
+        val builder: Any = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create()
@@ -104,7 +104,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -123,7 +123,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().prepare()
@@ -141,7 +141,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -161,7 +161,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare(path = path)
@@ -179,7 +179,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -197,7 +197,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
             protocol = URLProtocol.HTTP,
@@ -216,7 +216,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -237,7 +237,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
             port = port,
@@ -259,7 +259,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -289,7 +289,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setHeaders(headers).prepare()
@@ -307,7 +307,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -317,8 +317,12 @@ class RequestBuilderSpec {
 
     @Test
     @JsName("fn13")
-    fun `Given a instance was create with a Environment setParameter was called with parameter and it was prepared and executed itsets custom parameter to the request`() = runTest {
+    fun `Given a instance was create with a Environment setParameter was called with parameter and it was prepared and executed it sets custom parameter to the request`() = runTest {
         // Given
+        val parameterExisting = mapOf<String, String>(
+            fixture.pairFixture(ascii, ascii),
+            fixture.pairFixture(ascii, ascii),
+        )
         val parameter = mapOf<String, String>(
             fixture.pairFixture(ascii, ascii),
             fixture.pairFixture(ascii, ascii),
@@ -336,10 +340,45 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
-        ).create().setParameter(parameter).prepare()
+        ).create().setParameter(parameterExisting).setParameter(parameter).prepare()
+
+        (call as HttpCall).httpStatement.execute()
+    }
+
+    @Test
+    @JsName("fn13a")
+    fun `Given a instance was create with a Environment addParameter was called with parameter and it was prepared and executed it adds custom parameter to the request`() = runTest {
+        // Given
+        val parameterExisting = mapOf<String, String>(
+            fixture.pairFixture(ascii, ascii),
+            fixture.pairFixture(ascii, ascii),
+        )
+        val parameter = mapOf<String, String>(
+            fixture.pairFixture(ascii, ascii),
+            fixture.pairFixture(ascii, ascii),
+        )
+
+        val keys = parameterExisting.keys.toList() + parameter.keys.toList()
+
+        val host: String = fixture.fixture(ascii)
+        val client = createMockClientWithAssertion { request ->
+            // Then
+            request.url.parameters.toMap() mustBe mapOf(
+                keys[0] to listOf(parameterExisting[keys[0]]),
+                keys[1] to listOf(parameterExisting[keys[1]]),
+                keys[2] to listOf(parameter[keys[2]]),
+                keys[3] to listOf(parameter[keys[3]]),
+            )
+        }
+
+        // When
+        val call = RequestBuilderFactory(
+            client,
+            host,
+        ).create().setParameter(parameterExisting).addParameter(parameter).prepare()
 
         (call as HttpCall).httpStatement.execute()
     }
@@ -354,7 +393,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare()
@@ -366,12 +405,12 @@ class RequestBuilderSpec {
     @JsName("fn15")
     fun `Given a Requests setBody is called with a Payload and it was prepared and executed with GET it fails`() = runTest {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>(ascii))
 
         // Then
         val error = assertFailsWith<HttpError.RequestValidationFailure> {
             // When
-            RequestBuilder.Factory(
+            RequestBuilderFactory(
                 client,
                 host,
             ).create().setBody(fixture.fixture<String>(ascii)).prepare(NetworkingContract.Method.GET)
@@ -385,12 +424,12 @@ class RequestBuilderSpec {
     @JsName("fn16")
     fun `Given a Requests setBody is called with a Payload and it was prepared and executed with HEAD it fails`() = runTest {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture())
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>())
 
         // Then
         val error = assertFailsWith<HttpError.RequestValidationFailure> {
             // When
-            RequestBuilder.Factory(
+            RequestBuilderFactory(
                 client,
                 host,
             ).create().setBody(fixture.fixture<String>(ascii)).prepare(NetworkingContract.Method.HEAD)
@@ -404,12 +443,12 @@ class RequestBuilderSpec {
     @JsName("fn17")
     fun `Given a Requests setBody was not called and it was prepared and executed with POST it fails`() = runTest {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>(ascii))
 
         // Then
         val error = assertFailsWith<HttpError.RequestValidationFailure> {
             // When
-            RequestBuilder.Factory(
+            RequestBuilderFactory(
                 client,
                 host,
             ).create().prepare(NetworkingContract.Method.POST)
@@ -423,12 +462,12 @@ class RequestBuilderSpec {
     @JsName("fn18")
     fun `Given a Requests setBody was not called and it was prepared and executed with PUT it fails`() = runTest {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>(ascii))
 
         // Then
         val error = assertFailsWith<HttpError.RequestValidationFailure> {
             // When
-            RequestBuilder.Factory(
+            RequestBuilderFactory(
                 client,
                 host,
             ).create().prepare(NetworkingContract.Method.PUT)
@@ -442,12 +481,12 @@ class RequestBuilderSpec {
     @JsName("fn19")
     fun `Given Requests setBody was not called and it was prepared and executed with DELETE it fails`() = runTest {
         // Given
-        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture(ascii))
+        val client = KtorMockClientFactory.createSimpleMockClient(fixture.fixture<String>(ascii))
 
         // Then
         val error = assertFailsWith<HttpError.RequestValidationFailure> {
             // When
-            RequestBuilder.Factory(
+            RequestBuilderFactory(
                 client,
                 host,
             ).create().prepare(NetworkingContract.Method.DELETE)
@@ -467,7 +506,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             fixture.fixture(ascii),
         ).create().prepare(NetworkingContract.Method.HEAD)
@@ -487,7 +526,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.POST)
@@ -512,7 +551,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.POST)
@@ -532,7 +571,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.PUT)
@@ -557,7 +596,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.PUT)
@@ -577,7 +616,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE)
@@ -603,7 +642,7 @@ class RequestBuilderSpec {
         }
 
         // When
-        val call = RequestBuilder.Factory(
+        val call = RequestBuilderFactory(
             client,
             host,
         ).create().setBody(payload).prepare(NetworkingContract.Method.DELETE)

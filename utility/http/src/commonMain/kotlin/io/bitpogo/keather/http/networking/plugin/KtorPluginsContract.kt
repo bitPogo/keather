@@ -12,7 +12,7 @@ import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.Logging
 
-internal interface KtorPluginsContract {
+interface KtorPluginsContract {
     fun interface ErrorMapper {
         fun mapAndThrow(error: Throwable)
     }

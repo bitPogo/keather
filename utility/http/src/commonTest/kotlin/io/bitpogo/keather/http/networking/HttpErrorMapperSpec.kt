@@ -27,7 +27,7 @@ class HttpErrorMapperSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils ErrorMapper`() {
-        HttpErrorMapper() fulfils KtorPluginsContract.ErrorMapper::class
+        HttpErrorMapper fulfils KtorPluginsContract.ErrorMapper::class
     }
 
     @Test
@@ -39,7 +39,7 @@ class HttpErrorMapperSpec {
         // Then
         val error = assertFailsWith<RuntimeException> {
             // When
-            HttpErrorMapper().mapAndThrow(throwable)
+            HttpErrorMapper.mapAndThrow(throwable)
         }
 
         // Then
@@ -54,7 +54,7 @@ class HttpErrorMapperSpec {
             expectSuccess = true
             HttpResponseValidator {
                 handleResponseExceptionWithRequest { response, _ ->
-                    HttpErrorMapper().mapAndThrow(response)
+                    HttpErrorMapper.mapAndThrow(response)
                 }
             }
 

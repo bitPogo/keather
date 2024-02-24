@@ -10,7 +10,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class ForecastHour(
+internal data class HistoryHour(
     @SerialName("time")
     val time: String,
     @SerialName("time_epoch")
@@ -77,14 +77,10 @@ internal data class ForecastHour(
     val dewPointInCelsius: Double,
     @SerialName("dewpoint_f")
     val dewPointInFahrenheit: Double,
-    @SerialName("short_rad")
-    val shortwaveSolarRadiation: Double,
-    @SerialName("diff_rad")
-    val diffuseHorizontalIrradiation: Double,
 )
 
 @Serializable
-internal data class ForecastAstronomy(
+internal data class HistoryAstronomy(
     val sunrise: String,
     val sunset: String,
     val moonrise: String,
@@ -93,14 +89,10 @@ internal data class ForecastAstronomy(
     val moonPhase: String,
     @SerialName("moon_illumination")
     val moonIllumination: Double,
-    @SerialName("is_moon_up")
-    val hasMoonRisen: Int,
-    @SerialName("is_sun_up")
-    val hasSunRisen: Int,
 )
 
 @Serializable
-internal data class ForecastDay(
+internal data class HistoryDay(
     @SerialName("uv")
     val uvIndex: Double,
     val condition: Condition,
@@ -143,27 +135,26 @@ internal data class ForecastDay(
 )
 
 @Serializable
-internal data class ForecastDayContainer(
+internal data class HistoryDayContainer(
     val date: String,
     @SerialName("date_epoch")
     val timeStamp: Long,
-    val day: ForecastDay,
+    val day: HistoryDay,
     @SerialName("hour")
-    val hours: List<ForecastHour>,
+    val hours: List<HistoryHour>,
     @SerialName("astro")
-    val astronomy: ForecastAstronomy,
+    val astronomy: HistoryAstronomy,
 )
 
 @Serializable
-internal data class Forecasts(
+internal data class Timeline(
     @SerialName("forecastday")
-    val forecastDays: List<ForecastDayContainer>
+    val history: List<HistoryDayContainer>
 )
 
 @Serializable
-internal data class Forecast(
+internal data class History(
     val location: Location,
-    @SerialName("current")
-    val currentDay: Realtime,
-    val forecast: Forecasts
+    @SerialName("forecast")
+    val history: Timeline
 )

@@ -8,7 +8,7 @@ package io.bitpogo.keather.serialization
 
 import kotlinx.serialization.json.JsonBuilder
 
-internal class JsonConfigurator : JsonConfiguratorContract {
+object JsonConfigurator : JsonConfiguratorContract {
     override fun configure(jsonBuilder: JsonBuilder): JsonBuilder {
         jsonBuilder.isLenient = true
         jsonBuilder.ignoreUnknownKeys = true

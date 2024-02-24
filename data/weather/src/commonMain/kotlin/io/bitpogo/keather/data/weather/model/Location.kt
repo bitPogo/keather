@@ -20,8 +20,8 @@ data class Location(
     val longitude: Double,
     @SerialName("tz_id")
     val timezoneId: String,
-    @SerialName("localtime_epoch")
-    val localTime: String,
     @SerialName("localtime")
+    val localTime: String,
+    @SerialName("localtime_epoch")
     val localTimestamp: Long,
 )

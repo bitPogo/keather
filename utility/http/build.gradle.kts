@@ -74,8 +74,6 @@ kotlin {
                 implementation(antibytesCatalog.common.ktor.client.logging)
                 implementation(antibytesCatalog.common.ktor.client.contentNegotiation)
                 implementation(antibytesCatalog.common.ktor.serialization.json)
-                implementation(antibytesCatalog.common.kotlinx.serialization.core)
-                implementation(antibytesCatalog.common.kotlinx.serialization.json)
             }
         }
         val commonTest by getting {

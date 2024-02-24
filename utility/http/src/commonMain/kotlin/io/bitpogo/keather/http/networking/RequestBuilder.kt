@@ -20,7 +20,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
 
-internal class RequestBuilder private constructor(
+internal class RequestBuilder internal constructor(
     private val client: HttpClient,
     private val host: String,
     private val protocol: URLProtocol = URLProtocol.HTTPS,
@@ -30,16 +30,20 @@ internal class RequestBuilder private constructor(
     private var parameter: Parameter = emptyMap()
     private var body: Any? = null
 
-    override fun setHeaders(header: Header): NetworkingContract.RequestBuilder {
-        return this.also { this.headers = header }
+    override fun setHeaders(headers: Header): NetworkingContract.RequestBuilder {
+        return this.apply { this.headers = headers }
     }
 
     override fun setParameter(parameter: Parameter): NetworkingContract.RequestBuilder {
-        return this.also { this.parameter = parameter }
+        return this.apply { this.parameter = parameter }
+    }
+
+    override fun addParameter(parameter: Parameter): NetworkingContract.RequestBuilder {
+        return this.apply { this.parameter += parameter }
     }
 
     override fun setBody(body: Any): NetworkingContract.RequestBuilder {
-        return this.also { this.body = body }
+        return this.apply { this.body = body }
     }
 
     private fun validateBodyAgainstMethod(method: NetworkingContract.Method) {
@@ -131,20 +135,20 @@ internal class RequestBuilder private constructor(
             )
         )
     }
+}
 
-    class Factory constructor(
-        private val client: HttpClient,
-        private val host: String,
-        private val protocol: URLProtocol = URLProtocol.HTTPS,
-        private val port: Int? = null,
-    ) : NetworkingContract.RequestBuilderFactory {
-        override fun create(): NetworkingContract.RequestBuilder {
-            return RequestBuilder(
-                client,
-                host,
-                protocol,
-                port,
-            )
-        }
+class RequestBuilderFactory(
+    private val client: HttpClient,
+    private val host: String,
+    private val protocol: URLProtocol = URLProtocol.HTTPS,
+    private val port: Int? = null,
+) : NetworkingContract.RequestBuilderFactory {
+    override fun create(): NetworkingContract.RequestBuilder {
+        return RequestBuilder(
+            client,
+            host,
+            protocol,
+            port,
+        )
     }
 }

@@ -10,7 +10,7 @@ import io.bitpogo.keather.http.networking.error.HttpError
 import io.bitpogo.keather.http.networking.plugin.KtorPluginsContract
 import io.ktor.client.plugins.ResponseException
 
-internal class HttpErrorMapper : KtorPluginsContract.ErrorMapper {
+object HttpErrorMapper : KtorPluginsContract.ErrorMapper {
     private fun wrapError(error: Throwable): Throwable {
         return if (error is ResponseException) {
             HttpError.RequestError(error.response.status.value)

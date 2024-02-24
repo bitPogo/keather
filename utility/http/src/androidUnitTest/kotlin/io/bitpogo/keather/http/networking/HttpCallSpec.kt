@@ -54,7 +54,7 @@ class HttpCallSpec {
         // Given
         val data = "Test"
         val client = KtorMockClientFactory.createSimpleMockClient(data)
-        val builder = RequestBuilder.Factory(client, "abc")
+        val builder = RequestBuilderFactory(client, "abc")
 
         // When
         val actual = builder.create().prepare().receive<String>()

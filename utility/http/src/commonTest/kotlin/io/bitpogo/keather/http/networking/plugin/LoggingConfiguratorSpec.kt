@@ -6,8 +6,8 @@
 
 package io.bitpogo.keather.http.networking.plugin
 
-import io.bitpogo.keather.LoggerMock
 import io.bitpogo.keather.http.kmock
+import io.bitpogo.keather.http.networking.LoggerMock
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -27,7 +27,7 @@ class LoggingConfiguratorSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils LoggingConfigurator`() {
-        LoggingConfigurator() fulfils KtorPluginsContract.LoggingConfigurator::class
+        LoggingConfigurator fulfils KtorPluginsContract.LoggingConfigurator::class
     }
 
     @Test
@@ -38,7 +38,7 @@ class LoggingConfiguratorSpec {
         val logger: LoggerMock = kmock()
 
         // When
-        val result = LoggingConfigurator().configure(config, logger)
+        val result = LoggingConfigurator.configure(config, logger)
 
         // Then
         result mustBe Unit

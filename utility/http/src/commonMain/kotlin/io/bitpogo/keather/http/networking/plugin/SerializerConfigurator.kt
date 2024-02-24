@@ -11,7 +11,7 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-internal class SerializerConfigurator : KtorPluginsContract.SerializerConfigurator {
+object SerializerConfigurator : KtorPluginsContract.SerializerConfigurator {
     override fun configure(
         pluginConfiguration: ContentNegotiation.Config,
         subConfiguration: JsonConfiguratorContract,

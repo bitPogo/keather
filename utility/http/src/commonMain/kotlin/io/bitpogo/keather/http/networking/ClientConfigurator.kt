@@ -8,7 +8,7 @@ package io.bitpogo.keather.http.networking
 
 import io.ktor.client.HttpClientConfig
 
-internal object ClientConfigurator : NetworkingContract.ClientConfigurator {
+object ClientConfigurator : NetworkingContract.ClientConfigurator {
     override fun configure(
         httpConfig: HttpClientConfig<*>,
         installers: Set<NetworkingContract.Plugin<in Any, in Any?>>?,

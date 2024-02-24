@@ -9,9 +9,9 @@ package io.bitpogo.keather.http.networking
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.plugins.HttpClientPlugin
 
-internal typealias Header = Map<String, String>
-internal typealias Parameter = Map<String, Any?>
-internal typealias Path = List<String>
+typealias Header = Map<String, String>
+typealias Parameter = Map<String, Any?>
+typealias Path = List<String>
 
 interface NetworkingContract {
     fun interface PluginConfigurator<PluginConfiguration : Any, SubConfiguration> {
@@ -42,8 +42,9 @@ interface NetworkingContract {
     sealed interface HttpCall
 
     interface RequestBuilder {
-        fun setHeaders(header: Header): RequestBuilder
+        fun setHeaders(headers: Header): RequestBuilder
         fun setParameter(parameter: Parameter): RequestBuilder
+        fun addParameter(parameter: Parameter): RequestBuilder
         fun setBody(body: Any): RequestBuilder
 
         fun prepare(

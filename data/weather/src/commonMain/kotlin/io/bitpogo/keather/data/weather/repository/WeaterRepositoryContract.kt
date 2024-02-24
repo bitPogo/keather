@@ -7,10 +7,17 @@
 package io.bitpogo.keather.data.weather.repository
 
 import io.bitpogo.keather.data.weather.model.Forecast
+import io.bitpogo.keather.data.weather.model.History
+import io.bitpogo.keather.data.weather.model.RequestLocation
+import io.bitpogo.keather.http.networking.NetworkingContract
 
 internal interface WeatherRepositoryContract {
+    fun interface ClientProvider {
+        fun provide(): NetworkingContract.RequestBuilder
+    }
+
     interface Remote {
-        suspend fun fetchForecast(): Forecast
-        suspend fun fetchHistory(): Forecast
+        suspend fun fetchForecast(location: RequestLocation, until: Long): Forecast
+        suspend fun fetchHistory(location: RequestLocation, until: Long): History
     }
 }

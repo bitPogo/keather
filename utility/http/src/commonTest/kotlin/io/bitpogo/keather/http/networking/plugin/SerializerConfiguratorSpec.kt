@@ -26,7 +26,7 @@ class SerializerConfiguratorSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils SerializerConfigurator`() {
-        SerializerConfigurator() fulfils KtorPluginsContract.SerializerConfigurator::class
+        SerializerConfigurator fulfils KtorPluginsContract.SerializerConfigurator::class
     }
 
     @Test
@@ -43,7 +43,7 @@ class SerializerConfiguratorSpec {
         }
 
         // When
-        val result = SerializerConfigurator().configure(pluginConfig, jsonConfigurator)
+        val result = SerializerConfigurator.configure(pluginConfig, jsonConfigurator)
 
         // Then
         result mustBe Unit

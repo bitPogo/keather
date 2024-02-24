@@ -19,7 +19,7 @@ class JsonConfiguratorSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils JsonConfigurator`() {
-        JsonConfigurator() fulfils JsonConfiguratorContract::class
+        JsonConfigurator fulfils JsonConfiguratorContract::class
     }
 
     @Test
@@ -30,7 +30,7 @@ class JsonConfiguratorSpec {
         Json { builder = this }
 
         // When
-        val result: Any = JsonConfigurator().configure(builder!!)
+        val result: Any = JsonConfigurator.configure(builder!!)
 
         // Then
         result fulfils JsonBuilder::class
@@ -44,7 +44,7 @@ class JsonConfiguratorSpec {
         Json { builder = this }
 
         // When
-        val result = JsonConfigurator().configure(builder!!)
+        val result = JsonConfigurator.configure(builder!!)
 
         // Then
         result.isLenient mustBe true

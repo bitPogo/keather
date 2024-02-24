@@ -33,7 +33,7 @@ class ResponseValidatorConfiguratorSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils ResponseValidatorConfigurator`() {
-        ResponseValidatorConfigurator() fulfils KtorPluginsContract.ResponseValidatorConfigurator::class
+        ResponseValidatorConfigurator fulfils KtorPluginsContract.ResponseValidatorConfigurator::class
     }
 
     @Test
@@ -53,7 +53,7 @@ class ResponseValidatorConfiguratorSpec {
             }
 
             install(HttpCallValidator) {
-                ResponseValidatorConfigurator().configure(
+                ResponseValidatorConfigurator.configure(
                     this,
                     propagator,
                 )
