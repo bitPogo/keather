@@ -74,8 +74,6 @@ dependencyResolutionManagement {
 }
 
 include(
-    ":kmp-lib",
-    ":example-android-application",
     // ":docs",
 )
 
@@ -87,7 +85,7 @@ include(
 
 // Domain
 include(
-    ":entity"
+    ":entity",
 )
 
 buildCache {

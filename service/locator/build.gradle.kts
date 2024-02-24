@@ -6,7 +6,13 @@
 
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
+import tech.antibytes.gradle.configuration.runtime.AntiBytesMainConfigurationTask
 import tech.antibytes.gradle.configuration.sourcesets.iosx
+import tech.antibytes.gradle.versioning.Versioning
+import tech.antibytes.gradle.versioning.api.VersioningConfiguration
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
@@ -116,6 +122,9 @@ kotlin {
             }
         }
         val commonTest by getting {
+            kotlin {
+                srcDir("build/generated/antibytes/commonMain/kotlin")
+            }
             dependencies {
                 implementation(antibytesCatalog.common.test.kotlin.core)
                 implementation(antibytesCatalog.testUtils.core)
@@ -158,6 +167,7 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
+                implementation(antibytesCatalog.js.kotlin.wrappers.browser)
 
             }
         }

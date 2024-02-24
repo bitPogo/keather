@@ -26,6 +26,7 @@ import tech.antibytes.util.test.sameAs
 
 class LocatorSpec {
     private val fixture = kotlinFixture()
+
     @Test
     fun `Given getCurrentLocation is called it returns null if the client fails`() = runTest {
         mockkStatic(Tasks::class)
@@ -110,7 +111,7 @@ class LocatorSpec {
         // Then
         result.getOrNull() mustBe io.bitpogo.keather.entity.Location(
             Latitude(lat),
-            Longitude(long)
+            Longitude(long),
         )
         locationRequest.captured.priority mustBe Priority.PRIORITY_BALANCED_POWER_ACCURACY
         verify(exactly = 1) { client.getCurrentLocation(any<CurrentLocationRequest>(), null) }

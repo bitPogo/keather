@@ -7,6 +7,7 @@
 package io.bitpogo.keather.locator
 
 import android.annotation.SuppressLint
+import android.location.Location as DTO
 import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -18,7 +19,6 @@ import io.bitpogo.keather.entity.Longitude
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
-import android.location.Location as DTO
 
 internal class Locator(
     private val client: FusedLocationProviderClient,
@@ -60,7 +60,7 @@ internal class Locator(
         return wrappedDto.map { dto ->
             Location(
                 Latitude(dto.latitude),
-                Longitude(dto.longitude)
+                Longitude(dto.longitude),
             )
         }
     }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalForeignApi::class)
 internal class Locator(
-    private val appleLocator: AppleLocatorContractProtocol
+    private val appleLocator: AppleLocatorContractProtocol,
 ) : LocatorContract.Locator {
     private fun LocationResultContractProtocol.resolveLocation(): Result<Location> {
         val error = this.error()
@@ -26,7 +26,7 @@ internal class Locator(
                 Location(
                     longitude = Longitude(deviceLocation.longitude()),
                     latitude = Latitude(deviceLocation.latitude()),
-                )
+                ),
             )
         } else {
             Result.failure(Error(error.domain))

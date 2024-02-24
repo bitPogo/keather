@@ -6,6 +6,8 @@
 
 package io.bitpogo.keather.locator
 
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.test.runTest
 import platform.Foundation.NSError
@@ -14,8 +16,6 @@ import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 @OptIn(ExperimentalForeignApi::class)
 class LocatorSpec {
@@ -47,7 +47,7 @@ class LocatorSpec {
         val error = NSError.errorWithDomain(
             fixture.fixture<String>(),
             23,
-            emptyMap<Any?, Any?>()
+            emptyMap<Any?, Any?>(),
         )
         appleLocator._locateWithCallback run { callBack ->
             callBack(LocationResultKotlin(null, error))
@@ -95,7 +95,7 @@ private class AppleLocationKotlin(
 @OptIn(ExperimentalForeignApi::class)
 private class LocationResultKotlin(
     private val _success: AppleLocationContractProtocol?,
-    private val _error: NSError?
+    private val _error: NSError?,
 ) : LocationResultContractProtocol, NSObject() {
     override fun error(): NSError? = _error
     override fun success(): AppleLocationContractProtocol? = _success
