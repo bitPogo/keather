@@ -6,10 +6,10 @@
 
 package io.bitpogo.keather.http.networking.plugin
 
+import io.bitpogo.keather.serialization.JsonConfiguratorContract
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import io.bitpogo.keather.serialization.JsonConfiguratorContract
 
 internal class SerializerConfigurator : KtorPluginsContract.SerializerConfigurator {
     override fun configure(

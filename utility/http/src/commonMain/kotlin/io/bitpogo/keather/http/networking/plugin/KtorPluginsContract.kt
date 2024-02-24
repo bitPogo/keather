@@ -7,11 +7,11 @@
 package io.bitpogo.keather.http.networking.plugin
 
 import io.bitpogo.keather.HttpContract
+import io.bitpogo.keather.http.networking.NetworkingContract
+import io.bitpogo.keather.serialization.JsonConfiguratorContract
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.Logging
-import io.bitpogo.keather.http.networking.NetworkingContract
-import io.bitpogo.keather.serialization.JsonConfiguratorContract
 
 internal interface KtorPluginsContract {
     fun interface ErrorMapper {

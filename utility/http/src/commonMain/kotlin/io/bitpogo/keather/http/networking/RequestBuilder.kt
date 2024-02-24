@@ -6,6 +6,8 @@
 
 package io.bitpogo.keather.http.networking
 
+import io.bitpogo.keather.http.networking.NetworkingContract.RequestBuilder.Companion.BODYLESS_METHODS
+import io.bitpogo.keather.http.networking.error.HttpError
 import io.ktor.client.HttpClient
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.header
@@ -17,8 +19,6 @@ import io.ktor.client.statement.HttpStatement
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
 import io.ktor.http.path
-import io.bitpogo.keather.http.networking.NetworkingContract.RequestBuilder.Companion.BODYLESS_METHODS
-import io.bitpogo.keather.http.networking.error.HttpError
 
 internal class RequestBuilder private constructor(
     private val client: HttpClient,

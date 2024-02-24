@@ -7,6 +7,7 @@
 package io.bitpogo.keather.http.networking
 
 import io.bitpogo.keather.http.networking.error.HttpError
+import io.bitpogo.keather.http.networking.plugin.KtorPluginsContract
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.mock.MockEngine
@@ -17,7 +18,6 @@ import io.ktor.http.HttpStatusCode
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
-import io.bitpogo.keather.http.networking.plugin.KtorPluginsContract
 import tech.antibytes.util.test.coroutine.runBlockingTest
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe

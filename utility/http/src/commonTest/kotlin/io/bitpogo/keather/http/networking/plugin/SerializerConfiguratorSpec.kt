@@ -7,12 +7,12 @@
 package io.bitpogo.keather.http.networking.plugin
 
 import io.bitpogo.keather.http.kmock
+import io.bitpogo.keather.serialization.JsonConfiguratorContract
+import io.bitpogo.keather.serialization.JsonConfiguratorContractMock
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlinx.serialization.json.JsonBuilder
-import io.bitpogo.keather.serialization.JsonConfiguratorContract
-import io.bitpogo.keather.serialization.JsonConfiguratorContractMock
 import tech.antibytes.kmock.KMock
 import tech.antibytes.kmock.KMockExperimental
 import tech.antibytes.util.test.fulfils

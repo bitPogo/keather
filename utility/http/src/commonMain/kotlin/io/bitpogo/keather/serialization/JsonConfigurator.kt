@@ -6,7 +6,6 @@
 
 package io.bitpogo.keather.serialization
 
-import io.bitpogo.keather.serialization.JsonConfiguratorContract
 import kotlinx.serialization.json.JsonBuilder
 
 internal class JsonConfigurator : JsonConfiguratorContract {

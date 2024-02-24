@@ -87,10 +87,10 @@ include(
     ":utility:http",
 )
 
-// Actually a Repository
+// Repository
 include(
-    ":service:locator",
-    ":service:locator:Locator",
+    ":repository:locator",
+    ":repository:locator:Locator",
 )
 
 // Domain

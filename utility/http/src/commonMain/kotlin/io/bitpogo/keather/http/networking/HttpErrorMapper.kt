@@ -7,8 +7,8 @@
 package io.bitpogo.keather.http.networking
 
 import io.bitpogo.keather.http.networking.error.HttpError
-import io.ktor.client.plugins.ResponseException
 import io.bitpogo.keather.http.networking.plugin.KtorPluginsContract
+import io.ktor.client.plugins.ResponseException
 
 internal class HttpErrorMapper : KtorPluginsContract.ErrorMapper {
     private fun wrapError(error: Throwable): Throwable {
