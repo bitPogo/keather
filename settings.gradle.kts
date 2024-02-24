@@ -59,6 +59,11 @@ dependencyResolutionManagement {
                 "test-utils-coroutine",
             ).versionRef("testUtils")
             library(
+                "testUtils-ktor",
+                "tech.antibytes.test-utils-kmp",
+                "test-utils-ktor",
+            ).versionRef("testUtils")
+            library(
                 "kmock",
                 "tech.antibytes.kmock",
                 "kmock",
@@ -77,7 +82,12 @@ include(
     // ":docs",
 )
 
-// Adapters
+// Utility
+include(
+    ":utility:http",
+)
+
+// Actually a Repository
 include(
     ":service:locator",
     ":service:locator:Locator",

@@ -5,8 +5,7 @@
  */
 
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
-import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
-import tech.antibytes.gradle.configuration.sourcesets.nativeCoroutine
+import tech.antibytes.gradle.configuration.sourcesets.iosx
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
@@ -48,7 +47,7 @@ kotlin {
         }
     }
 
-    nativeCoroutine()
+    iosx()
     ensureAppleDeviceCompatibility()
 
     sourceSets {
