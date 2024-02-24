@@ -37,8 +37,6 @@ android {
 kotlin {
     androidTarget()
 
-    jvm()
-
     js(IR) {
         compilations {
             this.forEach {
@@ -148,18 +146,6 @@ kotlin {
                 implementation(antibytesCatalog.android.test.ktx)
                 implementation(antibytesCatalog.jvm.test.mockk)
                 implementation(antibytesCatalog.android.test.robolectric)
-            }
-        }
-
-        val jvmMain by getting {
-            dependencies {
-                implementation(antibytesCatalog.jvm.kotlin.stdlib.jdk)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-                implementation(antibytesCatalog.jvm.test.kotlin.core)
-                implementation(antibytesCatalog.jvm.test.junit.junit4)
             }
         }
 
