@@ -87,11 +87,12 @@ include(
     ":utility:http",
 )
 
-// Repository
+// DataLayer
 include(
     ":interactor:repository",
-    ":repository:locator",
-    ":repository:locator:Locator",
+    "data:weather",
+    ":data:locator",
+    ":data:locator:Locator",
 )
 
 // Domain
