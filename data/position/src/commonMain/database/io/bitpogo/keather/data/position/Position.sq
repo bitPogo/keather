@@ -1,0 +1,29 @@
+CREATE TABLE IF NOT EXISTS Position (
+    longitude REAL NOT NULL,
+    latitude REAL NOT NULL,
+    CONSTRAINT coordinate PRIMARY KEY (longitude, latitude)
+);
+
+contains:
+    SELECT EXISTS(
+        SELECT 1
+        FROM Position
+        WHERE longitude = :long AND latitude = :lat
+    )
+;
+
+set:
+    INSERT INTO Position(longitude, latitude)
+    VALUES (:long, :lat)
+;
+
+clear:
+    DELETE
+    FROM Position
+;
+
+fetch:
+    SELECT *
+    FROM Position
+    LIMIT 1
+;

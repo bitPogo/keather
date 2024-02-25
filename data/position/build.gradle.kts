@@ -11,6 +11,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 import tech.antibytes.gradle.configuration.runtime.AntiBytesMainConfigurationTask
 import tech.antibytes.gradle.configuration.sourcesets.iosx
+import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
+import tech.antibytes.gradle.dependency.helper.nodeProductionPackage
+import tech.antibytes.gradle.project.config.database.SqlDelight
 import tech.antibytes.gradle.versioning.Versioning
 import tech.antibytes.gradle.versioning.api.VersioningConfiguration
 
@@ -19,10 +22,11 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
     alias(antibytesCatalog.plugins.gradle.antibytes.coverage)
 
+    alias(antibytesCatalog.plugins.square.sqldelight)
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.data.locator"
+val projectPackage = "io.bitpogo.keather.data.position"
 
 android {
     namespace = projectPackage
@@ -127,6 +131,7 @@ kotlin {
                 implementation(antibytesCatalog.testUtils.coroutine)
                 implementation(antibytesCatalog.kfixture)
                 implementation(antibytesCatalog.kmock)
+                implementation(antibytesCatalog.common.square.sqldelight.primitiveAdapters)
             }
         }
 
@@ -143,6 +148,13 @@ kotlin {
                 implementation(antibytesCatalog.android.test.ktx)
                 implementation(antibytesCatalog.jvm.test.mockk)
                 implementation(antibytesCatalog.android.test.robolectric)
+                implementation(antibytesCatalog.android.square.sqldelight.driver)
+            }
+        }
+
+        val iosTest by getting {
+            dependencies {
+                implementation(antibytesCatalog.common.square.sqldelight.driver.native)
             }
         }
 
@@ -158,6 +170,11 @@ kotlin {
         val jsTest by getting {
             dependencies {
                 implementation(antibytesCatalog.js.test.kotlin.core)
+                implementation(antibytesCatalog.js.square.sqldelight.driver)
+                nodeProductionPackage(antibytesCatalog.node.sqlJs)
+                nodeDevelopmentPackage(antibytesCatalog.node.copyWebpackPlugin)
+                nodeProductionPackage(antibytesCatalog.node.sqlJsWorker)
+                implementation(antibytesCatalog.js.test.kotlin.core)
             }
         }
     }
@@ -170,5 +187,15 @@ kmock {
 tasks.withType(Test::class.java) {
     testLogging {
         events(FAILED)
+    }
+}
+
+sqldelight {
+    databases {
+        create(SqlDelight.databaseName) {
+            packageName.set(projectPackage)
+            srcDirs.setFrom("src/commonMain/database")
+            generateAsync = true
+        }
     }
 }

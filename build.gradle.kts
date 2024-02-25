@@ -4,6 +4,7 @@
  * Use of this source code is governed by Apache v2.0
  */
 
+import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
 import tech.antibytes.gradle.dependency.helper.addCustomRepositories
 import tech.antibytes.gradle.dependency.helper.ensureKotlinVersion
 import tech.antibytes.gradle.project.config.repositories.Repositories.projectRepositories
@@ -25,7 +26,6 @@ allprojects {
         }
         addCustomRepositories(projectRepositories)
     }
-
     ensureKotlinVersion()
 }
 
