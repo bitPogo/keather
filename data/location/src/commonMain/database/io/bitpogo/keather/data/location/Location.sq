@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS Location (
+    latitude REAL NOT NULL,
+    longitude REAL NOT NULL,
+    name TEXT NOT NULL,
+    region TEXT NOT NULL,
+    country TEXT NOT NULL,
+    CONSTRAINT postionRef FOREIGN KEY (longitude, latitude) REFERENCES Position(longitude, latitude),
+    PRIMARY KEY (longitude, latitude)
+);
+
+CREATE TRIGGER removeLocation BEFORE DELETE ON Position
+BEGIN
+    DELETE
+    FROM Location;
+END;
+
+contains:
+    SELECT EXISTS(
+        SELECT 1
+        FROM Location
+        WHERE longitude = :long AND latitude = :lat
+    )
+;
+
+set:
+    INSERT INTO Location(longitude, latitude, name, region, country)
+    VALUES (?, ?, ?, ?, ?)
+;
+
+fetch:
+    SELECT * FROM Location
+;

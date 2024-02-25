@@ -14,7 +14,7 @@ import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive
 
 internal class WeatherApi(
-    private val requestBuilder: NetworkingContract.RequestBuilder
+    private val requestBuilder: NetworkingContract.RequestBuilder,
 ) : WeatherRepositoryContract.Remote {
     // q = Latitude and Longitude
     private suspend inline fun <reified T : Any> fetch(
@@ -26,7 +26,7 @@ internal class WeatherApi(
             mapOf(
                 "q" to location.toString(),
                 "unixdt" to until,
-            )
+            ),
         ).prepare(
             NetworkingContract.Method.GET,
             listOf("v1", "$endpoint.json"),
@@ -35,11 +35,11 @@ internal class WeatherApi(
 
     override suspend fun fetchForecast(
         location: RequestLocation,
-        until: Long
+        until: Long,
     ): Forecast = fetch(location, "forecast", until)
 
     override suspend fun fetchHistory(
         location: RequestLocation,
-        until: Long
+        until: Long,
     ): History = fetch(location, "history", until)
 }

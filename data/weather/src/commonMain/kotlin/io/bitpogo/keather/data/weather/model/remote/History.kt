@@ -149,12 +149,12 @@ internal data class HistoryDayContainer(
 @Serializable
 internal data class Timeline(
     @SerialName("forecastday")
-    val history: List<HistoryDayContainer>
+    val history: List<HistoryDayContainer>,
 )
 
 @Serializable
 internal data class History(
     val location: Location,
     @SerialName("forecast")
-    val history: Timeline
+    val history: Timeline,
 )

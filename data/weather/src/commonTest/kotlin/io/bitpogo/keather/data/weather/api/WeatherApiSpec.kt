@@ -18,6 +18,9 @@ import io.bitpogo.keather.http.networking.FakeHttpCall
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.NetworkingContract.RequestBuilder
 import io.bitpogo.keather.http.networking.RequestBuilderMock
+import kotlin.js.JsName
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import tech.antibytes.kfixture.fixture
@@ -27,19 +30,16 @@ import tech.antibytes.kmock.KMockExperimental
 import tech.antibytes.kmock.verification.assertProxy
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.sameAs
-import kotlin.js.JsName
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 @OptIn(KMockExperimental::class)
 @KMock(
-    RequestBuilder::class
+    RequestBuilder::class,
 )
 class WeatherApiSpec {
     private val fixture = kotlinFixture()
     private val requestLocation = RequestLocation(
         Longitude(fixture.fixture()),
-        Latitude(fixture.fixture())
+        Latitude(fixture.fixture()),
     )
     private val requestBuilder: RequestBuilderMock = kmock()
     private val forecast: Forecast = Json.decodeFromString(resourceLoader.load("/fixtures/2dayForecast.json"))
@@ -71,7 +71,7 @@ class WeatherApiSpec {
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
                     "unixdt" to until,
-                )
+                ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
                 NetworkingContract.Method.GET,
@@ -97,7 +97,7 @@ class WeatherApiSpec {
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
                     "unixdt" to until,
-                )
+                ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
                 NetworkingContract.Method.GET,

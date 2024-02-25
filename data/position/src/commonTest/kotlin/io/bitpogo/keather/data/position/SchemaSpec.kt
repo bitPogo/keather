@@ -8,19 +8,20 @@ package io.bitpogo.keather.data.position
 
 import app.cash.sqldelight.async.coroutines.awaitAsOne
 import io.bitpogo.keather.data.location.Position
+import kotlin.js.JsName
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.annotations.RobolectricConfig
 import tech.antibytes.util.test.annotations.RobolectricTestRunner
 import tech.antibytes.util.test.annotations.RunWithRobolectricTestRunner
 import tech.antibytes.util.test.coroutine.AsyncTestReturnValue
+import tech.antibytes.util.test.coroutine.clearBlockingTest
 import tech.antibytes.util.test.coroutine.resolveMultiBlockCalls
 import tech.antibytes.util.test.coroutine.runBlockingTest
 import tech.antibytes.util.test.mustBe
-import kotlin.js.JsName
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 @RobolectricConfig(manifest = "--none")
 @RunWithRobolectricTestRunner(RobolectricTestRunner::class)
@@ -30,6 +31,7 @@ class SchemaSpec {
 
     @BeforeTest
     fun setup() {
+        clearBlockingTest()
         runBlockingTest {
             db.open()
         }

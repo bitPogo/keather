@@ -53,11 +53,11 @@ internal class ClientProvider(
 
         return RequestBuilderFactory(
             client = client,
-            host = "api.weatherapi.com"
+            host = "api.weatherapi.com",
         ).create().setParameter(
             mapOf(
-                "key" to MainConfig.apiKey
-            )
+                "key" to MainConfig.apiKey,
+            ),
         )
     }
 }

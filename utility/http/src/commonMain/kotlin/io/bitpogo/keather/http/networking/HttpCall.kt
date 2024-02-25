@@ -9,15 +9,14 @@ package io.bitpogo.keather.http.networking
 import io.bitpogo.keather.http.networking.error.HttpError
 import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.request
 
 // This is a Test Concern, however KTor is purely testable in this is is a tradeoff
 class FakeHttpCall<T>(
-    val body: () -> T
+    val body: () -> T,
 ) : NetworkingContract.HttpCall
 
 class HttpCall(
-    val httpStatement: HttpStatement
+    val httpStatement: HttpStatement,
 ) : NetworkingContract.HttpCall
 
 suspend inline fun <reified T : Any> NetworkingContract.HttpCall.receive(): T {

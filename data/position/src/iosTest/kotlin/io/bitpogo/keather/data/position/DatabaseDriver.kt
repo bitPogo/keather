@@ -35,7 +35,7 @@ actual class DatabaseDriver {
                         )
                     }
                 },
-            )
+            ),
         )
     }
 

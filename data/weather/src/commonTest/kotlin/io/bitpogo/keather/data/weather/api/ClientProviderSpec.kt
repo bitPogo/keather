@@ -14,14 +14,14 @@ import io.bitpogo.keather.http.networking.receive
 import io.ktor.client.HttpClient
 import io.ktor.http.ContentType
 import io.ktor.http.parameters
+import kotlin.js.JsName
+import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.ktor.Content
 import tech.antibytes.util.test.ktor.KtorMockClientFactory.createSimpleMockClient
 import tech.antibytes.util.test.mustBe
-import kotlin.js.JsName
-import kotlin.test.Test
 
 // Note this is only a
 class ClientProviderSpec {
@@ -39,8 +39,8 @@ class ClientProviderSpec {
                     "Content-Type" to listOf(
                         ContentType.Application.Json.toString(),
                     ),
-                )
-            )
+                ),
+            ),
         ) {
             url.host mustBe "api.weatherapi.com"
             url.parameters mustBe parameters {

@@ -132,7 +132,7 @@ internal class RequestBuilder internal constructor(
                     path,
                 ),
                 client,
-            )
+            ),
         )
     }
 }

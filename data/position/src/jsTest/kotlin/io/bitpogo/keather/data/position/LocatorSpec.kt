@@ -6,7 +6,6 @@
 
 package io.bitpogo.keather.data.position
 
-import io.bitpogo.keather.data.position.Locator
 import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest

@@ -17,5 +17,5 @@ data class SaveableLocation(
     val region: Region,
     val country: Country,
     val longitude: Longitude,
-    val latitude: Latitude
+    val latitude: Latitude,
 )

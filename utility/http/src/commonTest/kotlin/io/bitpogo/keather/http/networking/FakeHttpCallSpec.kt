@@ -6,14 +6,14 @@
 
 package io.bitpogo.keather.http.networking
 
-import kotlinx.coroutines.test.runTest
-import tech.antibytes.util.test.fulfils
-import tech.antibytes.util.test.mustBe
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
+import kotlinx.coroutines.test.runTest
+import tech.antibytes.util.test.fulfils
+import tech.antibytes.util.test.mustBe
 
-class FakeFakeHttpCallSpec {
+class FakeHttpCallSpec {
     @Test
     @JsName("fn2")
     fun `Given receive is called on a FakeHttpCall it propagates errors`() = runTest {

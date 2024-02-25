@@ -13,12 +13,12 @@ import io.bitpogo.keather.data.weather.model.remote.History
 import io.bitpogo.keather.data.weather.model.remote.RequestLocation
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
+import kotlin.js.JsName
+import kotlin.test.Test
 import kotlinx.coroutines.GlobalScope
 import kotlinx.datetime.Clock
 import tech.antibytes.util.test.coroutine.runBlockingTestInContext
 import tech.antibytes.util.test.fulfils
-import kotlin.js.JsName
-import kotlin.test.Test
 
 // Note this is only a convenience solution...it should actually live in a separate folder
 // so it can be run separately

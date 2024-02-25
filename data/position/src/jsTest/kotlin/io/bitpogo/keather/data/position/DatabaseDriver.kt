@@ -8,7 +8,6 @@ package io.bitpogo.keather.data.position
 
 import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.db.SqlSchema
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -24,8 +23,8 @@ actual class DatabaseDriver {
         mutex.withLock {
             driver = WebWorkerDriver(
                 Worker(
-                    js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
-                )
+                    js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)"""),
+                ),
             )
 
             KeatherDB.Schema.awaitCreate(driver as WebWorkerDriver)

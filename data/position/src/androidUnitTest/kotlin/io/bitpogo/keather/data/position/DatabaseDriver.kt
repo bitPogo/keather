@@ -22,7 +22,7 @@ actual class DatabaseDriver {
         driver = AndroidSqliteDriver(
             schema = KeatherDB.Schema.synchronous(),
             context = app,
-            name = testDatabase
+            name = testDatabase,
         )
     }
 

@@ -8,11 +8,11 @@ package io.bitpogo.keather.data.weather.model.remote
 
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
+import kotlin.js.JsName
+import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.mustBe
-import kotlin.js.JsName
-import kotlin.test.Test
 
 class RequestLocationSpec {
     private val fixture = kotlinFixture()

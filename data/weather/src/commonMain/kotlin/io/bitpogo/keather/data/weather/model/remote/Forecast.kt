@@ -157,7 +157,7 @@ internal data class ForecastDayContainer(
 @Serializable
 internal data class Forecasts(
     @SerialName("forecastday")
-    val forecastDays: List<ForecastDayContainer>
+    val forecastDays: List<ForecastDayContainer>,
 )
 
 @Serializable
@@ -165,5 +165,5 @@ internal data class Forecast(
     val location: Location,
     @SerialName("current")
     val currentDay: Realtime,
-    val forecast: Forecasts
+    val forecast: Forecasts,
 )

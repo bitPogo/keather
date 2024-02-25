@@ -7,8 +7,8 @@
 package io.bitpogo.keather.data.position
 
 import io.bitpogo.keather.entity.Latitude
-import io.bitpogo.keather.entity.Position
 import io.bitpogo.keather.entity.Longitude
+import io.bitpogo.keather.entity.Position
 import io.bitpogo.keather.interactor.repository.locator.LocatorContract
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope

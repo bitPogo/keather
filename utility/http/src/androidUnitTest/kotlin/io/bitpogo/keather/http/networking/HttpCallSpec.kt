@@ -11,12 +11,12 @@ import io.ktor.client.call.NoTransformationFoundException
 import io.ktor.client.statement.HttpStatement
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlin.test.assertFailsWith
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.ktor.KtorMockClientFactory
 import tech.antibytes.util.test.mustBe
-import kotlin.test.assertFailsWith
 
 class HttpCallSpec {
     @Test

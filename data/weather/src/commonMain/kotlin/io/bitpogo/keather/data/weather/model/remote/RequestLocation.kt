@@ -11,7 +11,7 @@ import io.bitpogo.keather.entity.Longitude
 
 data class RequestLocation(
     val longitude: Longitude,
-    val latitude: Latitude
+    val latitude: Latitude,
 ) {
     override fun toString(): String = "${latitude.lat},${longitude.long}"
 }
