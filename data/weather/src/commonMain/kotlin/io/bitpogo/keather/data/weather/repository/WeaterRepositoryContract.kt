@@ -6,9 +6,10 @@
 
 package io.bitpogo.keather.data.weather.repository
 
-import io.bitpogo.keather.data.weather.model.Forecast
-import io.bitpogo.keather.data.weather.model.History
-import io.bitpogo.keather.data.weather.model.RequestLocation
+import io.bitpogo.keather.data.weather.model.local.SaveableForecastDay
+import io.bitpogo.keather.data.weather.model.remote.Forecast
+import io.bitpogo.keather.data.weather.model.remote.History
+import io.bitpogo.keather.data.weather.model.remote.RequestLocation
 import io.bitpogo.keather.http.networking.NetworkingContract
 
 internal interface WeatherRepositoryContract {
@@ -19,5 +20,14 @@ internal interface WeatherRepositoryContract {
     interface Remote {
         suspend fun fetchForecast(location: RequestLocation, until: Long): Forecast
         suspend fun fetchHistory(location: RequestLocation, until: Long): History
+    }
+
+    interface Local {
+        suspend fun fetchLastUpdate(): Long
+        suspend fun setLastUpdate(timestamp: Long)
+        suspend fun fetchForecast(): List<SaveableForecastDay>
+        suspend fun setForecast(days: List<SaveableForecastDay>)
+        suspend fun fetchHistory(): List<SaveableForecastDay>
+        suspend fun setHistory(days: List<SaveableForecastDay>)
     }
 }

@@ -6,16 +6,14 @@
 
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
-import org.jetbrains.kotlin.gradle.model.SourceSet
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
-import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTestFramework
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 import tech.antibytes.gradle.configuration.runtime.AntiBytesMainConfigurationTask
 import tech.antibytes.gradle.configuration.runtime.AntiBytesTestConfigurationTask
 import tech.antibytes.gradle.configuration.sourcesets.iosx
+import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
+import tech.antibytes.gradle.dependency.helper.nodeProductionPackage
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
@@ -23,6 +21,7 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
     alias(antibytesCatalog.plugins.kotlinx.serialization)
 
+    alias(antibytesCatalog.plugins.square.sqldelight)
     alias(antibytesCatalog.plugins.kmock)
 }
 
@@ -107,13 +106,12 @@ kotlin {
                 implementation(antibytesCatalog.testUtils.resourceloader)
             }
         }
-        val commonIntegrationTest by creating
-
         val androidMain by getting {
             dependencies {
                 implementation(antibytesCatalog.jvm.kotlin.stdlib.jdk8)
                 implementation(antibytesCatalog.android.ktor.client)
                 implementation(antibytesCatalog.jvm.ktor.client.okhttp)
+                implementation(antibytesCatalog.android.square.sqldelight.driver)
             }
         }
 
@@ -126,10 +124,19 @@ kotlin {
             }
         }
 
+        val iosMain by getting {
+            dependencies {
+                implementation(antibytesCatalog.common.square.sqldelight.driver.native)
+            }
+        }
+
         val jsMain by getting {
             dependencies {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
+                implementation(antibytesCatalog.js.square.sqldelight.driver)
+                nodeProductionPackage(antibytesCatalog.node.sqlJs)
+                nodeDevelopmentPackage(antibytesCatalog.node.copyWebpackPlugin)
             }
         }
         val jsTest by getting {

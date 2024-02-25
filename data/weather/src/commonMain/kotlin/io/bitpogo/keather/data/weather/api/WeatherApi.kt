@@ -6,9 +6,9 @@
 
 package io.bitpogo.keather.data.weather.api
 
-import io.bitpogo.keather.data.weather.model.Forecast
-import io.bitpogo.keather.data.weather.model.History
-import io.bitpogo.keather.data.weather.model.RequestLocation
+import io.bitpogo.keather.data.weather.model.remote.Forecast
+import io.bitpogo.keather.data.weather.model.remote.History
+import io.bitpogo.keather.data.weather.model.remote.RequestLocation
 import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive

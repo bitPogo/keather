@@ -30,7 +30,7 @@ pluginManagement {
 }
 
 plugins {
-    id("tech.antibytes.gradle.dependency.settings") version "288f8da"
+    id("tech.antibytes.gradle.dependency.settings") version "988d949"
 }
 
 includeBuild("setup")
@@ -96,8 +96,8 @@ include(
 include(
     ":interactor:repository",
     "data:weather",
-    ":data:locator",
-    ":data:locator:Locator",
+    ":data:position",
+    ":data:position:Locator",
 )
 
 // Domain
