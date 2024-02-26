@@ -6,16 +6,16 @@
 
 package io.bitpogo.keather.data.weather.api
 
-import io.bitpogo.keather.data.weather.model.remote.Forecast
-import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestPosition
+import io.bitpogo.keather.data.weather.model.api.Forecast
+import io.bitpogo.keather.data.weather.model.api.History
+import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive
 
 internal class WeatherApi(
     private val requestBuilder: NetworkingContract.RequestBuilder,
-) : WeatherRepositoryContract.Remote {
+) : WeatherRepositoryContract.Api {
     // q = Latitude and Longitude
     private suspend inline fun <reified T : Any> fetch(
         location: RequestPosition,

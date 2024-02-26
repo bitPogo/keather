@@ -18,19 +18,3 @@ data class Position(
     val latitude: Latitude,
     val longitude: Longitude,
 )
-
-@JvmInline
-value class Name(val name: Double)
-
-@JvmInline
-value class Region(val region: Double)
-
-@JvmInline
-value class Country(val country: Double)
-
-data class Location(
-    val name: Name,
-    val region: Region,
-    val country: Country,
-    val position: Position,
-)

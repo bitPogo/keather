@@ -48,6 +48,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(antibytesCatalog.common.kotlinx.coroutines.core)
                 implementation(projects.entity)
             }
         }

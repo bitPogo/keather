@@ -139,6 +139,7 @@ kotlin {
                 implementation(antibytesCatalog.js.square.sqldelight.driver)
                 nodeProductionPackage(antibytesCatalog.node.sqlJs)
                 nodeDevelopmentPackage(antibytesCatalog.node.copyWebpackPlugin)
+                nodeProductionPackage(antibytesCatalog.node.sqlJsWorker)
             }
         }
         val jsTest by getting {
@@ -195,8 +196,8 @@ tasks.withType(Test::class.java) {
 }
 
 tasks.withType(KotlinCompile::class.java) {
-    dependsOn(provideConfig, provideTestConfig, prepareJsTest)
-    mustRunAfter(provideConfig, provideTestConfig, prepareJsTest)
+    dependsOn(provideConfig, provideTestConfig)
+    mustRunAfter(provideConfig, provideTestConfig)
 }
 
 tasks.withType(KotlinNativeCompile::class.java) {
@@ -205,14 +206,14 @@ tasks.withType(KotlinNativeCompile::class.java) {
 }
 
 tasks.withType(Kotlin2JsCompile::class.java) {
-    dependsOn(provideConfig, provideTestConfig)
-    mustRunAfter(provideConfig, provideTestConfig)
+    dependsOn(provideConfig, provideTestConfig, prepareJsTest)
+    mustRunAfter(provideConfig, provideTestConfig, prepareJsTest)
 }
 
 sqldelight {
     databases {
         create(SqlDelight.databaseName) {
-            packageName.set(projectPackage)
+            packageName.set("$projectPackage.database")
             srcDirs.setFrom("src/commonMain/database")
             generateAsync = true
 

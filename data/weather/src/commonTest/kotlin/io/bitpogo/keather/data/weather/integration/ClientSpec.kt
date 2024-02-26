@@ -8,9 +8,9 @@ package io.bitpogo.keather.data.weather.integration
 
 import io.bitpogo.keather.data.weather.api.ClientProvider
 import io.bitpogo.keather.data.weather.api.WeatherApi
-import io.bitpogo.keather.data.weather.model.remote.Forecast
-import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestPosition
+import io.bitpogo.keather.data.weather.model.api.Forecast
+import io.bitpogo.keather.data.weather.model.api.History
+import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 import kotlin.js.JsName

@@ -193,7 +193,7 @@ tasks.withType(Test::class.java) {
 sqldelight {
     databases {
         create(SqlDelight.databaseName) {
-            packageName.set(projectPackage)
+            packageName.set("$projectPackage.database")
             srcDirs.setFrom("src/commonMain/database")
             generateAsync = true
         }

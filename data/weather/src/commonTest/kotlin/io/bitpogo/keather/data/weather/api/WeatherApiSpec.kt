@@ -7,9 +7,9 @@
 package io.bitpogo.keather.data.weather.api
 
 import io.bitpogo.keather.data.weather.kmock
-import io.bitpogo.keather.data.weather.model.remote.Forecast
-import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestPosition
+import io.bitpogo.keather.data.weather.model.api.Forecast
+import io.bitpogo.keather.data.weather.model.api.History
+import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.resourceLoader
 import io.bitpogo.keather.entity.Latitude
@@ -109,6 +109,6 @@ class WeatherApiSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils Remote`() {
-        WeatherApi(requestBuilder) fulfils WeatherRepositoryContract.Remote::class
+        WeatherApi(requestBuilder) fulfils WeatherRepositoryContract.Api::class
     }
 }

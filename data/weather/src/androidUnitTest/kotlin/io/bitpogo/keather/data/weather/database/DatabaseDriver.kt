@@ -11,7 +11,6 @@ import androidx.test.core.app.ApplicationProvider
 import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import io.bitpogo.keather.data.weather.KeatherDB
 
 actual class DatabaseDriver {
     private var driver: SqlDriver? = null

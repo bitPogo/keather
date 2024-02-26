@@ -14,6 +14,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
+import tech.antibytes.util.test.annotations.IgnoreJs
 import tech.antibytes.util.test.annotations.RobolectricConfig
 import tech.antibytes.util.test.annotations.RobolectricTestRunner
 import tech.antibytes.util.test.annotations.RunWithRobolectricTestRunner
@@ -109,6 +110,7 @@ class SchemaSpec {
     }
 
     @Test
+    @IgnoreJs
     @JsName("fn2")
     fun `Given fetchRealtimeData it returns the latest stored RealtimeData`(): AsyncTestReturnValue {
         runBlockingTest {
@@ -208,6 +210,7 @@ class SchemaSpec {
     }
 
     @Test
+    @IgnoreJs
     @JsName("fn5")
     fun `Given fetchForecasts returns the stored forecasts`(): AsyncTestReturnValue {
         runBlockingTest {

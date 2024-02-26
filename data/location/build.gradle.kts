@@ -78,6 +78,7 @@ kotlin {
                 implementation(antibytesCatalog.common.kotlin.stdlib)
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
                 implementation(projects.data.position)
+                implementation(projects.entity)
             }
         }
         val commonTest by getting {
@@ -146,7 +147,7 @@ tasks.withType(Test::class.java) {
 sqldelight {
     databases {
         create(databaseName) {
-            packageName.set(projectPackage)
+            packageName.set("$projectPackage.database")
             srcDirs.setFrom("src/commonMain/database")
             generateAsync = true
             dependencies {

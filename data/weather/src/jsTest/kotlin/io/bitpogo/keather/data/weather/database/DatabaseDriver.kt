@@ -9,7 +9,6 @@ package io.bitpogo.keather.data.weather.database
 import app.cash.sqldelight.async.coroutines.awaitCreate
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.worker.WebWorkerDriver
-import io.bitpogo.keather.data.weather.KeatherDB
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.w3c.dom.Worker
