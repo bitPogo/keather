@@ -74,7 +74,7 @@ fetchRealtimeData:
 ;
 
 addForecast:
-    INSERT
+    INSERT OR REPLACE
     INTO Forecast(
         timestamp,
         maximumTemperatureInCelsius,
@@ -93,7 +93,7 @@ fetchForecasts:
 
 
 addHistoricData:
-    INSERT
+    INSERT OR REPLACE
     INTO History(
         timestamp,
         maximumTemperatureInCelsius,

@@ -6,10 +6,10 @@
 
 package io.bitpogo.keather.data.weather.api
 
+import io.bitpogo.keather.data.weather.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.model.api.Forecast
 import io.bitpogo.keather.data.weather.model.api.History
 import io.bitpogo.keather.data.weather.model.api.RequestPosition
-import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive
 
@@ -21,25 +21,31 @@ internal class WeatherApi(
         location: RequestPosition,
         endpoint: String,
         until: Long,
-    ): T {
-        return requestBuilder.addParameter(
+    ): Result<T> {
+        val request = requestBuilder.addParameter(
             mapOf(
                 "q" to location.toString(),
-                "unixdt" to until,
+                "dt" to until,
             ),
         ).prepare(
             NetworkingContract.Method.GET,
             listOf("v1", "$endpoint.json"),
-        ).receive()
+        )
+
+        return try {
+            Result.success(request.receive())
+        } catch (e: Throwable) {
+            Result.failure(e)
+        }
     }
 
     override suspend fun fetchForecast(
-        location: RequestPosition,
+        position: RequestPosition,
         until: Long,
-    ): Forecast = fetch(location, "forecast", until)
+    ): Result<Forecast> = fetch(position, "forecast", until)
 
     override suspend fun fetchHistory(
-        location: RequestPosition,
+        position: RequestPosition,
         until: Long,
-    ): History = fetch(location, "history", until)
+    ): Result<History> = fetch(position, "history", until)
 }

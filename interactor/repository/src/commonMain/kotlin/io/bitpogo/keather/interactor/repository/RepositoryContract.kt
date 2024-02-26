@@ -11,6 +11,7 @@ import io.bitpogo.keather.entity.HistoricData
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.Position
 import io.bitpogo.keather.entity.RealtimeData
+import io.bitpogo.keather.entity.ReturnState
 import io.bitpogo.keather.entity.Timestamp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -27,11 +28,9 @@ interface RepositoryContract {
 
     interface WeatherRepository {
         suspend fun getLastUpdateTime(scope: CoroutineScope): Deferred<Result<Timestamp>>
-        suspend fun updateRealtimeData(scope: CoroutineScope): Deferred<Result<RealtimeData>>
         suspend fun fetchRealtimeData(scope: CoroutineScope): Deferred<Result<RealtimeData>>
-        suspend fun updateForecast(scope: CoroutineScope): Deferred<Result<List<Forecast>>>
         suspend fun fetchForecast(scope: CoroutineScope): Deferred<Result<List<Forecast>>>
-        suspend fun updateHistoricData(scope: CoroutineScope): Deferred<Result<List<HistoricData>>>
-        suspend fun fetchHistoricData(now: Timestamp, scope: CoroutineScope): Deferred<Result<List<HistoricData>>>
+        suspend fun fetchHistoricData(scope: CoroutineScope): Deferred<Result<List<HistoricData>>>
+        suspend fun updateWeatherData(position: Position, scope: CoroutineScope): Deferred<Result<ReturnState.Success>>
     }
 }

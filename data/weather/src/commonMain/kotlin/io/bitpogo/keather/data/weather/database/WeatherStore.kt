@@ -10,9 +10,9 @@ import app.cash.sqldelight.async.coroutines.awaitAsList
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import io.bitpogo.keather.data.location.LocationQueries
 import io.bitpogo.keather.data.location.model.store.SaveableLocation
+import io.bitpogo.keather.data.weather.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.model.store.SaveableForecast
 import io.bitpogo.keather.data.weather.model.store.SaveableRealtimeData
-import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.entity.ReturnState
 
 internal class WeatherStore(

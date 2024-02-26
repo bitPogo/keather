@@ -6,11 +6,11 @@
 
 package io.bitpogo.keather.data.weather.api
 
+import io.bitpogo.keather.data.weather.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.kmock
 import io.bitpogo.keather.data.weather.model.api.Forecast
 import io.bitpogo.keather.data.weather.model.api.History
 import io.bitpogo.keather.data.weather.model.api.RequestPosition
-import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.resourceLoader
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
@@ -29,6 +29,7 @@ import tech.antibytes.kmock.KMock
 import tech.antibytes.kmock.KMockExperimental
 import tech.antibytes.kmock.verification.assertProxy
 import tech.antibytes.util.test.fulfils
+import tech.antibytes.util.test.mustBe
 import tech.antibytes.util.test.sameAs
 
 @OptIn(KMockExperimental::class)
@@ -55,6 +56,20 @@ class WeatherApiSpec {
     }
 
     @Test
+    @JsName("fn1a")
+    fun `Given fetchForecast it propagates Errors`() = runTest {
+        // Given
+        val until: Long = fixture.fixture()
+        requestBuilder._prepare returns FakeHttpCall { history }
+
+        // When
+        val actual = WeatherApi(requestBuilder).fetchForecast(requestLocation, until)
+
+        // Then
+        actual.isFailure mustBe true
+    }
+
+    @Test
     @JsName("fn1")
     fun `Given fetchForecast it calls the WeatherApi`() = runTest {
         // Given
@@ -65,12 +80,12 @@ class WeatherApiSpec {
         val actual = WeatherApi(requestBuilder).fetchForecast(requestLocation, until)
 
         // Then
-        actual sameAs forecast
+        actual.getOrNull() sameAs forecast
         assertProxy {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "unixdt" to until,
+                    "dt" to until,
                 ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
@@ -91,12 +106,12 @@ class WeatherApiSpec {
         val actual = WeatherApi(requestBuilder).fetchHistory(requestLocation, until)
 
         // Then
-        actual sameAs history
+        actual.getOrNull() sameAs history
         assertProxy {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "unixdt" to until,
+                    "dt" to until,
                 ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
@@ -104,6 +119,20 @@ class WeatherApiSpec {
                 listOf("v1", "history.json"),
             )
         }
+    }
+
+    @Test
+    @JsName("fn2a")
+    fun `Given fetchHistory it propagates Errors`() = runTest {
+        // Given
+        val until: Long = fixture.fixture()
+        requestBuilder._prepare returns FakeHttpCall { forecast }
+
+        // When
+        val actual = WeatherApi(requestBuilder).fetchHistory(requestLocation, until)
+
+        // Then
+        actual.isFailure mustBe true
     }
 
     @Test

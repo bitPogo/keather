@@ -21,4 +21,4 @@ value class TemperatureInCelsius(val temperature: Double)
 value class PrecipitationInMillimeter(val precipitation: Double)
 
 @JvmInline
-value class Possibility(val possibility: Int)
+value class Possibility(val possibility: Long)

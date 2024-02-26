@@ -263,6 +263,50 @@ class SchemaSpec {
     }
 
     @Test
+    @IgnoreJs
+    @JsName("fn5a")
+    fun `Given fetchForecasts is called can store the same data multible times forecasts`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            val forecast1 = Forecast(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+
+            // When
+            db.dataBase.weatherQueries.addForecast(
+                forecast1.timestamp,
+                forecast1.maximumTemperatureInCelsius,
+                forecast1.minimumTemperatureInCelsius,
+                forecast1.averageTemperatureInCelsius,
+                forecast1.maximumWindSpeedInKilometerPerHour,
+                forecast1.precipitationInMillimeter,
+                forecast1.rainPossibility,
+            )
+            db.dataBase.weatherQueries.addForecast(
+                forecast1.timestamp,
+                forecast1.maximumTemperatureInCelsius,
+                forecast1.minimumTemperatureInCelsius,
+                forecast1.averageTemperatureInCelsius,
+                forecast1.maximumWindSpeedInKilometerPerHour,
+                forecast1.precipitationInMillimeter,
+                forecast1.rainPossibility,
+            )
+            val entries = db.dataBase.weatherQueries.fetchForecasts().awaitAsList()
+
+            // Then
+            entries mustBe listOf(forecast1)
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
     @JsName("fn6")
     fun `Given addHistoricData it stores a Forecast`(): AsyncTestReturnValue {
         runBlockingTest {
@@ -300,10 +344,10 @@ class SchemaSpec {
 
     @Test
     @JsName("fn7")
-    fun `Given addHistoricData it stores more than one Forecast`(): AsyncTestReturnValue {
+    fun `Given addHistoricData it stores more than one HistoricData`(): AsyncTestReturnValue {
         runBlockingTest {
             // When
-            db.dataBase.weatherQueries.addForecast(
+            db.dataBase.weatherQueries.addHistoricData(
                 fixture.fixture(),
                 fixture.fixture(),
                 fixture.fixture(),
@@ -312,7 +356,7 @@ class SchemaSpec {
                 fixture.fixture(),
                 fixture.fixture(),
             )
-            db.dataBase.weatherQueries.addForecast(
+            db.dataBase.weatherQueries.addHistoricData(
                 fixture.fixture(),
                 fixture.fixture(),
                 fixture.fixture(),
@@ -336,7 +380,7 @@ class SchemaSpec {
     fun `Given fetchHistoricData returns the stored forecasts`(): AsyncTestReturnValue {
         runBlockingTest {
             // Given
-            val forecast1 = Forecast(
+            val forecast1 = History(
                 fixture.fixture(),
                 fixture.fixture(),
                 fixture.fixture(),
@@ -345,7 +389,7 @@ class SchemaSpec {
                 fixture.fixture(),
                 fixture.fixture(),
             )
-            val forecast2 = Forecast(
+            val forecast2 = History(
                 fixture.fixture(),
                 fixture.fixture(),
                 fixture.fixture(),
@@ -378,6 +422,50 @@ class SchemaSpec {
 
             // Then
             entries mustBe listOf(forecast1, forecast2)
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
+    @IgnoreJs
+    @JsName("fn9")
+    fun `Given it allows storing the same data multible times`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            val forecast1 = History(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+
+            // When
+            db.dataBase.weatherQueries.addHistoricData(
+                forecast1.timestamp,
+                forecast1.maximumTemperatureInCelsius,
+                forecast1.minimumTemperatureInCelsius,
+                forecast1.averageTemperatureInCelsius,
+                forecast1.maximumWindSpeedInKilometerPerHour,
+                forecast1.precipitationInMillimeter,
+                forecast1.rainPossibility,
+            )
+            db.dataBase.weatherQueries.addHistoricData(
+                forecast1.timestamp,
+                forecast1.maximumTemperatureInCelsius,
+                forecast1.minimumTemperatureInCelsius,
+                forecast1.averageTemperatureInCelsius,
+                forecast1.maximumWindSpeedInKilometerPerHour,
+                forecast1.precipitationInMillimeter,
+                forecast1.rainPossibility,
+            )
+            val entries = db.dataBase.weatherQueries.fetchHistoricData().awaitAsList()
+
+            // Then
+            entries mustBe listOf(forecast1)
         }
 
         return resolveMultiBlockCalls()

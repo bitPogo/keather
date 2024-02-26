@@ -14,12 +14,12 @@ import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.mustBe
 
-class RequestLocationSpec {
+class RequestPositionSpec {
     private val fixture = kotlinFixture()
 
     @Test
     @JsName("fn0")
-    fun `Given a RequestLocation it serializes always to latitude longitude`() {
+    fun `Given a RequestPosition it serializes always to latitude longitude`() {
         // Given
         val location = RequestPosition(Longitude(fixture.fixture()), Latitude(fixture.fixture()))
 

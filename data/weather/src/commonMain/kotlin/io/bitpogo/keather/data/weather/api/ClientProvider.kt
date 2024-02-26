@@ -6,8 +6,8 @@
 
 package io.bitpogo.keather.data.weather.api
 
+import io.bitpogo.keather.data.weather.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.config.MainConfig
-import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.http.networking.ClientConfigurator
 import io.bitpogo.keather.http.networking.HttpErrorMapper
 import io.bitpogo.keather.http.networking.NetworkingContract

@@ -4,7 +4,7 @@
  * Use of this source code is governed by Apache v2.0
  */
 
-package io.bitpogo.keather.data.weather.repository
+package io.bitpogo.keather.data.weather
 
 import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.data.weather.model.api.Forecast
@@ -21,8 +21,8 @@ internal interface WeatherRepositoryContract {
     }
 
     interface Api {
-        suspend fun fetchForecast(location: RequestPosition, until: Long): Forecast
-        suspend fun fetchHistory(location: RequestPosition, until: Long): History
+        suspend fun fetchForecast(position: RequestPosition, until: Long): Result<Forecast>
+        suspend fun fetchHistory(position: RequestPosition, until: Long): Result<History>
     }
 
     // Note: we cloud make even more convenient by couple Forecasts/History with positions and make a new Trigger

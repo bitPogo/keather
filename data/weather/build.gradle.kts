@@ -92,6 +92,7 @@ kotlin {
                 implementation(projects.utility.http)
                 implementation(projects.data.location)
                 implementation(projects.data.position)
+                implementation(projects.interactor.repository)
             }
         }
         val commonTest by getting {
