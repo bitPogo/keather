@@ -11,6 +11,10 @@ import io.bitpogo.keather.data.position.PositionRepositoryContract
 import io.bitpogo.keather.data.position.model.store.SaveablePosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
+import kotlin.js.JsName
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.annotations.RobolectricConfig
@@ -22,10 +26,6 @@ import tech.antibytes.util.test.coroutine.resolveMultiBlockCalls
 import tech.antibytes.util.test.coroutine.runBlockingTest
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe
-import kotlin.js.JsName
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 @RobolectricConfig(manifest = "--none")
 @RunWithRobolectricTestRunner(RobolectricTestRunner::class)

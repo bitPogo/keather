@@ -6,7 +6,6 @@
 
 package io.bitpogo.keather.data.position.database
 
-import app.cash.sqldelight.async.coroutines.awaitAsOne
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import io.bitpogo.keather.data.position.Position as DTO
 import io.bitpogo.keather.data.position.PositionQueries // <-- this should be an interface
@@ -16,19 +15,19 @@ import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 
 internal class PositionStore(
-    private val queries: PositionQueries
+    private val queries: PositionQueries,
 ) : PositionRepositoryContract.Store {
     override suspend fun savePosition(position: SaveablePosition) {
         return queries.set(
             longitude = position.longitude.long,
-            latitude = position.latitude.lat
+            latitude = position.latitude.lat,
         )
     }
 
     private fun DTO.map(): SaveablePosition {
         return SaveablePosition(
             longitude = Longitude(longitude),
-            latitude = Latitude(latitude)
+            latitude = Latitude(latitude),
         )
     }
 

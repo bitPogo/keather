@@ -9,9 +9,9 @@ package io.bitpogo.keather.data.position.device
 import io.bitpogo.keather.data.position.PositionRepositoryContract
 import io.bitpogo.keather.data.position.locator.AppleLocatorContractProtocol
 import io.bitpogo.keather.data.position.locator.LocationResultContractProtocol
+import io.bitpogo.keather.data.position.model.store.SaveablePosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
-import io.bitpogo.keather.entity.Position
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
@@ -21,12 +21,12 @@ import kotlinx.coroutines.launch
 internal class Locator(
     private val appleLocator: AppleLocatorContractProtocol,
 ) : PositionRepositoryContract.Locator {
-    private fun LocationResultContractProtocol.resolveLocation(): Result<Position> {
+    private fun LocationResultContractProtocol.resolveLocation(): Result<SaveablePosition> {
         val error = this.error()
         return if (error == null) {
             val deviceLocation = this.success()!!
             Result.success(
-                Position(
+                SaveablePosition(
                     longitude = Longitude(deviceLocation.longitude()),
                     latitude = Latitude(deviceLocation.latitude()),
                 ),
@@ -36,12 +36,12 @@ internal class Locator(
         }
     }
 
-    private fun LocationResultContractProtocol?.mapWrapper(): Result<Position> {
+    private fun LocationResultContractProtocol?.mapWrapper(): Result<SaveablePosition> {
         return this?.resolveLocation() ?: Result.failure(IllegalStateException())
     }
 
-    override suspend fun fetchPosition(): Result<Position> = coroutineScope {
-        val position = Channel<Result<Position>>()
+    override suspend fun fetchPosition(): Result<SaveablePosition> = coroutineScope {
+        val position = Channel<Result<SaveablePosition>>()
 
         appleLocator.locateWithCallback { locationWrapper ->
             launch {

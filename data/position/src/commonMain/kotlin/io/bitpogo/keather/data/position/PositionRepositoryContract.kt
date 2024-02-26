@@ -7,11 +7,10 @@
 package io.bitpogo.keather.data.position
 
 import io.bitpogo.keather.data.position.model.store.SaveablePosition
-import io.bitpogo.keather.entity.Position
 
 internal interface PositionRepositoryContract {
     fun interface Locator {
-        suspend fun fetchPosition(): Result<Position>
+        suspend fun fetchPosition(): Result<SaveablePosition>
     }
 
     interface Store {

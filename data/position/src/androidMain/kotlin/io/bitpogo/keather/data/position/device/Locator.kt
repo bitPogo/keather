@@ -14,9 +14,9 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import io.bitpogo.keather.data.position.PositionRepositoryContract
+import io.bitpogo.keather.data.position.model.store.SaveablePosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
-import io.bitpogo.keather.entity.Position
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -57,17 +57,17 @@ internal class Locator(
         }
     }
 
-    private fun toLocation(wrappedDto: Result<DTO>): Result<Position> {
+    private fun toLocation(wrappedDto: Result<DTO>): Result<SaveablePosition> {
         return wrappedDto.map { dto ->
-            Position(
-                Latitude(dto.latitude),
-                Longitude(dto.longitude),
+            SaveablePosition(
+                latitude = Latitude(dto.latitude),
+                longitude = Longitude(dto.longitude),
             )
         }
     }
 
     @SuppressLint("MissingPermission")
-    override suspend fun fetchPosition(): Result<Position> {
+    override suspend fun fetchPosition(): Result<SaveablePosition> {
         return fetchLocation {
             getCurrentLocation(LOCATION_REQUEST, null)
         }.run(::toLocation)

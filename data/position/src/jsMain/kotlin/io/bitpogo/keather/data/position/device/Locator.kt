@@ -7,9 +7,9 @@
 package io.bitpogo.keather.data.position.device
 
 import io.bitpogo.keather.data.position.PositionRepositoryContract
+import io.bitpogo.keather.data.position.model.store.SaveablePosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
-import io.bitpogo.keather.entity.Position
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -18,14 +18,17 @@ import web.geolocation.Geolocation
 internal class Locator(
     private val geolocation: Geolocation?,
 ) : PositionRepositoryContract.Locator {
-    private suspend fun resolveLocation(): Result<Position> = coroutineScope {
-        val position = Channel<Result<Position>>()
+    private suspend fun resolveLocation(): Result<SaveablePosition> = coroutineScope {
+        val position = Channel<Result<SaveablePosition>>()
         geolocation!!.getCurrentPosition(
             successCallback = { success ->
                 launch {
                     position.send(
                         Result.success(
-                            Position(Latitude(success.coords.latitude), Longitude(success.coords.longitude)),
+                            SaveablePosition(
+                                latitude = Latitude(success.coords.latitude),
+                                longitude = Longitude(success.coords.longitude),
+                            ),
                         ),
                     )
                 }
@@ -39,7 +42,7 @@ internal class Locator(
         return@coroutineScope position.receive()
     }
 
-    override suspend fun fetchPosition(): Result<Position> {
+    override suspend fun fetchPosition(): Result<SaveablePosition> {
         return if (geolocation == null || geolocation == undefined) {
             Result.failure(IllegalStateException())
         } else {
