@@ -11,6 +11,10 @@ import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.entity.Country
 import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
+import kotlin.js.JsName
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.annotations.RobolectricConfig
@@ -20,12 +24,8 @@ import tech.antibytes.util.test.coroutine.AsyncTestReturnValue
 import tech.antibytes.util.test.coroutine.clearBlockingTest
 import tech.antibytes.util.test.coroutine.resolveMultiBlockCalls
 import tech.antibytes.util.test.coroutine.runBlockingTest
-import kotlin.js.JsName
-import kotlin.test.Test
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 
 // Note since sqldelight 2.x the QueryInterfaces are gon...which is bad
 @RobolectricConfig(manifest = "--none")

@@ -6,7 +6,6 @@
 
 package io.bitpogo.keather.data.location.database
 
-import app.cash.sqldelight.async.coroutines.awaitAsOne
 import app.cash.sqldelight.async.coroutines.awaitAsOneOrNull
 import io.bitpogo.keather.data.location.Location as DTO
 import io.bitpogo.keather.data.location.LocationQueries
@@ -17,7 +16,7 @@ import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
 
 internal class LocationStore(
-    private val queries: LocationQueries
+    private val queries: LocationQueries,
 ) : LocationRepositoryContract.Store {
     private fun DTO.toSaveableLocation(): SaveableLocation {
         return SaveableLocation(
