@@ -10,7 +10,7 @@ import io.bitpogo.keather.data.weather.api.ClientProvider
 import io.bitpogo.keather.data.weather.api.WeatherApi
 import io.bitpogo.keather.data.weather.model.remote.Forecast
 import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestLocation
+import io.bitpogo.keather.data.weather.model.remote.RequestPosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 import kotlin.js.JsName
@@ -28,7 +28,7 @@ class ClientSpec {
     fun `Given Client it resolves a Forecast`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
         val future = Clock.System.now().epochSeconds + DAY
         val forecast = WeatherApi(ClientProvider().provide()).fetchForecast(
-            RequestLocation(Longitude(13.3777), Latitude(52.5162)),
+            RequestPosition(Longitude(13.3777), Latitude(52.5162)),
             future,
         )
 
@@ -40,7 +40,7 @@ class ClientSpec {
     fun `Given Client it resolves History`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
         val future = Clock.System.now().epochSeconds - DAY
         val forecast = WeatherApi(ClientProvider().provide()).fetchHistory(
-            RequestLocation(Longitude(13.3777), Latitude(52.5162)),
+            RequestPosition(Longitude(13.3777), Latitude(52.5162)),
             future,
         )
 

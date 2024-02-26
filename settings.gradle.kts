@@ -95,8 +95,8 @@ include(
 // DataLayer
 include(
     ":interactor:repository",
-    "data:weather",
-    "data:location",
+    ":data:weather",
+    ":data:location",
     ":data:position",
     ":data:position:Locator",
 )

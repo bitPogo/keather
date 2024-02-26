@@ -12,15 +12,13 @@ contains:
     )
 ;
 
-set:
-    INSERT INTO Position(longitude, latitude)
-    VALUES (:long, :lat)
-;
-
-clear:
+set {
     DELETE
-    FROM Position
-;
+    FROM Position;
+
+    INSERT INTO Position(longitude, latitude)
+    VALUES (?, ?);
+}
 
 fetch:
     SELECT *

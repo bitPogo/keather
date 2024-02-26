@@ -82,7 +82,7 @@ class SchemaSpec {
             val region: String = fixture.fixture()
 
             // When
-            db.dataBase.positionQueries.set(long = longitude, lat = latitude)
+            db.dataBase.positionQueries.set(longitude = longitude, latitude = latitude)
             db.dataBase.locationQueries.set(
                 longitude = longitude,
                 latitude = latitude,
@@ -91,8 +91,8 @@ class SchemaSpec {
                 country = country,
             )
             val hasEntry = db.dataBase.locationQueries.contains(
-                long = longitude,
-                lat = latitude,
+                longitude = longitude,
+                latitude = latitude,
             ).awaitAsOne()
 
             // Then
@@ -118,7 +118,7 @@ class SchemaSpec {
             val region: String = fixture.fixture()
 
             // When
-            db.dataBase.positionQueries.set(long = longitude, lat = latitude)
+            db.dataBase.positionQueries.set(longitude = longitude, latitude = latitude)
             db.dataBase.locationQueries.set(
                 longitude = longitude,
                 latitude = latitude,
@@ -126,10 +126,13 @@ class SchemaSpec {
                 region = region,
                 country = country,
             )
-            db.dataBase.positionQueries.clear()
+            db.dataBase.positionQueries.set(
+                longitude = fixture.fixture(),
+                latitude = fixture.fixture(),
+            )
             val hasEntry = db.dataBase.locationQueries.contains(
-                long = longitude,
-                lat = latitude,
+                longitude = longitude,
+                latitude = latitude,
             ).awaitAsOne()
 
             // Then
@@ -155,7 +158,7 @@ class SchemaSpec {
             val region: String = fixture.fixture()
 
             // When
-            db.dataBase.positionQueries.set(long = longitude, lat = latitude)
+            db.dataBase.positionQueries.set(longitude = longitude, latitude = latitude)
             db.dataBase.locationQueries.set(
                 longitude = longitude,
                 latitude = latitude,

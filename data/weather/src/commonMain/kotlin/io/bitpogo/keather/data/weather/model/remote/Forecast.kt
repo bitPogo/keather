@@ -14,7 +14,7 @@ internal data class ForecastHour(
     @SerialName("time")
     val time: String,
     @SerialName("time_epoch")
-    val timeStamp: Long,
+    val timestamp: Long,
     @SerialName("temp_c")
     val temperatureInCelsius: Double,
     @SerialName("temp_f")
@@ -146,7 +146,7 @@ internal data class ForecastDay(
 internal data class ForecastDayContainer(
     val date: String,
     @SerialName("date_epoch")
-    val timeStamp: Long,
+    val timestamp: Long,
     val day: ForecastDay,
     @SerialName("hour")
     val hours: List<ForecastHour>,

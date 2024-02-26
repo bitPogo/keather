@@ -21,7 +21,7 @@ class RequestLocationSpec {
     @JsName("fn0")
     fun `Given a RequestLocation it serializes always to latitude longitude`() {
         // Given
-        val location = RequestLocation(Longitude(fixture.fixture()), Latitude(fixture.fixture()))
+        val location = RequestPosition(Longitude(fixture.fixture()), Latitude(fixture.fixture()))
 
         // When
         val actual = location.toString()

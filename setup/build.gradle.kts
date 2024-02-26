@@ -44,6 +44,7 @@ dependencies {
     implementation(antibytesCatalog.gradle.antibytes.publishingConfiguration)
     implementation(antibytesCatalog.gradle.antibytes.quality)
     implementation(antibytesCatalog.gradle.agp)
+    implementation(antibytesCatalog.gradle.square.sqldelight) // https://github.com/cashapp/sqldelight/issues/2438
     api(antibytesCatalog.gradle.antibytes.runtimeConfig)
 }
 

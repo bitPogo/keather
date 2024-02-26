@@ -18,7 +18,7 @@ contains:
     SELECT EXISTS(
         SELECT 1
         FROM Location
-        WHERE longitude = :long AND latitude = :lat
+        WHERE longitude = :longitude AND latitude = :latitude
     )
 ;
 

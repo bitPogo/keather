@@ -22,7 +22,7 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
     alias(antibytesCatalog.plugins.gradle.antibytes.coverage)
 
-    alias(antibytesCatalog.plugins.square.sqldelight)
+    id(antibytesCatalog.plugins.square.sqldelight.get().pluginId)
     alias(antibytesCatalog.plugins.kmock)
 }
 

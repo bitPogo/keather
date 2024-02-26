@@ -3,7 +3,6 @@
  *
  * Use of this source code is governed by Apache v2.0
  */
-
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
@@ -14,6 +13,7 @@ import tech.antibytes.gradle.configuration.runtime.AntiBytesTestConfigurationTas
 import tech.antibytes.gradle.configuration.sourcesets.iosx
 import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
 import tech.antibytes.gradle.dependency.helper.nodeProductionPackage
+import tech.antibytes.gradle.project.config.database.SqlDelight
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
@@ -21,7 +21,7 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
     alias(antibytesCatalog.plugins.kotlinx.serialization)
 
-    alias(antibytesCatalog.plugins.square.sqldelight)
+    id(antibytesCatalog.plugins.square.sqldelight.get().pluginId)
     alias(antibytesCatalog.plugins.kmock)
 }
 
@@ -90,6 +90,8 @@ kotlin {
 
                 implementation(projects.entity)
                 implementation(projects.utility.http)
+                implementation(projects.data.location)
+                implementation(projects.data.position)
             }
         }
         val commonTest by getting {
@@ -205,4 +207,18 @@ tasks.withType(KotlinNativeCompile::class.java) {
 tasks.withType(Kotlin2JsCompile::class.java) {
     dependsOn(provideConfig, provideTestConfig)
     mustRunAfter(provideConfig, provideTestConfig)
+}
+
+sqldelight {
+    databases {
+        create(SqlDelight.databaseName) {
+            packageName.set(projectPackage)
+            srcDirs.setFrom("src/commonMain/database")
+            generateAsync = true
+
+            dependencies {
+                dependency(projects.data.location)
+            }
+        }
+    }
 }

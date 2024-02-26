@@ -7,7 +7,6 @@
 package io.bitpogo.keather.data.position
 
 import app.cash.sqldelight.async.coroutines.awaitAsOne
-import io.bitpogo.keather.data.location.Position
 import kotlin.js.JsName
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -67,16 +66,19 @@ class SchemaSpec {
 
     @Test
     @JsName("fn1")
-    fun `Given remove is called it removes a preexisting dataset`(): AsyncTestReturnValue {
+    fun `Given set is called it sets is called twice it saves only the latest dataset`(): AsyncTestReturnValue {
         runBlockingTest {
             // Given
-            val longitude: Double = fixture.fixture()
-            val latitude: Double = fixture.fixture()
+            val longitude1: Double = fixture.fixture()
+            val latitude1: Double = fixture.fixture()
+
+            val longitude2: Double = fixture.fixture()
+            val latitude2: Double = fixture.fixture()
 
             // When
-            db.dataBase.positionQueries.set(longitude, latitude)
-            db.dataBase.positionQueries.clear()
-            val hasEntry = db.dataBase.positionQueries.contains(longitude, latitude).awaitAsOne()
+            db.dataBase.positionQueries.set(longitude1, latitude1)
+            db.dataBase.positionQueries.set(longitude2, latitude2)
+            val hasEntry = db.dataBase.positionQueries.contains(longitude1, latitude1).awaitAsOne()
 
             // Then
             try {

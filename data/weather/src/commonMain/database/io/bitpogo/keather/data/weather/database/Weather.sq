@@ -1,0 +1,69 @@
+CREATE TABLE IF NOT EXISTS Realtime (
+   timestamp INTEGER NOT NULL PRIMARY KEY UNIQUE,
+   temperatureInCelsius REAL NOT NULL,
+   precipitationInMillimeter REAL NOT NULL,
+   windSpeedInKilometerPerHour REAL NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Forecast (
+    timestamp INTEGER NOT NULL PRIMARY KEY UNIQUE,
+    maximumTemperatureInCelsius REAL NOT NULL,
+    minimumTemperatureInCelsius REAL NOT NULL,
+    averageTemperatureInCelsius REAL NOT NULL,
+    maximumWindSpeedInKilometerPerHour REAL NOT NULL,
+    precipitationInMillimeter REAL NOT NULL,
+    rainPossibility INTEGER NOT NULL
+);
+
+containsRealtimeData:
+    SELECT EXISTS(
+        SELECT 1
+        FROM Realtime
+        WHERE timestamp = :timestamp
+    )
+;
+
+containsForecast:
+    SELECT EXISTS(
+        SELECT 1
+        FROM Forecast
+        WHERE timestamp = :timestamp
+    )
+;
+
+countForecast:
+    SELECT COUNT (timestamp)
+    FROM Forecast
+;
+
+setRealtimeData {
+    DELETE
+    FROM Realtime;
+
+    INSERT
+    INTO Realtime(timestamp, temperatureInCelsius, precipitationInMillimeter, windSpeedInKilometerPerHour)
+    VALUES (?, ?, ?, ?);
+}
+
+fetchRealtimeData:
+    SELECT *
+    FROM Realtime
+;
+
+addForecast:
+    INSERT
+    INTO Forecast(
+        timestamp,
+        maximumTemperatureInCelsius,
+        minimumTemperatureInCelsius,
+        averageTemperatureInCelsius,
+        maximumWindSpeedInKilometerPerHour,
+        precipitationInMillimeter,
+        rainPossibility)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+;
+
+fetchForecasts:
+    SELECT *
+    FROM Forecast
+;

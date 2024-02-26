@@ -6,8 +6,8 @@
 
 package io.bitpogo.keather.data.weather.model.local
 
-internal data class SaveableForecastDay(
-    val timeStamp: Long,
+internal data class SaveableForecast(
+    val timestamp: Long,
     val maximumTemperatureInCelsius: Double,
     val minimumTemperatureInCelsius: Double,
     val averageTemperatureInCelsius: Double,

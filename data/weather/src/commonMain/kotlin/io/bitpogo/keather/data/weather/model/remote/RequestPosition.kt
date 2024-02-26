@@ -9,7 +9,7 @@ package io.bitpogo.keather.data.weather.model.remote
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 
-data class RequestLocation(
+data class RequestPosition(
     val longitude: Longitude,
     val latitude: Latitude,
 ) {

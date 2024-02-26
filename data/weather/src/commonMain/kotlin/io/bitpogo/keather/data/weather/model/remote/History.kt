@@ -14,7 +14,7 @@ internal data class HistoryHour(
     @SerialName("time")
     val time: String,
     @SerialName("time_epoch")
-    val timeStamp: Long,
+    val timestamp: Long,
     @SerialName("temp_c")
     val temperatureInCelsius: Double,
     @SerialName("temp_f")
@@ -138,7 +138,7 @@ internal data class HistoryDay(
 internal data class HistoryDayContainer(
     val date: String,
     @SerialName("date_epoch")
-    val timeStamp: Long,
+    val timestamp: Long,
     val day: HistoryDay,
     @SerialName("hour")
     val hours: List<HistoryHour>,

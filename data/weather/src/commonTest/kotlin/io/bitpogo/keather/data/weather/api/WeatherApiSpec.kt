@@ -9,7 +9,7 @@ package io.bitpogo.keather.data.weather.api
 import io.bitpogo.keather.data.weather.kmock
 import io.bitpogo.keather.data.weather.model.remote.Forecast
 import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestLocation
+import io.bitpogo.keather.data.weather.model.remote.RequestPosition
 import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.resourceLoader
 import io.bitpogo.keather.entity.Latitude
@@ -37,7 +37,7 @@ import tech.antibytes.util.test.sameAs
 )
 class WeatherApiSpec {
     private val fixture = kotlinFixture()
-    private val requestLocation = RequestLocation(
+    private val requestLocation = RequestPosition(
         Longitude(fixture.fixture()),
         Latitude(fixture.fixture()),
     )

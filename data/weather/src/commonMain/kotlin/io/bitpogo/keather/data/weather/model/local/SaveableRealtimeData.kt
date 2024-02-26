@@ -6,7 +6,8 @@
 
 package io.bitpogo.keather.data.weather.model.local
 
-internal data class SaveableRealtime(
+internal data class SaveableRealtimeData(
+    val timestamp: Long,
     val temperatureInCelsius: Double,
     val windSpeedInKilometerPerHour: Double,
     val precipitationInMillimeter: Double,

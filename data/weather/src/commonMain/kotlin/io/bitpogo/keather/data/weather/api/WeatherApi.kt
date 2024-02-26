@@ -8,7 +8,7 @@ package io.bitpogo.keather.data.weather.api
 
 import io.bitpogo.keather.data.weather.model.remote.Forecast
 import io.bitpogo.keather.data.weather.model.remote.History
-import io.bitpogo.keather.data.weather.model.remote.RequestLocation
+import io.bitpogo.keather.data.weather.model.remote.RequestPosition
 import io.bitpogo.keather.data.weather.repository.WeatherRepositoryContract
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive
@@ -18,7 +18,7 @@ internal class WeatherApi(
 ) : WeatherRepositoryContract.Remote {
     // q = Latitude and Longitude
     private suspend inline fun <reified T : Any> fetch(
-        location: RequestLocation,
+        location: RequestPosition,
         endpoint: String,
         until: Long,
     ): T {
@@ -34,12 +34,12 @@ internal class WeatherApi(
     }
 
     override suspend fun fetchForecast(
-        location: RequestLocation,
+        location: RequestPosition,
         until: Long,
     ): Forecast = fetch(location, "forecast", until)
 
     override suspend fun fetchHistory(
-        location: RequestLocation,
+        location: RequestPosition,
         until: Long,
     ): History = fetch(location, "history", until)
 }
