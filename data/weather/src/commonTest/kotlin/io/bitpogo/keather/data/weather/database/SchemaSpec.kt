@@ -470,4 +470,158 @@ class SchemaSpec {
 
         return resolveMultiBlockCalls()
     }
+
+    @Test
+    @JsName("fn10")
+    fun `Given a setRealtimeData is called the historic data gets whiled as well`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            val timestamp: Long = fixture.fixture()
+            val temperatureInCelsius: Double = fixture.fixture()
+            val windSpeedInKilometerPerHour: Double = fixture.fixture()
+            val precipitationInMillimeter: Double = fixture.fixture()
+
+            // When
+            db.dataBase.weatherQueries.addHistoricData(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+
+            // When
+            db.dataBase.weatherQueries.setRealtimeData(
+                timestamp,
+                temperatureInCelsius,
+                precipitationInMillimeter,
+                windSpeedInKilometerPerHour,
+            )
+            val entries = db.dataBase.weatherQueries.countHistoricData().awaitAsOne()
+
+            // Then
+            entries mustBe 0
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
+    @JsName("fn11")
+    fun `Given a setRealtimeData is called the forecasts gets whiled as well`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            val timestamp: Long = fixture.fixture()
+            val temperatureInCelsius: Double = fixture.fixture()
+            val windSpeedInKilometerPerHour: Double = fixture.fixture()
+            val precipitationInMillimeter: Double = fixture.fixture()
+
+            db.dataBase.weatherQueries.addForecast(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+
+            // When
+            db.dataBase.weatherQueries.setRealtimeData(
+                timestamp,
+                temperatureInCelsius,
+                precipitationInMillimeter,
+                windSpeedInKilometerPerHour,
+            )
+            val entries = db.dataBase.weatherQueries.countForecast().awaitAsOne()
+
+            // Then
+            entries mustBe 0
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
+    @JsName("fn12")
+    fun `Given the position changes it earses the RealtimeData`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            val timestamp: Long = fixture.fixture()
+            val temperatureInCelsius: Double = fixture.fixture()
+            val windSpeedInKilometerPerHour: Double = fixture.fixture()
+            val precipitationInMillimeter: Double = fixture.fixture()
+
+            db.dataBase.weatherQueries.setRealtimeData(
+                timestamp,
+                temperatureInCelsius,
+                precipitationInMillimeter,
+                windSpeedInKilometerPerHour,
+            )
+            db.dataBase.positionQueries.set(fixture.fixture(), fixture.fixture())
+
+            val hasEntry = db.dataBase.weatherQueries.containsRealtimeData(timestamp).awaitAsOne()
+
+            // Then
+            try {
+                hasEntry mustBe false
+            } catch (_: Throwable) {
+                hasEntry mustBe 0
+            }
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
+    @JsName("fn13")
+    fun `Given the position changes it earses the Forecasts`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            db.dataBase.weatherQueries.addForecast(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+            db.dataBase.positionQueries.set(fixture.fixture(), fixture.fixture())
+
+            val entries = db.dataBase.weatherQueries.countForecast().awaitAsOne()
+
+            // Then
+            entries mustBe 0
+        }
+
+        return resolveMultiBlockCalls()
+    }
+
+    @Test
+    @JsName("fn15")
+    fun `Given the position changes it earses the historic data`(): AsyncTestReturnValue {
+        runBlockingTest {
+            // Given
+            db.dataBase.weatherQueries.addHistoricData(
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+                fixture.fixture(),
+            )
+            db.dataBase.positionQueries.set(fixture.fixture(), fixture.fixture())
+
+            val entries = db.dataBase.weatherQueries.countHistoricData().awaitAsOne()
+
+            // Then
+            entries mustBe 0
+        }
+
+        return resolveMultiBlockCalls()
+    }
 }

@@ -109,7 +109,7 @@ class SchemaSpec {
 
     @Test
     @JsName("fn3")
-    fun `Given remove is called on a position the location is removed as well`(): AsyncTestReturnValue {
+    fun `Given set is called on a position the location is removed`(): AsyncTestReturnValue {
         runBlockingTest {
             // Given
             val longitude: Double = fixture.fixture()

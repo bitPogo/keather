@@ -25,6 +25,18 @@ CREATE TABLE IF NOT EXISTS History (
     rainPossibility INTEGER NOT NULL
 );
 
+CREATE TRIGGER earse BEFORE INSERT ON Position
+BEGIN
+    DELETE
+    FROM Realtime;
+
+    DELETE
+    FROM Forecast;
+
+    DELETE
+    FROM History;
+END;
+
 containsRealtimeData:
     SELECT EXISTS(
         SELECT 1
@@ -62,6 +74,12 @@ countHistoricData:
 setRealtimeData {
     DELETE
     FROM Realtime;
+
+    DELETE
+    FROM History;
+
+    DELETE
+    FROM Forecast;
 
     INSERT
     INTO Realtime(timestamp, temperatureInCelsius, precipitationInMillimeter, windSpeedInKilometerPerHour)
