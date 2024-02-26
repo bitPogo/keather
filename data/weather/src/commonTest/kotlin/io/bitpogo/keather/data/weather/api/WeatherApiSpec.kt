@@ -22,6 +22,8 @@ import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.ClockMock
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
@@ -45,6 +47,8 @@ class WeatherApiSpec {
     private val requestBuilder: RequestBuilderMock = kmock()
     private val forecast: Forecast = Json.decodeFromString(resourceLoader.load("/fixtures/2dayForecast.json"))
     private val history: History = Json.decodeFromString(resourceLoader.load("/fixtures/2dayHistory.json"))
+    private val clock: ClockMock = kmock()
+    private val now = 1708953253L
 
     @BeforeTest
     fun setUp() {
@@ -53,17 +57,18 @@ class WeatherApiSpec {
         requestBuilder._setBody returns requestBuilder
         requestBuilder._setHeaders returns requestBuilder
         requestBuilder._addParameter returns requestBuilder
+
+        clock._now returns Instant.fromEpochSeconds(now)
     }
 
     @Test
     @JsName("fn1a")
     fun `Given fetchForecast it propagates Errors`() = runTest {
         // Given
-        val until: Long = fixture.fixture()
         requestBuilder._prepare returns FakeHttpCall { history }
 
         // When
-        val actual = WeatherApi(requestBuilder).fetchForecast(requestLocation, until)
+        val actual = WeatherApi(clock, requestBuilder).fetchForecast(requestLocation)
 
         // Then
         actual.isFailure mustBe true
@@ -73,11 +78,10 @@ class WeatherApiSpec {
     @JsName("fn1")
     fun `Given fetchForecast it calls the WeatherApi`() = runTest {
         // Given
-        val until: Long = fixture.fixture()
         requestBuilder._prepare returns FakeHttpCall { forecast }
 
         // When
-        val actual = WeatherApi(requestBuilder).fetchForecast(requestLocation, until)
+        val actual = WeatherApi(clock, requestBuilder).fetchForecast(requestLocation)
 
         // Then
         actual.getOrNull() sameAs forecast
@@ -85,7 +89,8 @@ class WeatherApiSpec {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "dt" to until,
+                    "dt" to now,
+                    "days" to 7, // 1709558053L
                 ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
@@ -99,11 +104,10 @@ class WeatherApiSpec {
     @JsName("fn2")
     fun `Given fetchHistory it calls the WeatherApi`() = runTest {
         // Given
-        val until: Long = fixture.fixture()
         requestBuilder._prepare returns FakeHttpCall { history }
 
         // When
-        val actual = WeatherApi(requestBuilder).fetchHistory(requestLocation, until)
+        val actual = WeatherApi(clock, requestBuilder).fetchHistory(requestLocation)
 
         // Then
         actual.getOrNull() sameAs history
@@ -111,7 +115,8 @@ class WeatherApiSpec {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "dt" to until,
+                    "dt" to 1707743653L,
+                    "unixend_dt" to now,
                 ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
@@ -125,11 +130,10 @@ class WeatherApiSpec {
     @JsName("fn2a")
     fun `Given fetchHistory it propagates Errors`() = runTest {
         // Given
-        val until: Long = fixture.fixture()
         requestBuilder._prepare returns FakeHttpCall { forecast }
 
         // When
-        val actual = WeatherApi(requestBuilder).fetchHistory(requestLocation, until)
+        val actual = WeatherApi(clock, requestBuilder).fetchHistory(requestLocation)
 
         // Then
         actual.isFailure mustBe true
@@ -138,6 +142,6 @@ class WeatherApiSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils Remote`() {
-        WeatherApi(requestBuilder) fulfils WeatherRepositoryContract.Api::class
+        WeatherApi(clock, requestBuilder) fulfils WeatherRepositoryContract.Api::class
     }
 }

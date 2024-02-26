@@ -21,8 +21,8 @@ internal interface WeatherRepositoryContract {
     }
 
     interface Api {
-        suspend fun fetchForecast(position: RequestPosition, until: Long): Result<Forecast>
-        suspend fun fetchHistory(position: RequestPosition, until: Long): Result<History>
+        suspend fun fetchForecast(position: RequestPosition): Result<Forecast>
+        suspend fun fetchHistory(position: RequestPosition): Result<History>
     }
 
     // Note: we cloud make even more convenient by couple Forecasts/History with positions and make a new Trigger

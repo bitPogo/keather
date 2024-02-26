@@ -36,11 +36,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.datetime.Clock
 
 internal class WeatherRepository(
     private val dispatcher: CoroutineDispatcher,
-    private val clock: Clock,
     private val api: WeatherRepositoryContract.Api,
     private val store: WeatherRepositoryContract.Store,
 ) : RepositoryContract.WeatherRepository {
@@ -131,13 +129,12 @@ internal class WeatherRepository(
         scope: CoroutineScope,
     ): Deferred<Result<ReturnState.Success>> = defer(scope, dispatcher) {
         val requestPosition = position.toRequestPosition()
-        val now = clock.now().epochSeconds
 
         val forecasts = async {
-            api.fetchForecast(requestPosition, now + FORECAST).mapSuspendableSuccess(::save)
+            api.fetchForecast(requestPosition).mapSuspendableSuccess(::save)
         }
         val history = async {
-            api.fetchHistory(requestPosition, now - HISTORY).mapSuspendableSuccess(::save)
+            api.fetchHistory(requestPosition).mapSuspendableSuccess(::save)
         }
 
         awaitAll(forecasts, history).map {
@@ -206,10 +203,5 @@ internal class WeatherRepository(
         } else {
             Result.success(forecasts.map(::mapHistoricData))
         }
-    }
-
-    private companion object {
-        const val FORECAST = 604800
-        const val HISTORY = 1209600
     }
 }

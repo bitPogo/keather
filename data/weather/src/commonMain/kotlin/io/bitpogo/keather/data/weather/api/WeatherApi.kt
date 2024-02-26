@@ -12,24 +12,25 @@ import io.bitpogo.keather.data.weather.model.api.History
 import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.http.networking.NetworkingContract
 import io.bitpogo.keather.http.networking.receive
+import kotlinx.datetime.Clock
 
 internal class WeatherApi(
+    private val clock: Clock,
     private val requestBuilder: NetworkingContract.RequestBuilder,
 ) : WeatherRepositoryContract.Api {
     // q = Latitude and Longitude
-    private suspend inline fun <reified T : Any> fetch(
-        location: RequestPosition,
-        endpoint: String,
-        until: Long,
-    ): Result<T> {
+    override suspend fun fetchForecast(
+        position: RequestPosition,
+    ): Result<Forecast> {
         val request = requestBuilder.addParameter(
             mapOf(
-                "q" to location.toString(),
-                "dt" to until,
+                "q" to position.toString(),
+                "unixdt" to clock.now().epochSeconds,
+                "days" to FORECAST_IN_DAYS,
             ),
         ).prepare(
             NetworkingContract.Method.GET,
-            listOf("v1", "$endpoint.json"),
+            listOf("v1", "forecast.json"),
         )
 
         return try {
@@ -39,13 +40,30 @@ internal class WeatherApi(
         }
     }
 
-    override suspend fun fetchForecast(
-        position: RequestPosition,
-        until: Long,
-    ): Result<Forecast> = fetch(position, "forecast", until)
-
     override suspend fun fetchHistory(
         position: RequestPosition,
-        until: Long,
-    ): Result<History> = fetch(position, "history", until)
+    ): Result<History> {
+        val now = clock.now().epochSeconds
+        val request = requestBuilder.addParameter(
+            mapOf(
+                "q" to position.toString(),
+                "unixdt" to now - HISTORY_IN_SECONDS,
+                "unixend_dt" to now,
+            ),
+        ).prepare(
+            NetworkingContract.Method.GET,
+            listOf("v1", "history.json"),
+        )
+
+        return try {
+            Result.success(request.receive())
+        } catch (e: Throwable) {
+            Result.failure(e)
+        }
+    }
+
+    private companion object {
+        const val FORECAST_IN_DAYS = 7
+        const val HISTORY_IN_SECONDS = 1209600
+    }
 }

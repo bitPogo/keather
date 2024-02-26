@@ -34,8 +34,6 @@ import kotlin.test.Test
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
-import kotlinx.datetime.ClockMock
-import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
@@ -55,8 +53,6 @@ class WeatherRepositorySpec {
     private val fixture = kotlinFixture()
     private val api: ApiMock = kmock()
     private val store: StoreMock = kmock(relaxUnitFun = true)
-    private val clock: ClockMock = kmock()
-    private val now = 1708953253L
     private val forecast: ApiForecast = Json.decodeFromString<ApiForecast>(resourceLoader.load("/fixtures/2dayForecast.json")).run {
         copy(
             forecast = forecast.copy(
@@ -129,8 +125,6 @@ class WeatherRepositorySpec {
     fun setup() {
         api._clearMock()
         store._clearMock()
-
-        clock._now returns Instant.fromEpochSeconds(now)
     }
 
     @Test
@@ -142,7 +136,6 @@ class WeatherRepositorySpec {
         // When
         val timestamp = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).getLastUpdateTime(this).await()
@@ -166,7 +159,6 @@ class WeatherRepositorySpec {
         // When
         val timestamp = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).getLastUpdateTime(this).await()
@@ -190,7 +182,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).updateWeatherData(position, this).await()
@@ -215,7 +206,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).updateWeatherData(position, this).await()
@@ -239,7 +229,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).updateWeatherData(position, this).await()
@@ -269,7 +258,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).updateWeatherData(position, this).await()
@@ -280,11 +268,9 @@ class WeatherRepositorySpec {
         verify {
             api._fetchForecast.hasBeenStrictlyCalledWith(
                 RequestPosition(position.longitude, position.latitude),
-                1709558053L,
             )
             api._fetchHistory.hasBeenStrictlyCalledWith(
                 RequestPosition(position.longitude, position.latitude),
-                1707743653L,
             )
             store._setLocation.hasBeenStrictlyCalledWith(location)
             store._setRealtimeData.hasBeenStrictlyCalledWith(realtime)
@@ -303,7 +289,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchRealtimeData(this).await()
@@ -321,7 +306,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchRealtimeData(this).await()
@@ -343,7 +327,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchForecast(this).await()
@@ -361,7 +344,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchForecast(this).await()
@@ -389,7 +371,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchHistoricData(this).await()
@@ -407,7 +388,6 @@ class WeatherRepositorySpec {
         // When
         val data = WeatherRepository(
             StandardTestDispatcher(testScheduler),
-            clock,
             api,
             store,
         ).fetchHistoricData(this).await()
@@ -428,7 +408,6 @@ class WeatherRepositorySpec {
     fun `It fulfils WeatherRepository`() {
         WeatherRepository(
             StandardTestDispatcher(),
-            clock,
             api,
             store,
         ) fulfils RepositoryContract.WeatherRepository::class

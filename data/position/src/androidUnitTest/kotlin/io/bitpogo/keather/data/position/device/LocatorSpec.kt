@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import io.bitpogo.keather.data.position.PositionRepositoryContract
+import io.bitpogo.keather.data.position.model.store.SaveablePosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 import io.mockk.every
@@ -116,9 +117,9 @@ class LocatorSpec {
         val result = Locator(client).fetchPosition()
 
         // Then
-        result.getOrNull() mustBe io.bitpogo.keather.entity.Position(
-            Latitude(lat),
+        result.getOrNull() mustBe SaveablePosition(
             Longitude(long),
+            Latitude(lat),
         )
         locationRequest.captured.priority mustBe Priority.PRIORITY_BALANCED_POWER_ACCURACY
         verify(exactly = 1) { client.getCurrentLocation(any<CurrentLocationRequest>(), null) }

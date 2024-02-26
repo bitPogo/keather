@@ -26,28 +26,22 @@ class ClientSpec {
     @Test
     @JsName("fn0")
     fun `Given Client it resolves a Forecast`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
-        val future = Clock.System.now().epochSeconds + DAY
-        val forecast = WeatherApi(ClientProvider().provide()).fetchForecast(
-            RequestPosition(Longitude(13.3777), Latitude(52.5162)),
-            future,
-        )
+        val forecast = WeatherApi(
+            Clock.System,
+            ClientProvider().provide(),
+        ).fetchForecast(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast fulfils Forecast::class
+        forecast.getOrNull() fulfils Forecast::class
     }
 
     @Test
     @JsName("fn1")
     fun `Given Client it resolves History`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
-        val future = Clock.System.now().epochSeconds - DAY
-        val forecast = WeatherApi(ClientProvider().provide()).fetchHistory(
-            RequestPosition(Longitude(13.3777), Latitude(52.5162)),
-            future,
-        )
+        val forecast = WeatherApi(
+            Clock.System,
+            ClientProvider().provide(),
+        ).fetchHistory(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast fulfils History::class
-    }
-
-    companion object {
-        const val DAY = 86400
+        forecast.getOrNull() fulfils History::class
     }
 }
