@@ -13,29 +13,21 @@ import tech.antibytes.gradle.configuration.runtime.AntiBytesMainConfigurationTas
 import tech.antibytes.gradle.configuration.sourcesets.iosx
 import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
 import tech.antibytes.gradle.dependency.helper.nodeProductionPackage
-import tech.antibytes.gradle.project.config.database.SqlDelight.databaseName
 import tech.antibytes.gradle.versioning.Versioning
 import tech.antibytes.gradle.versioning.api.VersioningConfiguration
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
-    alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
     alias(antibytesCatalog.plugins.gradle.antibytes.coverage)
+    alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
 
-    id(antibytesCatalog.plugins.square.sqldelight.get().pluginId)
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.data.location"
+val projectPackage = "io.bitpogo.keather.interactor"
 
 android {
     namespace = projectPackage
-
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
-    }
 }
 
 kotlin {
@@ -53,15 +45,8 @@ kotlin {
             }
         }
 
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadlessNoSandbox()
-                }
-            }
-        }
+        browser()
     }
-
     iosx()
     ensureAppleDeviceCompatibility()
 
@@ -74,27 +59,33 @@ kotlin {
         }
 
         val commonMain by getting {
+            kotlin.srcDir("${layout.buildDirectory.get().asFile.absolutePath.trimEnd('/')}/generated/antibytes/commonMain/kotlin")
             dependencies {
                 implementation(antibytesCatalog.common.kotlin.stdlib)
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
+                implementation(antibytesCatalog.common.koin.core)
 
-                implementation(projects.domain.repository)
-                implementation(projects.data.position)
                 implementation(projects.entity)
+                implementation(projects.presentation.interactor)
+                implementation(projects.domain.repository)
             }
         }
         val commonTest by getting {
-            kotlin {
-                srcDir("build/generated/antibytes/commonMain/kotlin")
-            }
+            kotlin.srcDir("${layout.buildDirectory.get().asFile.absolutePath.trimEnd('/')}/generated/antibytes/commonTest/kotlin")
             dependencies {
                 implementation(antibytesCatalog.common.test.kotlin.core)
+
+                implementation(antibytesCatalog.kmock)
+                implementation(antibytesCatalog.kfixture)
                 implementation(antibytesCatalog.testUtils.core)
                 implementation(antibytesCatalog.testUtils.annotations)
                 implementation(antibytesCatalog.testUtils.coroutine)
-                implementation(antibytesCatalog.kfixture)
-                implementation(antibytesCatalog.kmock)
-                implementation(antibytesCatalog.common.square.sqldelight.primitiveAdapters)
+                implementation(antibytesCatalog.common.test.turbine)
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation(antibytesCatalog.jvm.kotlin.stdlib.jdk8)
             }
         }
 
@@ -103,15 +94,7 @@ kotlin {
                 implementation(antibytesCatalog.android.test.junit.core)
                 implementation(antibytesCatalog.jvm.test.kotlin.junit4)
                 implementation(antibytesCatalog.android.test.ktx)
-                implementation(antibytesCatalog.jvm.test.mockk)
                 implementation(antibytesCatalog.android.test.robolectric)
-                implementation(antibytesCatalog.android.square.sqldelight.driver)
-            }
-        }
-
-        val iosTest by getting {
-            dependencies {
-                implementation(antibytesCatalog.common.square.sqldelight.driver.native)
             }
         }
 
@@ -119,17 +102,10 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
-                implementation(antibytesCatalog.js.kotlin.wrappers.browser)
-
             }
         }
-
         val jsTest by getting {
             dependencies {
-                implementation(antibytesCatalog.js.square.sqldelight.driver)
-                nodeProductionPackage(antibytesCatalog.node.sqlJs)
-                nodeDevelopmentPackage(antibytesCatalog.node.copyWebpackPlugin)
-                nodeProductionPackage(antibytesCatalog.node.sqlJsWorker)
                 implementation(antibytesCatalog.js.test.kotlin.core)
             }
         }
@@ -138,23 +114,4 @@ kotlin {
 
 kmock {
     rootPackage = projectPackage
-}
-
-tasks.withType(Test::class.java) {
-    testLogging {
-        events(FAILED)
-    }
-}
-
-sqldelight {
-    databases {
-        create(databaseName) {
-            packageName.set("$projectPackage.database")
-            srcDirs.setFrom("src/commonMain/database")
-            generateAsync = true
-            dependencies {
-                dependency(projects.data.position)
-            }
-        }
-    }
 }

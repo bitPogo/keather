@@ -92,7 +92,7 @@ kotlin {
                 implementation(projects.utility.http)
                 implementation(projects.data.location)
                 implementation(projects.data.position)
-                implementation(projects.interactor.repository)
+                implementation(projects.domain.repository)
             }
         }
         val commonTest by getting {

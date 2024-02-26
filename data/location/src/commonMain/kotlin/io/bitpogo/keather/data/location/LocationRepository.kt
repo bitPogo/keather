@@ -34,7 +34,7 @@ internal class LocationRepository(
         )
     }
 
-    override suspend fun fetchLocation(
+    override fun fetchLocation(
         scope: CoroutineScope,
     ): Deferred<Result<Location>> = defer(scope, dispatcher) {
         store.fetchLocation().map(::map)

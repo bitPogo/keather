@@ -52,7 +52,7 @@ internal class WeatherRepository(
         crossinline transform: suspend T.() -> R,
     ): Result<R> = mapCatching { transform(it) }
 
-    override suspend fun getLastUpdateTime(
+    override fun getLastUpdateTime(
         scope: CoroutineScope,
     ): Deferred<Result<Timestamp>> = defer(scope, dispatcher) {
         store.fetchRealtimeData().map { data -> Timestamp(data.timestamp) }
@@ -124,7 +124,7 @@ internal class WeatherRepository(
         return ReturnState.Success
     }
 
-    override suspend fun updateWeatherData(
+    override fun updateWeatherData(
         position: Position,
         scope: CoroutineScope,
     ): Deferred<Result<ReturnState.Success>> = defer(scope, dispatcher) {
@@ -154,7 +154,7 @@ internal class WeatherRepository(
         )
     }
 
-    override suspend fun fetchRealtimeData(
+    override fun fetchRealtimeData(
         scope: CoroutineScope,
     ): Deferred<Result<RealtimeData>> = defer(scope, dispatcher) {
         store.fetchRealtimeData().map(::map)
@@ -172,7 +172,7 @@ internal class WeatherRepository(
         )
     }
 
-    override suspend fun fetchForecast(
+    override fun fetchForecast(
         scope: CoroutineScope,
     ): Deferred<Result<List<Forecast>>> = defer(scope, dispatcher) {
         val forecasts = store.fetchForecasts()
@@ -193,7 +193,7 @@ internal class WeatherRepository(
         )
     }
 
-    override suspend fun fetchHistoricData(
+    override fun fetchHistoricData(
         scope: CoroutineScope,
     ): Deferred<Result<List<HistoricData>>> = defer(scope, dispatcher) {
         val forecasts = store.fetchHistoricData()

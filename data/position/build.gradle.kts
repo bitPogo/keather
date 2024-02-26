@@ -117,7 +117,7 @@ kotlin {
                 implementation(antibytesCatalog.common.kotlin.stdlib)
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
                 implementation(projects.entity)
-                implementation(projects.interactor.repository)
+                implementation(projects.domain.repository)
             }
         }
         val commonTest by getting {

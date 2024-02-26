@@ -94,7 +94,6 @@ include(
 
 // DataLayer
 include(
-    ":interactor:repository",
     ":data:weather",
     ":data:location",
     ":data:position",
@@ -104,6 +103,13 @@ include(
 // Domain
 include(
     ":entity",
+    ":domain",
+    ":domain:repository",
+)
+
+// Presentation
+include(
+    ":presentation:interactor",
 )
 
 buildCache {

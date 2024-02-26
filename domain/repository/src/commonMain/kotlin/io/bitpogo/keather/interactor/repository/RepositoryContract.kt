@@ -23,14 +23,14 @@ interface RepositoryContract {
     }
 
     fun interface LocationRepository {
-        suspend fun fetchLocation(scope: CoroutineScope): Deferred<Result<Location>>
+        fun fetchLocation(scope: CoroutineScope): Deferred<Result<Location>>
     }
 
     interface WeatherRepository {
-        suspend fun getLastUpdateTime(scope: CoroutineScope): Deferred<Result<Timestamp>>
-        suspend fun fetchRealtimeData(scope: CoroutineScope): Deferred<Result<RealtimeData>>
-        suspend fun fetchForecast(scope: CoroutineScope): Deferred<Result<List<Forecast>>>
-        suspend fun fetchHistoricData(scope: CoroutineScope): Deferred<Result<List<HistoricData>>>
-        suspend fun updateWeatherData(position: Position, scope: CoroutineScope): Deferred<Result<ReturnState.Success>>
+        fun getLastUpdateTime(scope: CoroutineScope): Deferred<Result<Timestamp>>
+        fun fetchRealtimeData(scope: CoroutineScope): Deferred<Result<RealtimeData>>
+        fun fetchForecast(scope: CoroutineScope): Deferred<Result<List<Forecast>>>
+        fun fetchHistoricData(scope: CoroutineScope): Deferred<Result<List<HistoricData>>>
+        fun updateWeatherData(position: Position, scope: CoroutineScope): Deferred<Result<ReturnState.Success>>
     }
 }
