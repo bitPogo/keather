@@ -9,6 +9,8 @@ package io.bitpogo.keather.data.location.database
 import io.bitpogo.keather.data.location.LocationRepositoryContract
 import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.entity.Country
+import io.bitpogo.keather.entity.Latitude
+import io.bitpogo.keather.entity.Longitude
 import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
 import kotlin.js.JsName
@@ -27,10 +29,10 @@ import tech.antibytes.util.test.coroutine.runBlockingTest
 import tech.antibytes.util.test.fulfils
 import tech.antibytes.util.test.mustBe
 
-// Note since sqldelight 2.x the QueryInterfaces are gon...which is bad
+// Note since sqldelight 2.x the QueryInterfaces are gone...which is bad
 @RobolectricConfig(manifest = "--none")
 @RunWithRobolectricTestRunner(RobolectricTestRunner::class)
-class DatabaseSpec {
+class LocationStoreSpec {
     private val fixture = kotlinFixture()
     private val db = DatabaseDriver()
 
@@ -72,6 +74,8 @@ class DatabaseSpec {
 
             // Then
             location.getOrNull() mustBe SaveableLocation(
+                longitude = Longitude(longitude),
+                latitude = Latitude(latitude),
                 name = Name(name),
                 region = Region(region),
                 country = Country(country),

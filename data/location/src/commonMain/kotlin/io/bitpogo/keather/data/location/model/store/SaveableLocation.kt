@@ -7,10 +7,14 @@
 package io.bitpogo.keather.data.location.model.store
 
 import io.bitpogo.keather.entity.Country
+import io.bitpogo.keather.entity.Latitude
+import io.bitpogo.keather.entity.Longitude
 import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
 
 data class SaveableLocation(
+    val latitude: Latitude,
+    val longitude: Longitude,
     val name: Name,
     val region: Region,
     val country: Country,

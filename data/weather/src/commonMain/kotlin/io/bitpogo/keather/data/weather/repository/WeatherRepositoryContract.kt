@@ -6,11 +6,13 @@
 
 package io.bitpogo.keather.data.weather.repository
 
+import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.data.weather.model.api.Forecast
 import io.bitpogo.keather.data.weather.model.api.History
 import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.data.weather.model.store.SaveableForecast
-import io.bitpogo.keather.data.weather.model.store.SaveableLocation
+import io.bitpogo.keather.data.weather.model.store.SaveableRealtimeData
+import io.bitpogo.keather.entity.ReturnState
 import io.bitpogo.keather.http.networking.NetworkingContract
 
 internal interface WeatherRepositoryContract {
@@ -23,11 +25,14 @@ internal interface WeatherRepositoryContract {
         suspend fun fetchHistory(location: RequestPosition, until: Long): History
     }
 
+    // Note: we cloud make even more convenient by couple Forecasts/History with positions and make a new Trigger
     interface Store {
-        suspend fun setLocation(location: SaveableLocation)
-        suspend fun fetchForecast(): List<SaveableForecast>
-        suspend fun setForecast(days: List<SaveableForecast>)
-        suspend fun fetchHistory(): List<SaveableForecast>
-        suspend fun setHistory(days: List<SaveableForecast>)
+        suspend fun setLocation(location: SaveableLocation): ReturnState
+        suspend fun fetchForecasts(): List<SaveableForecast>
+        suspend fun setForecasts(forecasts: List<SaveableForecast>)
+        suspend fun fetchHistoricData(): List<SaveableForecast>
+        suspend fun setHistoricData(historicData: List<SaveableForecast>)
+        suspend fun fetchRealtimeData(): Result<SaveableRealtimeData>
+        suspend fun setRealtimeData(data: SaveableRealtimeData)
     }
 }

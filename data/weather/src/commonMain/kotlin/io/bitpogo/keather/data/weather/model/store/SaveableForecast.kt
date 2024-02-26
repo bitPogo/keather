@@ -13,5 +13,5 @@ internal data class SaveableForecast(
     val averageTemperatureInCelsius: Double,
     val maximumWindSpeedInKilometerPerHour: Double,
     val precipitationInMillimeter: Double,
-    val rainPossibility: Int,
+    val rainPossibility: Long,
 )

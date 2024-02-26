@@ -15,6 +15,16 @@ CREATE TABLE IF NOT EXISTS Forecast (
     rainPossibility INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS History (
+    timestamp INTEGER NOT NULL PRIMARY KEY UNIQUE,
+    maximumTemperatureInCelsius REAL NOT NULL,
+    minimumTemperatureInCelsius REAL NOT NULL,
+    averageTemperatureInCelsius REAL NOT NULL,
+    maximumWindSpeedInKilometerPerHour REAL NOT NULL,
+    precipitationInMillimeter REAL NOT NULL,
+    rainPossibility INTEGER NOT NULL
+);
+
 containsRealtimeData:
     SELECT EXISTS(
         SELECT 1
@@ -34,6 +44,19 @@ containsForecast:
 countForecast:
     SELECT COUNT (timestamp)
     FROM Forecast
+;
+
+containsHistoricData:
+    SELECT EXISTS(
+        SELECT 1
+        FROM History
+        WHERE timestamp = :timestamp
+    )
+;
+
+countHistoricData:
+    SELECT COUNT (timestamp)
+    FROM History
 ;
 
 setRealtimeData {
@@ -66,4 +89,23 @@ addForecast:
 fetchForecasts:
     SELECT *
     FROM Forecast
+;
+
+
+addHistoricData:
+    INSERT
+    INTO History(
+        timestamp,
+        maximumTemperatureInCelsius,
+        minimumTemperatureInCelsius,
+        averageTemperatureInCelsius,
+        maximumWindSpeedInKilometerPerHour,
+        precipitationInMillimeter,
+        rainPossibility)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+;
+
+fetchHistoricData:
+    SELECT *
+    FROM History
 ;

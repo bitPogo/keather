@@ -8,7 +8,9 @@ package io.bitpogo.keather.data.location
 
 import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.entity.Country
+import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Location
+import io.bitpogo.keather.entity.Longitude
 import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
 import io.bitpogo.keather.interactor.repository.RepositoryContract
@@ -42,6 +44,8 @@ class LocationRepositorySpec {
     fun `Given fetchLocation it delegates the call to the Store propagates its Result`() = runTest {
         // Given
         val location = SaveableLocation(
+            latitude = Latitude(fixture.fixture()),
+            longitude = Longitude(fixture.fixture()),
             name = Name(fixture.fixture()),
             country = Country(fixture.fixture()),
             region = Region(fixture.fixture()),

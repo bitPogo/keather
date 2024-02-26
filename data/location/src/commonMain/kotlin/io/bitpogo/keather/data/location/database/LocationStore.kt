@@ -12,6 +12,8 @@ import io.bitpogo.keather.data.location.LocationQueries
 import io.bitpogo.keather.data.location.LocationRepositoryContract
 import io.bitpogo.keather.data.location.model.store.SaveableLocation
 import io.bitpogo.keather.entity.Country
+import io.bitpogo.keather.entity.Latitude
+import io.bitpogo.keather.entity.Longitude
 import io.bitpogo.keather.entity.Name
 import io.bitpogo.keather.entity.Region
 
@@ -20,6 +22,8 @@ internal class LocationStore(
 ) : LocationRepositoryContract.Store {
     private fun DTO.toSaveableLocation(): SaveableLocation {
         return SaveableLocation(
+            longitude = Longitude(longitude),
+            latitude = Latitude(latitude),
             name = Name(name),
             region = Region(region),
             country = Country(country),

@@ -7,6 +7,7 @@
 package io.bitpogo.keather.data.weather.database
 
 import android.app.Application
+import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.test.core.app.ApplicationProvider
 import app.cash.sqldelight.async.coroutines.synchronous
 import app.cash.sqldelight.db.SqlDriver
@@ -23,6 +24,11 @@ actual class DatabaseDriver {
             schema = KeatherDB.Schema.synchronous(),
             context = app,
             name = testDatabase,
+            callback = object : AndroidSqliteDriver.Callback(KeatherDB.Schema.synchronous()) {
+                override fun onOpen(db: SupportSQLiteDatabase) {
+                    db.setForeignKeyConstraintsEnabled(true)
+                }
+            },
         )
     }
 

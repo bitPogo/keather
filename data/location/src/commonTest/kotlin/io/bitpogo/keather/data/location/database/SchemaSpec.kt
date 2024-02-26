@@ -15,8 +15,7 @@ import kotlin.test.Test
 import kotlin.test.assertFails
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
-import tech.antibytes.util.test.annotations.IgnoreJs
-import tech.antibytes.util.test.annotations.IgnoreNative
+import tech.antibytes.util.test.annotations.AndroidOnly
 import tech.antibytes.util.test.annotations.RobolectricConfig
 import tech.antibytes.util.test.annotations.RobolectricTestRunner
 import tech.antibytes.util.test.annotations.RunWithRobolectricTestRunner
@@ -46,8 +45,7 @@ class SchemaSpec {
     }
 
     @Test
-    @IgnoreJs
-    @IgnoreNative
+    @AndroidOnly
     @JsName("fn0")
     fun `Given a it will not add a new entry if the position for it is already set`(): AsyncTestReturnValue {
         runBlockingTest {
