@@ -6,10 +6,10 @@
 
 package io.bitpogo.keather.data.location
 
-import io.bitpogo.keather.data.position.model.store.SaveablePosition
+import io.bitpogo.keather.data.location.model.store.SaveableLocation
 
 internal interface LocationRepositoryContract {
     fun interface Store {
-        suspend fun fetchLocation(): Result<SaveablePosition>
+        suspend fun fetchLocation(): Result<SaveableLocation>
     }
 }

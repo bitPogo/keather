@@ -9,13 +9,13 @@ package io.bitpogo.keather.entity
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class Name(val name: Double)
+value class Name(val name: String)
 
 @JvmInline
-value class Region(val region: Double)
+value class Region(val region: String)
 
 @JvmInline
-value class Country(val country: Double)
+value class Country(val country: String)
 
 data class Location(
     val name: Name,
