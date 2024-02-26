@@ -9,7 +9,7 @@ package io.bitpogo.keather.data.position.model.store
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
 
-class SaveablePosition(
+data class SaveablePosition(
     val longitude: Longitude,
     val latitude: Latitude,
 )
