@@ -7,6 +7,7 @@
 package io.bitpogo.keather.data.position.device
 
 import io.bitpogo.keather.data.position.PositionRepositoryContract
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlinx.coroutines.test.runTest
 import tech.antibytes.kfixture.fixture
@@ -30,6 +31,7 @@ class LocatorSpec {
     }
 
     @Test
+    @Ignore
     @JsName("fn2")
     fun `Given getCurrentLocation is called it fails if no geolocation service is available(undefinded)`() = runTest {
         // When

@@ -4,6 +4,7 @@
  * Use of this source code is governed by Apache v2.0
  */
 
+import com.android.build.gradle.internal.ide.kmp.KotlinAndroidSourceSetMarker.Companion.android
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
@@ -116,6 +117,8 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.common.kotlin.stdlib)
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
+                implementation(antibytesCatalog.common.koin.core)
+
                 implementation(projects.entity)
                 implementation(projects.domain.repository)
             }
@@ -138,6 +141,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(antibytesCatalog.android.google.android.playservice.location)
+                implementation(antibytesCatalog.android.koin.androidBinding)
             }
         }
 

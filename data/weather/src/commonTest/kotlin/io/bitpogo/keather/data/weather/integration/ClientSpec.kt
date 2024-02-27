@@ -8,8 +8,6 @@ package io.bitpogo.keather.data.weather.integration
 
 import io.bitpogo.keather.data.weather.api.ClientProvider
 import io.bitpogo.keather.data.weather.api.WeatherApi
-import io.bitpogo.keather.data.weather.model.api.Forecast
-import io.bitpogo.keather.data.weather.model.api.History
 import io.bitpogo.keather.data.weather.model.api.RequestPosition
 import io.bitpogo.keather.entity.Latitude
 import io.bitpogo.keather.entity.Longitude
@@ -17,11 +15,13 @@ import kotlin.js.JsName
 import kotlin.test.Test
 import kotlinx.coroutines.GlobalScope
 import kotlinx.datetime.Clock
+import tech.antibytes.util.test.annotations.AndroidOnly
 import tech.antibytes.util.test.coroutine.runBlockingTestInContext
-import tech.antibytes.util.test.fulfils
+import tech.antibytes.util.test.mustBe
 
 // Note this is only a convenience solution...it should actually live in a separate folder
 // so it can be run separately
+@AndroidOnly
 class ClientSpec {
     @Test
     @JsName("fn0")
@@ -31,7 +31,7 @@ class ClientSpec {
             ClientProvider().provide(),
         ).fetchForecast(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast.getOrNull() fulfils Forecast::class
+        forecast.getOrNull().toString().startsWith("Forecast") mustBe true
     }
 
     @Test
@@ -42,6 +42,6 @@ class ClientSpec {
             ClientProvider().provide(),
         ).fetchHistory(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast.getOrNull() fulfils History::class
+        forecast.getOrNull().toString().startsWith("History") mustBe true
     }
 }

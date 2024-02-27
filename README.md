@@ -12,11 +12,23 @@ Short Title
 
 ## About The Project
 
+### API Key
+In order to be able to use the Api you need to set an API Key as environmental variables - `WEATHER_API`
+To use them in Android studio please make sure you propagate both variables via `launchctl setenv`. See [here](https://issuetracker.google.com/issues/216364005) for more.
+
+### Strange AndroidStudio Errors on sync
+
+That is normal due to the iOS bindings. If you run the tasks by hand you see all is good.
+
+### Don't forget to set permission
+
+The app needs permission for geolocation.
+
 ## Dependencies
 
 ## Additional Requirements
 
-* Android 5.0 (API 21) to Android 13 (API 33)
+* Android 5.0 (API 21) to Android 14 (API 34)
 * [Java 17](https://adoptopenjdk.net/?variant=openjdk17&jvmVariant=hotspot)
 
 ## Changelog

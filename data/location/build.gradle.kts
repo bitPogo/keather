@@ -77,6 +77,7 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.common.kotlin.stdlib)
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
+                implementation(antibytesCatalog.common.koin.core)
 
                 implementation(projects.domain.repository)
                 implementation(projects.data.position)

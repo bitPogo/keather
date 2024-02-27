@@ -7,6 +7,7 @@
 package io.bitpogo.keather.data.position.device
 
 import io.bitpogo.keather.data.position.PositionRepositoryContract
+import io.bitpogo.keather.data.position.locator.AppleLocator
 import io.bitpogo.keather.data.position.locator.AppleLocatorContractProtocol
 import io.bitpogo.keather.data.position.locator.LocationResultContractProtocol
 import io.bitpogo.keather.data.position.model.store.SaveablePosition
@@ -19,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalForeignApi::class)
 internal class Locator(
-    private val appleLocator: AppleLocatorContractProtocol,
+    private val appleLocator: AppleLocatorContractProtocol = AppleLocator(),
 ) : PositionRepositoryContract.Locator {
     private fun LocationResultContractProtocol.resolveLocation(): Result<SaveablePosition> {
         val error = this.error()

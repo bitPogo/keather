@@ -30,7 +30,7 @@ pluginManagement {
 }
 
 plugins {
-    id("tech.antibytes.gradle.dependency.settings") version "2d16671"
+    id("tech.antibytes.gradle.dependency.settings") version "bf5cf3e"
 }
 
 includeBuild("setup")
@@ -45,6 +45,7 @@ dependencyResolutionManagement {
             version("kotlinx-coroutines-core", "1.7.1")
             version("kotlinx-coroutines-test", "1.7.1")
             version("google-android-playservice-location", "21.1.0")
+            version("vico", "1.14.0")
 
             library("kfixture", "tech.antibytes.kfixture", "core").versionRef("kfixture")
             library("testUtils-core", "tech.antibytes.test-utils-kmp", "test-utils").versionRef("testUtils")
@@ -79,6 +80,36 @@ dependencyResolutionManagement {
                 "com.google.android.gms",
                 "play-services-location",
             ).versionRef("google-android-playservice-location")
+            library(
+                "vico-compose-core",
+                "com.patrykandpatrick.vico",
+                "compose",
+            ).versionRef("vico")
+            library(
+                "vico-compose-m2",
+                "com.patrykandpatrick.vico",
+                "compose-m2",
+            ).versionRef("vico")
+            library(
+                "vico-compose-m3",
+                "com.patrykandpatrick.vico",
+                "compose-m3",
+            ).versionRef("vico")
+            library(
+                "vico-core",
+                "com.patrykandpatrick.vico",
+                "core",
+            ).versionRef("vico")
+            library(
+                "vico-views",
+                "com.patrykandpatrick.vico",
+                "views",
+            ).versionRef("vico")
+            library(
+                "compose-material3",
+                "androidx.compose.material3",
+                "material3",
+            ).version("1.2.0")
         }
     }
 }
@@ -99,6 +130,7 @@ include(
     ":data:location",
     ":data:position",
     ":data:position:Locator",
+    ":database",
 )
 
 // Domain
@@ -114,6 +146,10 @@ include(
     ":presentation:interactor",
     ":presentation:ui:store",
 )
+
+// Platform
+// Android
+include(":android")
 
 buildCache {
     fullCache(rootDir)

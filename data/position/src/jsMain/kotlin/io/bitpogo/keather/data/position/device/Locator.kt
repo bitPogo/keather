@@ -14,9 +14,10 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import web.geolocation.Geolocation
+import web.navigator.navigator
 
 internal class Locator(
-    private val geolocation: Geolocation?,
+    private val geolocation: Geolocation? = navigator.geolocation,
 ) : PositionRepositoryContract.Locator {
     private suspend fun resolveLocation(): Result<SaveablePosition> = coroutineScope {
         val position = Channel<Result<SaveablePosition>>()
