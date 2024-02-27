@@ -28,7 +28,7 @@ class ClientSpec {
     fun `Given Client it resolves a Forecast`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
         val forecast = WeatherApi(
             Clock.System,
-            ClientProvider().provide(),
+            ClientProvider(),
         ).fetchForecast(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
         forecast.getOrNull().toString().startsWith("Forecast") mustBe true
@@ -39,7 +39,7 @@ class ClientSpec {
     fun `Given Client it resolves History`() = runBlockingTestInContext(GlobalScope.coroutineContext) {
         val forecast = WeatherApi(
             Clock.System,
-            ClientProvider().provide(),
+            ClientProvider(),
         ).fetchHistory(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
         forecast.getOrNull().toString().startsWith("History") mustBe true

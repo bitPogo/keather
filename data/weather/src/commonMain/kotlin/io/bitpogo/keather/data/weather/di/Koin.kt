@@ -25,7 +25,7 @@ fun resolveWeatherRepository(): Module = module {
     single<WeatherRepositoryContract.Api> {
         WeatherApi(
             clock = Clock.System,
-            requestBuilder = get<WeatherRepositoryContract.ClientProvider>().provide(),
+            clientProvider = get(),
         )
     }
     single<RepositoryContract.WeatherRepository> {

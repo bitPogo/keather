@@ -16,8 +16,11 @@ import kotlinx.datetime.Clock
 
 internal class WeatherApi(
     private val clock: Clock,
-    private val requestBuilder: NetworkingContract.RequestBuilder,
+    private val clientProvider: WeatherRepositoryContract.ClientProvider,
 ) : WeatherRepositoryContract.Api {
+    private val requestBuilder: NetworkingContract.RequestBuilder
+        get() = clientProvider.provide()
+
     // q = Latitude and Longitude
     override suspend fun fetchForecast(
         position: RequestPosition,
@@ -25,7 +28,7 @@ internal class WeatherApi(
         val request = requestBuilder.addParameter(
             mapOf(
                 "q" to position.toString(),
-                "unixdt" to clock.now().epochSeconds,
+                "unixdt_end" to clock.now().epochSeconds + FORECAST_IN_SECONDS,
                 "days" to FORECAST_IN_DAYS,
             ),
         ).prepare(
@@ -64,6 +67,7 @@ internal class WeatherApi(
 
     private companion object {
         const val FORECAST_IN_DAYS = 7
-        const val HISTORY_IN_SECONDS = 1209600
+        const val FORECAST_IN_SECONDS = 604800L
+        const val HISTORY_IN_SECONDS = 1209600L
     }
 }

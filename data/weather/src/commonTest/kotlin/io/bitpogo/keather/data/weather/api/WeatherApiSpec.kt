@@ -6,6 +6,7 @@
 
 package io.bitpogo.keather.data.weather.api
 
+import io.bitpogo.keather.data.weather.ClientProviderMock
 import io.bitpogo.keather.data.weather.WeatherRepositoryContract
 import io.bitpogo.keather.data.weather.kmock
 import io.bitpogo.keather.data.weather.model.api.Forecast
@@ -37,6 +38,7 @@ import tech.antibytes.util.test.sameAs
 @OptIn(KMockExperimental::class)
 @KMock(
     RequestBuilder::class,
+    WeatherRepositoryContract.ClientProvider::class,
 )
 class WeatherApiSpec {
     private val fixture = kotlinFixture()
@@ -45,6 +47,7 @@ class WeatherApiSpec {
         Latitude(fixture.fixture()),
     )
     private val requestBuilder: RequestBuilderMock = kmock()
+    private val clientProvider: ClientProviderMock = kmock()
     private val forecast: Forecast = Json.decodeFromString(resourceLoader.load("/fixtures/2dayForecast.json"))
     private val history: History = Json.decodeFromString(resourceLoader.load("/fixtures/2dayHistory.json"))
     private val clock: ClockMock = kmock()
@@ -52,6 +55,8 @@ class WeatherApiSpec {
 
     @BeforeTest
     fun setUp() {
+        clientProvider._provide returns requestBuilder
+
         requestBuilder._clearMock()
 
         requestBuilder._setBody returns requestBuilder
@@ -68,7 +73,7 @@ class WeatherApiSpec {
         requestBuilder._prepare returns FakeHttpCall { history }
 
         // When
-        val actual = WeatherApi(clock, requestBuilder).fetchForecast(requestLocation)
+        val actual = WeatherApi(clock, clientProvider).fetchForecast(requestLocation)
 
         // Then
         actual.isFailure mustBe true
@@ -81,7 +86,7 @@ class WeatherApiSpec {
         requestBuilder._prepare returns FakeHttpCall { forecast }
 
         // When
-        val actual = WeatherApi(clock, requestBuilder).fetchForecast(requestLocation)
+        val actual = WeatherApi(clock, clientProvider).fetchForecast(requestLocation)
 
         // Then
         actual.getOrNull() sameAs forecast
@@ -89,8 +94,8 @@ class WeatherApiSpec {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "unixdt" to now,
-                    "days" to 7, // 1709558053L
+                    "unixdt_end" to 1709558053L,
+                    "days" to 7,
                 ),
             )
             requestBuilder._prepare.hasBeenStrictlyCalledWith(
@@ -107,7 +112,7 @@ class WeatherApiSpec {
         requestBuilder._prepare returns FakeHttpCall { history }
 
         // When
-        val actual = WeatherApi(clock, requestBuilder).fetchHistory(requestLocation)
+        val actual = WeatherApi(clock, clientProvider).fetchHistory(requestLocation)
 
         // Then
         actual.getOrNull() sameAs history
@@ -133,7 +138,7 @@ class WeatherApiSpec {
         requestBuilder._prepare returns FakeHttpCall { forecast }
 
         // When
-        val actual = WeatherApi(clock, requestBuilder).fetchHistory(requestLocation)
+        val actual = WeatherApi(clock, clientProvider).fetchHistory(requestLocation)
 
         // Then
         actual.isFailure mustBe true
@@ -142,6 +147,6 @@ class WeatherApiSpec {
     @Test
     @JsName("fn0")
     fun `It fulfils Remote`() {
-        WeatherApi(clock, requestBuilder) fulfils WeatherRepositoryContract.Api::class
+        WeatherApi(clock, clientProvider) fulfils WeatherRepositoryContract.Api::class
     }
 }
