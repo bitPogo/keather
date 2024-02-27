@@ -30,7 +30,7 @@ pluginManagement {
 }
 
 plugins {
-    id("tech.antibytes.gradle.dependency.settings") version "db3eb1b"
+    id("tech.antibytes.gradle.dependency.settings") version "2d16671"
 }
 
 includeBuild("setup")
@@ -90,6 +90,7 @@ include(
 // Utility
 include(
     ":utility:http",
+    ":utility:koin",
 )
 
 // DataLayer
