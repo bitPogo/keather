@@ -1,10 +1,10 @@
-import tech.antibytes.gradle.dependency.settings.fullCache
-
 /*
- * Copyright (c) 2023 Matthias Geisler (bitPogo) / All rights reserved.
+ * Copyright (c) 2024 Matthias Geisler (bitPogo) / All rights reserved.
  *
  * Use of this source code is governed by Apache v2.0
  */
+
+import tech.antibytes.gradle.dependency.settings.fullCache
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -110,6 +110,7 @@ include(
 // Presentation
 include(
     ":presentation:interactor",
+    ":presentation:ui:store",
 )
 
 buildCache {

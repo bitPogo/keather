@@ -19,7 +19,7 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
 }
 
-val projectPackage = "io.bitpogo.keather.presentation.interactor"
+val projectPackage = "io.bitpogo.keather.presentation.ui.store"
 
 android {
     namespace = projectPackage
@@ -49,7 +49,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(antibytesCatalog.common.kotlinx.coroutines.core)
-                api(projects.entity)
+                implementation(projects.entity)
             }
         }
     }
