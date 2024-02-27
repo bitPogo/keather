@@ -1,11 +1,10 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import tech.antibytes.gradle.configuration.runtime.AntiBytesTestConfigurationTask
-
 /*
- * Copyright (c) 2023 Matthias Geisler (bitPogo) / All rights reserved.
+ * Copyright (c) 2024 Matthias Geisler (bitPogo) / All rights reserved.
  *
  * Use of this source code is governed by Apache v2.0
  */
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import tech.antibytes.gradle.configuration.runtime.AntiBytesTestConfigurationTask
 
 plugins {
     id(antibytesCatalog.plugins.kotlin.android.get().pluginId)
@@ -69,6 +68,30 @@ android {
             matchingFallbacks.add("release")
         }
     }
+
+    sourceSets {
+        getByName("test") {
+            java.srcDirs(layout.buildDirectory.dir("generated/antibytes/test/kotlin"))
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            all {
+                // -Pscreenshot to filter screenshot tests
+                it.useJUnit {
+                    if (project.hasProperty("screenshot")) {
+                        includeCategories("io.github.takahirom.roborazzi.testing.category.ScreenshotTests")
+                    }
+                }
+            }
+        }
+    }
+}
+
+roborazzi {
+    outputDir.set(project.layout.projectDirectory.dir("src/test/snapshots/roborazzi/images"))
 }
 
 dependencies {
@@ -107,8 +130,8 @@ dependencies {
     implementation(projects.data.weather)
     implementation(projects.database)
     implementation(projects.entity)
+    implementation(projects.utility.koin)
     implementation(antibytesCatalog.android.ktx.navigation.compose)
-    // implementation("androidx.compose.ui:ui-test-junit4-android:1.6.2")
 
     testImplementation(antibytesCatalog.testUtils.core)
     testImplementation(antibytesCatalog.testUtils.coroutine)
@@ -117,13 +140,15 @@ dependencies {
     testImplementation(antibytesCatalog.android.test.junit.core)
     testImplementation(antibytesCatalog.jvm.test.junit.junit4)
     testImplementation(antibytesCatalog.android.test.compose.core)
+    testImplementation(antibytesCatalog.android.test.compose.junit4Rule)
+    testImplementation(antibytesCatalog.jvm.test.koin)
 
-    /*testImplementation(antibytesCatalog.android.test.roborazzi.compose)
+    testImplementation(antibytesCatalog.android.test.roborazzi.compose)
     testImplementation(antibytesCatalog.android.test.roborazzi.junit)
-    testImplementation(antibytesCatalog.android.test.roborazzi.core)*/
+    testImplementation(antibytesCatalog.android.test.roborazzi.core)
     testImplementation(antibytesCatalog.android.test.robolectric)
-    // testImplementation(antibytesCatalog.android.test.junit.ktx)
-    // testImplementation(antibytesCatalog.android.test.rules)
+    testImplementation(antibytesCatalog.android.test.espresso.core)
+    testImplementation(antibytesCatalog.android.test.koin.androidTest)
 
     // Debug
     debugImplementation(antibytesCatalog.android.compose.ui.tooling.core)

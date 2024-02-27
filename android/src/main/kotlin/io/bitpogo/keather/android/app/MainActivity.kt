@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthias Geisler (bitPogo) / All rights reserved.
+ * Copyright (c) 2024 Matthias Geisler (bitPogo) / All rights reserved.
  *
  * Use of this source code is governed by Apache v2.0
  */
@@ -24,10 +24,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.patrykandpatrick.vico.core.chart.composed.plus
+import io.bitpogo.keather.android.app.atom.TextEmphatic
+import io.bitpogo.keather.android.app.atom.TextError
+import io.bitpogo.keather.android.app.atom.TextStandard
+import io.bitpogo.keather.android.app.token.Spacing
 import io.bitpogo.keather.entity.Location
 import io.bitpogo.keather.entity.RealtimeData
 import io.bitpogo.keather.presentation.ui.store.StoreContract
@@ -59,17 +65,24 @@ private fun State<StoreContract.WeatherDataState>.hasValues(): Boolean {
 fun RealtimeDataDisplay(
     realtimeData: RealtimeData,
 ) {
-    Text("Temperature: ${realtimeData.temperatureInCelsius.temperature}°C")
-    Text("Windspeed: ${realtimeData.windSpeedInKilometerPerHour.speed}kmh")
-    Text("Precipitation: ${realtimeData.precipitationInMillimeter.precipitation}mm")
+    TextEmphatic(stringResource(R.string.reatime_header))
+    TextStandard(stringResource(R.string.realtime_temperature, realtimeData.temperatureInCelsius.temperature))
+    TextStandard(stringResource(R.string.realtime_speed, realtimeData.windSpeedInKilometerPerHour.speed))
+    TextStandard(stringResource(R.string.realtime_precipitation, realtimeData.precipitationInMillimeter.precipitation))
 }
 
 @Composable
 fun LocationDisplay(
     location: Location,
 ) {
-    Text("You are in ${location.name.name} (${location.region.region}/${location.country.country})")
-    Spacer(modifier = Modifier.size(14.dp))
+    TextEmphatic(
+        stringResource(
+            R.string.location,
+            location.name.name,
+            location.region.region,
+            location.country.country
+        )
+    )
 }
 
 @Composable
@@ -78,17 +91,18 @@ fun RealtimeScreen(
 ) {
     val state = viewModel.weatherData.collectAsState()
 
-    Column {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         if (state.hasValues()) {
             val weatherData = (state.value as StoreContract.WeatherDataContentfulState).data
             LocationDisplay(weatherData.location)
+            Spacer(modifier = Modifier.size(Spacing.xl))
             RealtimeDataDisplay(weatherData.realtimeData)
         }
         if (state.value == StoreContract.StartUpError) {
-            Text(
-                fontSize = 10.sp,
-                text = "Something went wrong!",
-            )
+            TextError(stringResource(R.string.error))
         }
 
         Row(
@@ -99,7 +113,7 @@ fun RealtimeScreen(
             ) {
                 Text(
                     fontSize = 10.sp,
-                    text = "Refresh All",
+                    text = stringResource(R.string.button_all),
                 )
             }
             Spacer(modifier = Modifier.size(12.dp))
@@ -110,7 +124,7 @@ fun RealtimeScreen(
             ) {
                 Text(
                     fontSize = 10.sp,
-                    text = "Refresh Weather",
+                    text = stringResource(R.string.button_refresh),
                 )
             }
             /*Button(

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Matthias Geisler (bitPogo) / All rights reserved.
+  ~
+  ~ Use of this source code is governed by Apache v2.0
+  -->
+
 <resources>
     <color name="noconnection_background">#FFFFFF</color>
 </resources>
