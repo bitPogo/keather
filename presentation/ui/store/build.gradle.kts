@@ -17,6 +17,8 @@ import tech.antibytes.gradle.versioning.api.VersioningConfiguration
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
+
+    alias(antibytesCatalog.plugins.kmock)
 }
 
 val projectPackage = "io.bitpogo.keather.presentation.ui.store"
@@ -52,5 +54,33 @@ kotlin {
                 implementation(projects.entity)
             }
         }
+
+        val commonTest by getting {
+            kotlin.srcDir("${layout.buildDirectory.get().asFile.absolutePath.trimEnd('/')}/generated/antibytes/commonTest/kotlin")
+            dependencies {
+                implementation(antibytesCatalog.common.test.kotlin.core)
+                implementation(antibytesCatalog.kfixture)
+                implementation(antibytesCatalog.testUtils.core)
+                implementation(antibytesCatalog.testUtils.annotations)
+                implementation(antibytesCatalog.kmock)
+            }
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(antibytesCatalog.android.test.junit.core)
+                implementation(antibytesCatalog.jvm.test.kotlin.junit4)
+                implementation(antibytesCatalog.android.test.ktx)
+                implementation(antibytesCatalog.android.test.robolectric)
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(antibytesCatalog.js.test.kotlin.core)
+            }
+        }
     }
+}
+
+kmock {
+    rootPackage = projectPackage
 }

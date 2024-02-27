@@ -7,12 +7,14 @@
 package io.bitpogo.keather.presentation.ui.store
 
 import io.bitpogo.keather.entity.LocalizedWeatherData
-import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandContract
+import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.CommandExecutor
+import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.Refresh
+import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.RefreshAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface StoreContract {
-    interface WeatherStore : RefreshCommandContract.Refresh, RefreshCommandContract.RefreshAll {
+    interface WeatherStore : Refresh, RefreshAll, CommandExecutor {
         val weatherData: StateFlow<WeatherDataState>
         val error: Flow<WeatherUIError>
     }
