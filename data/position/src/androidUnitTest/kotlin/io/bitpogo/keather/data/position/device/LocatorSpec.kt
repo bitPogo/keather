@@ -91,6 +91,35 @@ class LocatorSpec {
     }
 
     @Test
+    fun `Given getCurrentLocation is called it returns an error if the client returns a null location`() = runTest {
+        // Given
+        val error = RuntimeException()
+        val client: FusedLocationProviderClient = mockk()
+        val task: Task<Location> = mockk()
+        val locationRequest = slot<CurrentLocationRequest>()
+
+        every { task.exception } returns error
+        every { task.addOnFailureListener(any()) } returns task
+        every { task.addOnSuccessListener(any()) } answers {
+            @Suppress("UNCHECKED_CAST")
+            (this.args[0] as OnSuccessListener<Location?>).onSuccess(null)
+            task
+        }
+
+        every { client.getCurrentLocation(capture(locationRequest), any()) } returns task
+
+        // When
+        val result = Locator(client).fetchPosition()
+
+        // Then
+        result.exceptionOrNull() fulfils NullPointerException::class
+        locationRequest.captured.priority mustBe Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        verify(exactly = 1) { client.getCurrentLocation(any<CurrentLocationRequest>(), null) }
+    }
+
+
+
+    @Test
     fun `Given getCurrentLocation is called it returns the last location propagated from the client`() = runTest {
         // Given
         val lat: Double = fixture.fixture()

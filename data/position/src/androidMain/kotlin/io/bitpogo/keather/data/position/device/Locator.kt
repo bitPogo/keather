@@ -58,7 +58,7 @@ internal class Locator(
     }
 
     private fun toLocation(wrappedDto: Result<DTO>): Result<SaveablePosition> {
-        return wrappedDto.map { dto ->
+        return wrappedDto.mapCatching { dto ->
             SaveablePosition(
                 latitude = Latitude(dto.latitude),
                 longitude = Longitude(dto.longitude),
