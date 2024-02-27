@@ -11,17 +11,20 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 import tech.antibytes.gradle.configuration.runtime.AntiBytesMainConfigurationTask
 import tech.antibytes.gradle.configuration.sourcesets.iosx
+import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
+import tech.antibytes.gradle.dependency.helper.nodeProductionPackage
 import tech.antibytes.gradle.versioning.Versioning
 import tech.antibytes.gradle.versioning.api.VersioningConfiguration
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
+    alias(antibytesCatalog.plugins.gradle.antibytes.coverage)
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
 
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.presentation.ui.store"
+val projectPackage = "io.bitpogo.keather.store"
 
 android {
     namespace = projectPackage
@@ -48,29 +51,57 @@ kotlin {
     ensureAppleDeviceCompatibility()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(antibytesCatalog.common.kotlinx.coroutines.core)
-                api(projects.entity)
+        all {
+            languageSettings.apply {
+                optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                optIn("kotlinx.coroutines.DelicateCoroutinesApi")
             }
         }
 
+        val commonMain by getting {
+            kotlin.srcDir("${layout.buildDirectory.get().asFile.absolutePath.trimEnd('/')}/generated/antibytes/commonMain/kotlin")
+            dependencies {
+                implementation(antibytesCatalog.common.kotlin.stdlib)
+                implementation(antibytesCatalog.common.kotlinx.coroutines.core)
+                implementation(antibytesCatalog.common.koin.core)
+
+                implementation(projects.presentation.ui.store)
+                implementation(projects.presentation.interactor)
+            }
+        }
         val commonTest by getting {
             kotlin.srcDir("${layout.buildDirectory.get().asFile.absolutePath.trimEnd('/')}/generated/antibytes/commonTest/kotlin")
             dependencies {
                 implementation(antibytesCatalog.common.test.kotlin.core)
+
+                implementation(antibytesCatalog.kmock)
                 implementation(antibytesCatalog.kfixture)
                 implementation(antibytesCatalog.testUtils.core)
                 implementation(antibytesCatalog.testUtils.annotations)
-                implementation(antibytesCatalog.kmock)
+                implementation(antibytesCatalog.testUtils.coroutine)
+                implementation(antibytesCatalog.common.test.turbine)
             }
         }
+        val androidMain by getting {
+            dependencies {
+                implementation(antibytesCatalog.jvm.kotlin.stdlib.jdk8)
+                implementation(antibytesCatalog.android.ktx.viewmodel.core)
+            }
+        }
+
         val androidUnitTest by getting {
             dependencies {
                 implementation(antibytesCatalog.android.test.junit.core)
                 implementation(antibytesCatalog.jvm.test.kotlin.junit4)
                 implementation(antibytesCatalog.android.test.ktx)
                 implementation(antibytesCatalog.android.test.robolectric)
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                implementation(antibytesCatalog.js.kotlin.stdlib)
+                implementation(antibytesCatalog.js.kotlinx.nodeJs)
             }
         }
         val jsTest by getting {

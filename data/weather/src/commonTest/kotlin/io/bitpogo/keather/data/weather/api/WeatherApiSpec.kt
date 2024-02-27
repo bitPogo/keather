@@ -89,7 +89,7 @@ class WeatherApiSpec {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "dt" to now,
+                    "unixdt" to now,
                     "days" to 7, // 1709558053L
                 ),
             )
@@ -115,7 +115,7 @@ class WeatherApiSpec {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(
                     "q" to "${requestLocation.latitude.lat},${requestLocation.longitude.long}",
-                    "dt" to 1707743653L,
+                    "unixdt" to 1707743653L,
                     "unixend_dt" to now,
                 ),
             )

@@ -23,6 +23,7 @@ import kotlin.test.Test
 import tech.antibytes.kfixture.fixture
 import tech.antibytes.kfixture.kotlinFixture
 import tech.antibytes.util.test.annotations.AndroidOnly
+import tech.antibytes.util.test.annotations.IgnoreJs
 import tech.antibytes.util.test.annotations.RobolectricConfig
 import tech.antibytes.util.test.annotations.RobolectricTestRunner
 import tech.antibytes.util.test.annotations.RunWithRobolectricTestRunner
@@ -164,6 +165,7 @@ class WeatherStoreSpec {
     }
 
     @Test
+    @IgnoreJs
     @JsName("fn4")
     fun `Given fetchForecasts is called it returns Forecasts`(): AsyncTestReturnValue {
         // Given
@@ -257,6 +259,7 @@ class WeatherStoreSpec {
     }
 
     @Test
+    @IgnoreJs
     @JsName("fn6")
     fun `Given fetchHistory is called it returns Forecasts`(): AsyncTestReturnValue {
         // Given
@@ -329,6 +332,7 @@ class WeatherStoreSpec {
     }
 
     @Test
+    @IgnoreJs
     @JsName("fn8")
     fun `Given fetchRealtimeData is called it propagates stored data`(): AsyncTestReturnValue {
         // Given

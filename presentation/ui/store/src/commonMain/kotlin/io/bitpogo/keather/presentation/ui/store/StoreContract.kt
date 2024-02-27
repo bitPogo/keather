@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface StoreContract {
-    interface WeatherStore : Refresh, RefreshAll, CommandExecutor {
+    interface WeatherStore : Refresh, RefreshAll, CommandExecutor<WeatherStore> {
         val weatherData: StateFlow<WeatherDataState>
         val error: Flow<WeatherUIError>
     }
@@ -24,10 +24,15 @@ interface StoreContract {
     sealed interface WeatherDataState
     data object Initial : WeatherDataState
     data object StartUpLoading : WeatherDataState
+    data object StartUpError : WeatherDataState
 
     sealed interface WeatherDataContentfulState : WeatherDataState {
         val data: LocalizedWeatherData
     }
+
+    data class Error(
+        override val data: LocalizedWeatherData,
+    ) : WeatherDataContentfulState
 
     data class Loading(
         override val data: LocalizedWeatherData,

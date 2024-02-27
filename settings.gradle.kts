@@ -110,6 +110,7 @@ include(
 
 // Presentation
 include(
+    ":presentation",
     ":presentation:interactor",
     ":presentation:ui:store",
 )
