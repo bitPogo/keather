@@ -79,6 +79,30 @@ class WeatherStoreSpec {
             region = Region(fixture.fixture()),
         ),
     )
+    private val uiWeatherData = StoreContract.UIWeatherData(
+        location = StoreContract.UILocation(
+            name = weatherData.location.name.name,
+            country = weatherData.location.country.country,
+            region = weatherData.location.region.region,
+        ),
+        realtimeData = StoreContract.UIRealtimeData(
+            temperature = weatherData.realtimeData.temperatureInCelsius.temperature.toString() + "°C",
+            windSpeed = weatherData.realtimeData.windSpeedInKilometerPerHour.speed.toString() + "kmh",
+            precipitation = weatherData.realtimeData.precipitationInMillimeter.precipitation.toString() + "mm",
+        ),
+        forecast = listOf(
+            StoreContract.UIChartData(
+                temperature = weatherData.forecast.first().averageTemperatureInCelsius.temperature,
+                precipitation = weatherData.forecast.first().precipitationInMillimeter.precipitation,
+            ),
+        ),
+        historicData = listOf(
+            StoreContract.UIChartData(
+                temperature = weatherData.history.first().averageTemperatureInCelsius.temperature,
+                precipitation = weatherData.history.first().precipitationInMillimeter.precipitation,
+            ),
+        ),
+    )
 
     @BeforeTest
     fun setup() {
@@ -143,7 +167,7 @@ class WeatherStoreSpec {
             // Then
             skipItems(1) // Initial
             awaitItem() mustBe StoreContract.StartUpLoading
-            awaitItem() mustBe StoreContract.Loaded(weatherData)
+            awaitItem() mustBe StoreContract.Loaded(uiWeatherData)
 
             interactor.invoked mustBe WeatherInteractorFake.InvocationType.REFRESH
         }
@@ -174,8 +198,8 @@ class WeatherStoreSpec {
                 advanceUntilIdle()
 
                 // Then
-                weather.awaitItem() mustBe StoreContract.Loading(weatherData)
-                weather.awaitItem() mustBe StoreContract.Error(weatherData)
+                weather.awaitItem() mustBe StoreContract.Loading(uiWeatherData)
+                weather.awaitItem() mustBe StoreContract.Error(uiWeatherData)
 
                 errors.awaitItem() mustBe StoreContract.WeatherUIError
 
@@ -230,7 +254,7 @@ class WeatherStoreSpec {
             // Then
             skipItems(1) // Initial
             awaitItem() mustBe StoreContract.StartUpLoading
-            awaitItem() mustBe StoreContract.Loaded(weatherData)
+            awaitItem() mustBe StoreContract.Loaded(uiWeatherData)
 
             interactor.invoked mustBe WeatherInteractorFake.InvocationType.REFRESH_ALL
         }
@@ -261,8 +285,8 @@ class WeatherStoreSpec {
                 advanceUntilIdle()
 
                 // Then
-                weather.awaitItem() mustBe StoreContract.Loading(weatherData)
-                weather.awaitItem() mustBe StoreContract.Error(weatherData)
+                weather.awaitItem() mustBe StoreContract.Loading(uiWeatherData)
+                weather.awaitItem() mustBe StoreContract.Error(uiWeatherData)
 
                 errors.awaitItem() mustBe StoreContract.WeatherUIError
 

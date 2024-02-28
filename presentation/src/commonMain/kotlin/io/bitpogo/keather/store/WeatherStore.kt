@@ -6,7 +6,11 @@
 
 package io.bitpogo.keather.store
 
+import io.bitpogo.keather.entity.Forecast
+import io.bitpogo.keather.entity.HistoricData
 import io.bitpogo.keather.entity.LocalizedWeatherData
+import io.bitpogo.keather.entity.Location
+import io.bitpogo.keather.entity.RealtimeData
 import io.bitpogo.keather.presentation.interactor.InteractorContract
 import io.bitpogo.keather.presentation.ui.store.StoreContract
 import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract
@@ -49,8 +53,48 @@ internal class WeatherStore(
         }
     }
 
+    private fun Location.toUILocation(): StoreContract.UILocation {
+        return StoreContract.UILocation(
+            name = name.name,
+            region = region.region,
+            country = country.country,
+        )
+    }
+
+    // Formatter can do wounders here
+    private fun RealtimeData.toUIRealtimeData(): StoreContract.UIRealtimeData {
+        return StoreContract.UIRealtimeData(
+            temperature = "${temperatureInCelsius.temperature}°C",
+            windSpeed = "${windSpeedInKilometerPerHour.speed}kmh",
+            precipitation = "${precipitationInMillimeter.precipitation}mm",
+        )
+    }
+
+    private fun foreCastToUIChart(forecast: Forecast): StoreContract.UIChartData {
+        return StoreContract.UIChartData(
+            temperature = forecast.averageTemperatureInCelsius.temperature,
+            precipitation = forecast.precipitationInMillimeter.precipitation,
+        )
+    }
+
+    private fun historicDataToUIChart(data: HistoricData): StoreContract.UIChartData {
+        return StoreContract.UIChartData(
+            temperature = data.averageTemperatureInCelsius.temperature,
+            precipitation = data.precipitationInMillimeter.precipitation,
+        )
+    }
+
+    private fun LocalizedWeatherData.toUIWeatherData(): StoreContract.UIWeatherData {
+        return StoreContract.UIWeatherData(
+            location = location.toUILocation(),
+            realtimeData = realtimeData.toUIRealtimeData(),
+            forecast = forecast.map(::foreCastToUIChart),
+            historicData = history.map(::historicDataToUIChart),
+        )
+    }
+
     private fun Result<LocalizedWeatherData>.toLoaded(): StoreContract.WeatherDataState {
-        return StoreContract.Loaded(getOrThrow())
+        return StoreContract.Loaded(getOrThrow().toUIWeatherData())
     }
 
     private fun Result<LocalizedWeatherData>.toUIState(): StoreContract.WeatherDataState {

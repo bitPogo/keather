@@ -181,3 +181,12 @@ tasks.withType(KotlinCompile::class.java) {
     dependsOn(provideTestConfig)
     mustRunAfter(provideTestConfig)
 }
+
+afterEvaluate {
+    tasks.named("generateDebugLintReportModel") {
+        mustRunAfter("kspDebugUnitTestKotlin")
+    }
+    tasks.named("lintAnalyzeDebug") {
+        mustRunAfter("kspDebugUnitTestKotlin")
+    }
+}

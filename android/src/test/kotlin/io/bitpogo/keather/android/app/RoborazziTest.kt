@@ -6,15 +6,23 @@
 
 package io.bitpogo.keather.android.app
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.RoborazziRule
 import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
+
+class TestActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+}
 
 abstract class RoborazziTest(
     captureType: RoborazziRule.CaptureType = RoborazziRule.CaptureType.None,
@@ -24,6 +32,11 @@ abstract class RoborazziTest(
 
     @get:Rule
     val roborazziRule = roborazziOf(subjectUnderTest, captureType)
+
+    @Before
+    fun start() {
+        stopKoin()
+    }
 
     @After
     fun capture() {

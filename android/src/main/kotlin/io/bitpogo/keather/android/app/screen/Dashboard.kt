@@ -9,8 +9,8 @@ package io.bitpogo.keather.android.app.screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -19,12 +19,12 @@ import androidx.compose.ui.res.stringResource
 import io.bitpogo.keather.android.app.R
 import io.bitpogo.keather.android.app.atom.ActionButton
 import io.bitpogo.keather.android.app.atom.ActionButtonState
+import io.bitpogo.keather.android.app.atom.SpacerSmall
+import io.bitpogo.keather.android.app.atom.SpacerStandard
 import io.bitpogo.keather.android.app.atom.TextEmphatic
 import io.bitpogo.keather.android.app.atom.TextError
 import io.bitpogo.keather.android.app.atom.TextStandard
-import io.bitpogo.keather.android.app.token.Spacing
-import io.bitpogo.keather.entity.Location
-import io.bitpogo.keather.entity.RealtimeData
+import io.bitpogo.keather.android.app.molecules.WeatherChart
 import io.bitpogo.keather.presentation.ui.store.StoreContract
 import io.bitpogo.keather.presentation.ui.store.StoreContract.WeatherStore
 import io.bitpogo.keather.presentation.ui.store.command.RefreshAllCommand
@@ -35,24 +35,24 @@ import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.
 // Note this could be done with a lovely formatter (aka icu)
 @Composable
 fun RealtimeDataDisplay(
-    realtimeData: RealtimeData,
+    realtimeData: StoreContract.UIRealtimeData,
 ) {
     TextEmphatic(stringResource(R.string.dashboard_header))
-    TextStandard(stringResource(R.string.realtime_temperature, realtimeData.temperatureInCelsius.temperature))
-    TextStandard(stringResource(R.string.realtime_speed, realtimeData.windSpeedInKilometerPerHour.speed))
-    TextStandard(stringResource(R.string.realtime_precipitation, realtimeData.precipitationInMillimeter.precipitation))
+    TextStandard(stringResource(R.string.realtime_temperature, realtimeData.temperature))
+    TextStandard(stringResource(R.string.realtime_speed, realtimeData.windSpeed))
+    TextStandard(stringResource(R.string.realtime_precipitation, realtimeData.precipitation))
 }
 
 @Composable
 fun LocationDisplay(
-    location: Location,
+    location: StoreContract.UILocation,
 ) {
     TextEmphatic(
         stringResource(
             R.string.location,
-            location.name.name,
-            location.region.region,
-            location.country.country,
+            location.name,
+            location.region,
+            location.country,
         ),
     )
 }
@@ -77,7 +77,7 @@ private fun ActionGroup(
             stringResource(R.string.button_all),
             onClick = { executor(RefreshAllCommand) },
         )
-        Spacer(modifier = Modifier.size(Spacing.m))
+        SpacerSmall()
         ActionButton(
             stringResource(R.string.button_refresh),
             state = enabledSimpleRefresh.toActionButtonState(),
@@ -93,6 +93,7 @@ fun Dashboard(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
+        modifier = Modifier.verticalScroll(rememberScrollState()),
     ) {
         val state = viewmodel.weatherData.collectAsState()
         val hasDisplayableData = state.value is StoreContract.WeatherDataContentfulState
@@ -101,8 +102,14 @@ fun Dashboard(
             is StoreContract.WeatherDataContentfulState -> {
                 val weatherData = (state.value as StoreContract.WeatherDataContentfulState).data
                 LocationDisplay(weatherData.location)
-                Spacer(modifier = Modifier.size(Spacing.xl))
+                SpacerStandard()
                 RealtimeDataDisplay(weatherData.realtimeData)
+                SpacerStandard()
+                TextEmphatic(stringResource(R.string.forecast_header))
+                WeatherChart(weatherData.forecast)
+                SpacerStandard()
+                TextEmphatic(stringResource(R.string.history_header))
+                WeatherChart(weatherData.historicData)
             }
             StoreContract.StartUpError -> {
                 TextError(stringResource(R.string.error))

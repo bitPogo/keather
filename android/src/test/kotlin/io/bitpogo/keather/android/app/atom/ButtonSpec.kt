@@ -9,6 +9,7 @@ package io.bitpogo.keather.android.app.atom
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.github.takahirom.roborazzi.RoborazziRule
 import io.bitpogo.keather.android.app.RoborazziTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,6 +20,7 @@ import tech.antibytes.util.test.mustBe
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [33])
+@RoborazziRule.Ignore
 class ButtonSpec : RoborazziTest() {
     @Test
     fun `It renders an enabled ActionButton`() {

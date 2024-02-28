@@ -6,7 +6,6 @@
 
 package io.bitpogo.keather.presentation.ui.store
 
-import io.bitpogo.keather.entity.LocalizedWeatherData
 import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.CommandExecutor
 import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.Refresh
 import io.bitpogo.keather.presentation.ui.store.command.RefreshCommandsContract.RefreshAll
@@ -27,18 +26,42 @@ interface StoreContract {
     data object StartUpError : WeatherDataState
 
     sealed interface WeatherDataContentfulState : WeatherDataState {
-        val data: LocalizedWeatherData
+        val data: UIWeatherData
     }
 
     data class Error(
-        override val data: LocalizedWeatherData,
+        override val data: UIWeatherData,
     ) : WeatherDataContentfulState
 
     data class Loading(
-        override val data: LocalizedWeatherData,
+        override val data: UIWeatherData,
     ) : WeatherDataContentfulState
 
     data class Loaded(
-        override val data: LocalizedWeatherData,
+        override val data: UIWeatherData,
     ) : WeatherDataContentfulState
+
+    data class UILocation(
+        val name: String,
+        val region: String,
+        val country: String,
+    )
+
+    data class UIRealtimeData(
+        val temperature: String,
+        val windSpeed: String,
+        val precipitation: String,
+    )
+
+    data class UIChartData(
+        val temperature: Double,
+        val precipitation: Double,
+    )
+
+    data class UIWeatherData(
+        val location: UILocation,
+        val realtimeData: UIRealtimeData,
+        val historicData: List<UIChartData>,
+        val forecast: List<UIChartData>,
+    )
 }
