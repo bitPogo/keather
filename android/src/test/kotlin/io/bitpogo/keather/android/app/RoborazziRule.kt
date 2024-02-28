@@ -10,13 +10,11 @@ import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.AndroidComposeTestRule
 import androidx.compose.ui.test.onRoot
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.RoborazziRule
-import io.bitpogo.keather.android.app.config.TestConfig
 
 fun roborazziOf(
     szenario: AndroidComposeTestRule<ActivityScenarioRule<ComponentActivity>, ComponentActivity>,
-    captureType: RoborazziRule.CaptureType = RoborazziRule.CaptureType.Gif(),
+    captureType: RoborazziRule.CaptureType = RoborazziRule.CaptureType.None,
 ): RoborazziRule {
     return RoborazziRule(
         composeRule = szenario,

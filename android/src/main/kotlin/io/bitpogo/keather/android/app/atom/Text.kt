@@ -16,7 +16,7 @@ fun TextError(text: String) {
     Text(
         text = text,
         color = Color.text.danger,
-        style = Font.text.bold.m
+        style = Font.text.bold.m,
     )
 }
 
@@ -25,7 +25,7 @@ fun TextStandard(text: String) {
     Text(
         text = text,
         color = Color.text.standard,
-        style = Font.text.semiBold.m
+        style = Font.text.semiBold.m,
     )
 }
 
@@ -34,15 +34,6 @@ fun TextEmphatic(text: String) {
     Text(
         text = text,
         color = Color.text.standard,
-        style = Font.text.bold.l
-    )
-}
-
-@Composable
-fun TextDiscreet(text: String) {
-    Text(
-        text = text,
-        color = Color.text.standard,
-        style = Font.text.regular.s
+        style = Font.text.bold.l,
     )
 }

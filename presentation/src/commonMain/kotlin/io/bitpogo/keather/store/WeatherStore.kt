@@ -95,7 +95,10 @@ internal class WeatherStore(
         }
     }
 
-    override fun runCommand(command: RefreshCommandsContract.Command<StoreContract.WeatherStore>) {
-        command.execute(this)
+    override fun <T : RefreshCommandsContract.CommandReceiver> runCommand(
+        command: RefreshCommandsContract.Command<T>,
+    ) {
+        @Suppress("UNCHECKED_CAST")
+        command.execute(this as T)
     }
 }

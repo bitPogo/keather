@@ -6,7 +6,8 @@
 
 <resources>
     <string name="app_name">Keather</string>
-    <string name="reatime_header">Your realtime Data Overview</string>
+    <string name="dashboard_not_initialized">Please hit the refresh button to start</string>
+    <string name="dashboard_header">Your realtime Data Overview</string>
     <string name="location">You are in %s (%s/%s)</string>
     <string name="realtime_temperature">Temperature: %s°C</string>
     <string name="realtime_speed">Windspeed: %skmh</string>

@@ -117,8 +117,6 @@ class LocatorSpec {
         verify(exactly = 1) { client.getCurrentLocation(any<CurrentLocationRequest>(), null) }
     }
 
-
-
     @Test
     fun `Given getCurrentLocation is called it returns the last location propagated from the client`() = runTest {
         // Given

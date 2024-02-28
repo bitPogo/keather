@@ -7,14 +7,14 @@
 package io.bitpogo.keather.presentation.ui.store.command
 
 interface RefreshCommandsContract {
-    sealed interface CommandReceiver
+    interface CommandReceiver
 
     interface Command<T : CommandReceiver> {
         fun execute(receiver: T)
     }
 
-    interface CommandExecutor<T : CommandReceiver> {
-        fun runCommand(command: Command<T>)
+    interface CommandExecutor {
+        fun <T : CommandReceiver> runCommand(command: Command<T>)
     }
 
     fun interface RefreshAll : CommandReceiver {

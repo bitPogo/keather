@@ -51,7 +51,7 @@ object Color {
         val info = Core.Secondary.Smoke.medium
         val warning = Core.Primary.Orange.dark
         val danger = Core.Secondary.Red.medium
-        val accent = Core.Primary.Orange.light
+        val accent = Core.secondary.gray.light
     }
     val text = Text
 
@@ -69,6 +69,7 @@ object Color {
             val orange = Orange
         }
         val primary = Primary
+        val secondary = Secondary
 
         object Secondary {
             object Gray {

@@ -38,7 +38,7 @@ android {
 
     buildFeatures {
         compose = true
-        viewBinding = true
+        viewBinding = false
     }
 
     composeOptions {
@@ -120,7 +120,6 @@ dependencies {
     implementation(antibytesCatalog.vico.core)
 
     implementation(antibytesCatalog.common.koin.core)
-    implementation(antibytesCatalog.android.koin.androidBinding)
 
     implementation(projects.presentation)
     implementation(projects.presentation.ui.store)
