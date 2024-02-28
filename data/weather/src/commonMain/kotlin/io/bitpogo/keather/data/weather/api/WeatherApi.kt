@@ -43,6 +43,14 @@ internal class WeatherApi(
         }
     }
 
+    private fun History.cleanHistoryTimeline(): History {
+        return copy(
+            history = history.copy(
+                history = history.history.dropLast(1),
+            ),
+        )
+    }
+
     override suspend fun fetchHistory(
         position: RequestPosition,
     ): Result<History> {
@@ -59,7 +67,9 @@ internal class WeatherApi(
         )
 
         return try {
-            Result.success(request.receive())
+            Result.success(
+                request.receive<History>().cleanHistoryTimeline(),
+            )
         } catch (e: Throwable) {
             Result.failure(e)
         }

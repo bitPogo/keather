@@ -49,7 +49,7 @@ class WeatherApiSpec {
     private val requestBuilder: RequestBuilderMock = kmock()
     private val clientProvider: ClientProviderMock = kmock()
     private val forecast: Forecast = Json.decodeFromString(resourceLoader.load("/fixtures/2dayForecast.json"))
-    private val history: History = Json.decodeFromString(resourceLoader.load("/fixtures/2dayHistory.json"))
+    private val history: History = Json.decodeFromString(resourceLoader.load("/fixtures/14dayHistory.json"))
     private val clock: ClockMock = kmock()
     private val now = 1708953253L
 
@@ -115,7 +115,13 @@ class WeatherApiSpec {
         val actual = WeatherApi(clock, clientProvider).fetchHistory(requestLocation)
 
         // Then
-        actual.getOrNull() sameAs history
+        actual.getOrNull() sameAs history.run {
+            copy(
+                history = history.copy(
+                    history.history.dropLast(1),
+                ),
+            )
+        }
         assertProxy {
             requestBuilder._addParameter.hasBeenStrictlyCalledWith(
                 mapOf(

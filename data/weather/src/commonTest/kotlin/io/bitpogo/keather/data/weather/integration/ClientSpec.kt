@@ -15,13 +15,13 @@ import kotlin.js.JsName
 import kotlin.test.Test
 import kotlinx.coroutines.GlobalScope
 import kotlinx.datetime.Clock
-import tech.antibytes.util.test.annotations.AndroidOnly
+import tech.antibytes.util.test.annotations.IgnoreNative
 import tech.antibytes.util.test.coroutine.runBlockingTestInContext
 import tech.antibytes.util.test.mustBe
 
 // Note this is only a convenience solution...it should actually live in a separate folder
 // so it can be run separately
-@AndroidOnly
+@IgnoreNative
 class ClientSpec {
     @Test
     @JsName("fn0")
@@ -31,7 +31,7 @@ class ClientSpec {
             ClientProvider(),
         ).fetchForecast(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast.getOrNull().toString().startsWith("Forecast") mustBe true
+        forecast.getOrNull()?.forecast?.forecastDays?.size mustBe 7
     }
 
     @Test
@@ -42,6 +42,6 @@ class ClientSpec {
             ClientProvider(),
         ).fetchHistory(RequestPosition(Longitude(13.3777), Latitude(52.5162)))
 
-        forecast.getOrNull().toString().startsWith("History") mustBe true
+        forecast.getOrNull()?.history?.history?.size mustBe 14
     }
 }
