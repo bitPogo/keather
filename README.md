@@ -24,6 +24,10 @@ That is normal due to the iOS bindings. If you run the tasks by hand you see all
 
 The app needs permission for geolocation.
 
+### Known issues
+
+* once running `./gradlew test` or `./gradlew check` the release tests will fail. While unfortunate you can simply ignore it with `-x testReleaseUnitTest`, since those tests do not contribute in particular. 
+
 ## Dependencies
 
 ## Additional Requirements

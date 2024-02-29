@@ -7,7 +7,6 @@
 package io.bitpogo.keather.android.app.atom
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.takahirom.roborazzi.RoborazziRule
 import io.bitpogo.keather.android.app.RoborazziTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -17,7 +16,6 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [33])
-@RoborazziRule.Ignore
 class TextSpec : RoborazziTest() {
     @Test
     fun `It renders TextError`() {

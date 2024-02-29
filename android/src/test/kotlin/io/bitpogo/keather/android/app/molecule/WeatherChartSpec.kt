@@ -7,7 +7,6 @@
 package io.bitpogo.keather.android.app.molecule
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.takahirom.roborazzi.RoborazziRule
 import io.bitpogo.keather.android.app.RoborazziTest
 import io.bitpogo.keather.android.app.molecules.WeatherChart
 import io.bitpogo.keather.presentation.ui.store.StoreContract
@@ -19,7 +18,6 @@ import org.robolectric.annotation.GraphicsMode
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [33])
-@RoborazziRule.Ignore
 class WeatherChartSpec : RoborazziTest() {
     private val data = listOf(
         StoreContract.UIChartData(
