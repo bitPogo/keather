@@ -7,6 +7,7 @@
 package io.bitpogo.keather.android.app
 
 import android.app.Application
+import io.bitpogo.keather.android.app.di.resolveApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 

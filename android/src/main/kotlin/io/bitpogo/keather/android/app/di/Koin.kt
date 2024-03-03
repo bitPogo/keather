@@ -4,7 +4,7 @@
  * Use of this source code is governed by Apache v2.0
  */
 
-package io.bitpogo.keather.android.app
+package io.bitpogo.keather.android.app.di
 
 import io.bitpogo.keather.data.location.di.resolveLocationRepository
 import io.bitpogo.keather.data.position.di.resolvePositionRepository
