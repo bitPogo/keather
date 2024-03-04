@@ -1,0 +1,11 @@
+appId: io.bitpogo.keather.android.app
+---
+- launchApp:
+    clearState: true
+
+- assertVisible:
+    text: "Please hit the refresh button to start"
+- assertVisible:
+    text: "Refresh everything"
+- assertVisible:
+    text: "Refresh Weather"
