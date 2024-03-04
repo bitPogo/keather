@@ -151,6 +151,9 @@ include(
 // Android
 include(":android")
 
+// Js - Browser/Web
+include(":web")
+
 buildCache {
     fullCache(rootDir)
 }
