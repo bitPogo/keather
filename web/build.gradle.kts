@@ -42,15 +42,20 @@ kotlin {
                     customField(
                         "exports", mapOf(
                             "./kotlin/sass/*.scss" to mapOf(
-                                 "import" to "./*.scss",
-                                 "require" to "./*.scss",
+                                "import" to "./*.scss",
+                                "require" to "./*.scss",
                             )
                         )
                     )
                 }
             }
+
+            testTask {
+                useKarma {
+                    useChromeHeadlessNoSandbox()
+                }
+            }
         }
-        useCommonJs()
     }
     sourceSets {
         val jsMain by getting {
@@ -95,6 +100,7 @@ val projectPackage = "io.bitpogo.keather.web.app"
 
 kmock {
     rootPackage = projectPackage
+    allowInterfaces = true
 }
 
 tasks.create("distributeJsResources", Copy::class) {

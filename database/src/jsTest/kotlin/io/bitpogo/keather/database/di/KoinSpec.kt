@@ -10,14 +10,12 @@ import io.bitpogo.keather.data.location.LocationQueries
 import io.bitpogo.keather.data.position.PositionQueries
 import io.bitpogo.keather.data.weather.database.WeatherQueries
 import io.bitpogo.keather.database.DatabaseFactory
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 import kotlinx.coroutines.test.runTest
 import org.koin.dsl.koinApplication
 
-@Ignore
-class KoinTest {
+class KoinSpec {
     @Test
     @JsName("fn0")
     fun `It contains a PositionQueries`() = runTest {

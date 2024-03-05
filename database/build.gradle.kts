@@ -1,4 +1,4 @@
-import com.android.build.gradle.internal.ide.kmp.KotlinAndroidSourceSetMarker.Companion.android
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import tech.antibytes.gradle.configuration.sourcesets.iosx
 import tech.antibytes.gradle.dependency.helper.nodeDevelopmentPackage
@@ -143,7 +143,7 @@ kmock {
 
 tasks.withType(Test::class.java) {
     testLogging {
-        // events(FAILED)
+        events(FAILED)
     }
 }
 

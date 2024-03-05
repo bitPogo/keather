@@ -16,13 +16,13 @@ fun resolveDatabase(
 ): Module {
     return module {
         single {
-            get<KeatherDB>().positionQueries
+            database.positionQueries
         }
         single {
-            get<KeatherDB>().locationQueries
+            database.locationQueries
         }
         single {
-            get<KeatherDB>().weatherQueries
+            database.weatherQueries
         }
     }
 }
