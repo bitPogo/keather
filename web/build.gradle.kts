@@ -5,10 +5,12 @@
  */
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig.*
 import tech.antibytes.gradle.dependency.helper.nodePackage
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
 
+    alias(antibytesCatalog.plugins.kvision)
     alias(antibytesCatalog.plugins.kmock)
 }
 
@@ -34,6 +36,19 @@ kotlin {
                     Mode.DEVELOPMENT
                 }
             }
+
+            compilations.getByName("main") {
+                packageJson {
+                    customField(
+                        "exports", mapOf(
+                            "./kotlin/sass/*.scss" to mapOf(
+                                 "import" to "./*.scss",
+                                 "require" to "./*.scss",
+                            )
+                        )
+                    )
+                }
+            }
         }
         useCommonJs()
     }
@@ -43,9 +58,14 @@ kotlin {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.coroutines.core)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
-                implementation(antibytesCatalog.js.kotlin.wrappers.browser)
+                implementation(antibytesCatalog.js.kvision.core)
+                implementation(antibytesCatalog.js.kvision.bootstrap.core)
+                implementation(antibytesCatalog.js.kvision.chart)
 
                 implementation(antibytesCatalog.common.koin.core)
+
+                nodePackage(antibytesCatalog.node.sass.core)
+                nodePackage(antibytesCatalog.node.sass.loader)
 
                 implementation(projects.presentation)
                 implementation(projects.presentation.ui.store)
@@ -65,6 +85,7 @@ kotlin {
                 implementation(antibytesCatalog.testUtils.coroutine)
                 implementation(antibytesCatalog.kfixture)
                 implementation(antibytesCatalog.kmock)
+                implementation(antibytesCatalog.js.test.kvision)
             }
         }
     }
@@ -74,4 +95,21 @@ val projectPackage = "io.bitpogo.keather.web.app"
 
 kmock {
     rootPackage = projectPackage
+}
+
+tasks.create("distributeJsResources", Copy::class) {
+    dependsOn("jsBrowserProductionWebpack")
+    group = "package"
+    val distribution = project.tasks.getByName("jsBrowserProductionWebpack", KotlinWebpack::class).outputDirectory
+    val processedResources = project.tasks.getByName("jsProcessResources", Copy::class).destinationDir
+
+    from(distribution) {
+        include("*.*")
+    }
+    from(processedResources)
+
+    destinationDir = file("${layout.buildDirectory.asFile.get()}/app")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    inputs.files(distribution, processedResources)
+    outputs.dirs(destinationDir)
 }

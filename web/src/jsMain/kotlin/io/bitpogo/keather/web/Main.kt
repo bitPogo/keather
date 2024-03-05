@@ -6,10 +6,10 @@
 
 package io.bitpogo.keather.web
 
-import kotlinx.browser.document
+import io.kvision.CoreModule
+import io.kvision.module
+import io.kvision.startApplication
 
 fun main() {
-    document.getElementById("app")?.apply {
-        this.innerHTML = "<p>Hello World</p>"
-    }
+    startApplication(::KeatherApplication, module.hot, CoreModule)
 }

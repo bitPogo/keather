@@ -32,6 +32,7 @@ bigint/rsrc/target/
 
 # kotlin-js
 kotlin-js-store/
+**/.kotlin-js-store/
 
 # Editors
 *.suo

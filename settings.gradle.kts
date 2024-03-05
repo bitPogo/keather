@@ -46,6 +46,11 @@ dependencyResolutionManagement {
             version("kotlinx-coroutines-test", "1.7.1")
             version("google-android-playservice-location", "21.1.0")
             version("vico", "1.14.0")
+            version("node-react-test", "14.2.1")
+            version("material3", "1.2.0")
+            version("kvision", "7.4.2")
+            version("sass", "^1.29.0")
+            version("sass-loader", "^10.1.0")
 
             library("kfixture", "tech.antibytes.kfixture", "core").versionRef("kfixture")
             library("testUtils-core", "tech.antibytes.test-utils-kmp", "test-utils").versionRef("testUtils")
@@ -109,7 +114,38 @@ dependencyResolutionManagement {
                 "compose-material3",
                 "androidx.compose.material3",
                 "material3",
-            ).version("1.2.0")
+            ).versionRef("material3")
+            library(
+                "js-kvision-core",
+                "io.kvision",
+                "kvision",
+            ).versionRef("kvision")
+            library(
+                "js-kvision-bootstrap-core",
+                "io.kvision",
+                "kvision-bootstrap",
+            ).versionRef("kvision")
+            library(
+                "js-kvision-chart",
+                "io.kvision",
+                "kvision-chart",
+            ).versionRef("kvision")
+            library(
+                "js-test-kvision",
+                "io.kvision",
+                "kvision-testutils",
+            ).versionRef("kvision")
+            plugin("kvision", "io.kvision").versionRef("kvision")
+            library(
+                "node-sass-core",
+                "node-production",
+                "sass",
+            ).versionRef("sass")
+            library(
+                "node-sass-loader",
+                "node-development",
+                "sass-loader",
+            ).versionRef("sass-loader")
         }
     }
 }
