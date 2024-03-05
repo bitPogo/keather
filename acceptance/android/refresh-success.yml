@@ -1,0 +1,57 @@
+appId: io.bitpogo.keather.android.app
+---
+- launchApp:
+    clearState: true
+    permissions:
+      android.permission.ACCESS_COARSE_LOCATION: allow
+      android.permission.ACCESS_FINE_LOCATION: allow
+      android.permission.INTERNET: allow
+      android.permission.ACCESS_NETWORK_STATE: allow
+
+- runFlow:
+      file: ./assertion/IsInitialScreen.yml
+      label: "Is initially not setup"
+
+- tapOn:
+      text: "Refresh Weather"
+      label: "When tapping on the simple refresh Button"
+
+- setLocation:
+    longitude: 2.169919
+    latitude: 41.387917
+    label: "Reset Location to Barcelona"
+
+- tapOn:
+      text: "Refresh everything"
+      label: "When refreshing the everything"
+
+- scrollUntilVisible:
+      element: "You are in Barcelona (Catalonia/Spain)"
+      direction: UP
+      label: Locates the devices
+
+- assertVisible:
+      text: "Forecast for the next week"
+      label: And has a forecast
+
+- scrollUntilVisible:
+    element: "Refresh everything"
+    direction: DOWN
+
+- setLocation:
+    latitude: 52.520008
+    longitude: 13.404954
+    label: "Reset Location to Berlin"
+
+- tapOn:
+    text: "Refresh everything"
+    label: "When refreshing the everything again"
+
+- scrollUntilVisible:
+    element: "You are in Berlin (Berlin/Germany)"
+    direction: UP
+    label: Locates the devices
+
+- assertVisible:
+    text: "Forecast for the next week"
+    label: And has a forecast

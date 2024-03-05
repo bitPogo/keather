@@ -1,0 +1,24 @@
+appId: io.bitpogo.keather.android.app
+---
+- launchApp:
+    clearState: true
+
+- runFlow:
+      file: ./assertion/IsInitialScreen.yml
+      label: "Is initially not setup"
+
+- tapOn:
+      text: "Refresh Weather"
+      label: "When tapping on the simple refresh Button"
+
+- runFlow:
+      file: ./assertion/IsInitialScreen.yml
+      label: "Nothing happened"
+
+- tapOn:
+      text: "Refresh everything"
+      label: "When refreshing the everything"
+
+- assertVisible:
+    text: "Something went wrong"
+    label: It shows an error
