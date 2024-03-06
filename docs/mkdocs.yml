@@ -108,6 +108,9 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Changelog: changelog.md
+  - Upcomming:
+      - Features: featurelist.md
+      - Tools: nexttools.md
   - Contribution Guide: contributing.md
   - Code of Conduct: codeOfConduct.md
   - Security Policy: security.md

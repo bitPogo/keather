@@ -172,7 +172,7 @@ dependencyResolutionManagement {
 }
 
 include(
-    // ":docs",
+    ":docs",
 )
 
 // Utility
