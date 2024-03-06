@@ -13,6 +13,5 @@ class ActionButtonSpec : DomSpec {
     @Test
     @JsName("fn0")
     fun `It renders an ActionButton`() {
-
     }
 }

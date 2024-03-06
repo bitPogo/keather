@@ -51,6 +51,8 @@ dependencyResolutionManagement {
             version("kvision", "7.4.2")
             version("sass", "^1.29.0")
             version("sass-loader", "^10.1.0")
+            version("gradle-node", "7.0.2")
+            version("storybook", "^7.6.17")
 
             library("kfixture", "tech.antibytes.kfixture", "core").versionRef("kfixture")
             library("testUtils-core", "tech.antibytes.test-utils-kmp", "test-utils").versionRef("testUtils")
@@ -146,6 +148,25 @@ dependencyResolutionManagement {
                 "node-development",
                 "sass-loader",
             ).versionRef("sass-loader")
+            plugin(
+                "gradle-node",
+                "com.github.node-gradle.node",
+            ).versionRef("gradle-node")
+            library(
+                "node-storybook-builder-webpack5",
+                "node-production",
+                "@storybook/builder-webpack5",
+            ).versionRef("storybook")
+            library(
+                "node-storybook-manager-webpack5",
+                "node-production",
+                "@storybook/manager-webpack5",
+            ).versionRef("storybook")
+            library(
+                "node-storybook-node-logger",
+                "node-production",
+                "@storybook/node-logger",
+            ).versionRef("storybook")
         }
     }
 }
@@ -188,7 +209,10 @@ include(
 include(":android")
 
 // Js - Browser/Web
-include(":web")
+include(
+    ":web",
+    ":stories",
+)
 
 buildCache {
     fullCache(rootDir)

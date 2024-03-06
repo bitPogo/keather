@@ -1,3 +1,4 @@
+@file:Suppress("ktlint:standard:function-naming")
 /*
  * Copyright (c) 2024 Matthias Geisler (bitPogo) / All rights reserved.
  *
