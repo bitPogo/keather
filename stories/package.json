@@ -1,0 +1,62 @@
+{
+  "name": "keather-stories",
+  "version": "0.0.0-unspecified",
+  "main": "keather-stories.js",
+  "types": "keather-stories.d.ts",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.17",
+    "@storybook/addon-interactions": "^7.6.17",
+    "@storybook/addon-links": "^7.6.17",
+    "@storybook/addon-onboarding": "^1.0.11",
+    "@storybook/blocks": "^7.6.17",
+    "@storybook/builder-webpack5": "^7.6.17",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/node-logger": "^7.6.17",
+    "@storybook/preset-create-react-app": "^7.6.17",
+    "@storybook/react": "^7.6.17",
+    "@storybook/react-webpack5": "^7.6.17",
+    "@storybook/test": "^7.6.17",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "source-map-loader": "4.0.1",
+    "storybook": "^7.6.17",
+    "typescript": "5.0.4",
+    "webpack": "5.82.0",
+    "webpack-cli": "5.1.0",
+    "webpack-dev-server": "4.15.0"
+  },
+  "dependencies": {
+    "@cashapp/sqldelight-sqljs-worker": "2.0.1",
+    "@js-joda/core": "3.2.0",
+    "@popperjs/core": "2.11.8",
+    "@rjaros/snabbdom-virtualize": "1.0.0-beta.5",
+    "abort-controller": "3.0.0",
+    "bootstrap": "5.3.3",
+    "chart.js": "4.4.2",
+    "css-loader": "6.10.0",
+    "fecha": "4.2.3",
+    "format-util": "^1.0.5",
+    "gettext-extract": "2.0.1",
+    "gettext.js": "2.0.2",
+    "imports-loader": "5.0.0",
+    "kvision-assets": "8.0.9",
+    "node-fetch": "2.6.7",
+    "sass": "^1.29.0",
+    "snabbdom": "3.6.2",
+    "split.js": "1.6.5",
+    "sql.js": "1.8.0",
+    "style-loader": "3.3.4",
+    "ws": "8.5.0"
+  },
+  "bundledDependencies": [],
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5"
+    }
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "bundleDependencies": []
+}

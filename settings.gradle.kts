@@ -46,13 +46,17 @@ dependencyResolutionManagement {
             version("kotlinx-coroutines-test", "1.7.1")
             version("google-android-playservice-location", "21.1.0")
             version("vico", "1.14.0")
-            version("node-react-test", "14.2.1")
             version("material3", "1.2.0")
             version("kvision", "7.4.2")
             version("sass", "^1.29.0")
             version("sass-loader", "^10.1.0")
             version("gradle-node", "7.0.2")
             version("storybook", "^7.6.17")
+            version("storybook-manager-webpack5", "^6.5.16")
+            version("gradle-node", "7.0.2")
+            version("react", "^18.2.0")
+            version("kotlin-wrappers-react-core", "18.2.0-pre.710")
+            version("kotlin-wrappers-react-dom", "18.2.0-pre.710")
 
             library("kfixture", "tech.antibytes.kfixture", "core").versionRef("kfixture")
             library("testUtils-core", "tech.antibytes.test-utils-kmp", "test-utils").versionRef("testUtils")
@@ -148,24 +152,59 @@ dependencyResolutionManagement {
                 "node-development",
                 "sass-loader",
             ).versionRef("sass-loader")
-            plugin(
-                "gradle-node",
-                "com.github.node-gradle.node",
-            ).versionRef("gradle-node")
             library(
                 "node-storybook-builder-webpack5",
-                "node-production",
+                "node-development",
                 "@storybook/builder-webpack5",
             ).versionRef("storybook")
             library(
                 "node-storybook-manager-webpack5",
-                "node-production",
+                "node-development",
                 "@storybook/manager-webpack5",
+            ).versionRef("storybook-manager-webpack5")
+            library(
+                "node-storybook-node-logger",
+                "node-development",
+                "@storybook/node-logger",
             ).versionRef("storybook")
             library(
                 "node-storybook-node-logger",
-                "node-production",
+                "node-development",
                 "@storybook/node-logger",
+            ).versionRef("storybook")
+            plugin(
+                "gradle-node",
+                "com.github.node-gradle.node"
+            ).versionRef("gradle-node")
+            library(
+                "js-kvision-react",
+                "io.kvision",
+                "kvision-react",
+            ).versionRef("kvision")
+            library(
+                "node-react-core",
+                "node-development",
+                "react",
+            ).versionRef("react")
+            library(
+                "node-react-dom",
+                "node-development",
+                "react-dom",
+            ).versionRef("react")
+            library(
+                "node-storybook-preset-create-react",
+                "node-development",
+                "@storybook/preset-create-react-app",
+            ).versionRef("storybook")
+            library(
+                "node-storybook-react",
+                "node-development",
+                "@storybook/react",
+            ).versionRef("storybook")
+            library(
+                "node-storybook-addon-essentials",
+                "node-development",
+                "@storybook/addon-essentials",
             ).versionRef("storybook")
         }
     }
