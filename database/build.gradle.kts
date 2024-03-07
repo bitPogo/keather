@@ -14,7 +14,7 @@ plugins {
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.database"
+val projectPackage = "tech.antibytes.keather.database"
 
 
 val featureTables = listOf(

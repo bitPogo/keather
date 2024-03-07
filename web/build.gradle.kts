@@ -96,7 +96,7 @@ kotlin {
     }
 }
 
-val projectPackage = "io.bitpogo.keather.web.app"
+val projectPackage = "tech.antibytes.keather.web.app"
 
 kmock {
     rootPackage = projectPackage

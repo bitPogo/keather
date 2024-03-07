@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "io.bitpogo.keather.koin"
+    namespace = "tech.antibytes.keather.koin"
     compileSdk = 34
 }
 

@@ -21,7 +21,7 @@ plugins {
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.presentation.ui.store"
+val projectPackage = "tech.antibytes.keather.presentation.ui.store"
 
 android {
     namespace = projectPackage

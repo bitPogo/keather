@@ -19,7 +19,7 @@ plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.androidLibraryConfiguration)
 }
 
-val projectPackage = "io.bitpogo.keather.presentation.interactor"
+val projectPackage = "tech.antibytes.keather.presentation.interactor"
 
 android {
     namespace = projectPackage

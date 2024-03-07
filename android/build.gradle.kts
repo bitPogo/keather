@@ -16,7 +16,7 @@ plugins {
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.android.app"
+val projectPackage = "tech.antibytes.keather.android.app"
 
 kmock {
     rootPackage = projectPackage

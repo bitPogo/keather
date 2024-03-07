@@ -1,4 +1,4 @@
-package = io.bitpogo.keather.data.position.locator
+package = tech.antibytes.keather.data.position.locator
 language = Objective-C
 
 headers = include/Locator/Locator-Swift.h

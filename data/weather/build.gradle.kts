@@ -25,7 +25,7 @@ plugins {
     alias(antibytesCatalog.plugins.kmock)
 }
 
-val projectPackage = "io.bitpogo.keather.data.weather"
+val projectPackage = "tech.antibytes.keather.data.weather"
 
 android {
     namespace = projectPackage

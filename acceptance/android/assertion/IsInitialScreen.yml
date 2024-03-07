@@ -1,4 +1,4 @@
-appId: io.bitpogo.keather.android.app
+appId: tech.antibytes.keather.android.app
 ---
 
 - assertVisible:
