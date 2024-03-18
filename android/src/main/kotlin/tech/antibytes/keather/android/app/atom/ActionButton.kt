@@ -54,3 +54,13 @@ fun ActionButton(
         }
     }
 }
+
+@Composable
+fun ActionButton2(text: String, onClick: () -> Unit) {
+    Button(onClick = onClick) {
+        Text(
+            text = text,
+            color = Color.text.warning
+        )
+    }
+}

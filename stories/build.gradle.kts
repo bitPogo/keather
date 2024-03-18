@@ -61,8 +61,8 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(projects.web)
-                implementation(antibytesCatalog.js.kotlin.wrappers.react.core)
-                implementation(antibytesCatalog.js.kotlin.wrappers.react.dom)
+                implementation(antibytesCatalog.js.kotlinx.wrappers.react.core)
+                implementation(antibytesCatalog.js.kotlinx.wrappers.react.dom)
                 implementation(antibytesCatalog.js.kvision.core)
                 implementation(antibytesCatalog.js.kvision.react)
                 nodePackage(antibytesCatalog.node.storybook.builder.webpack5)

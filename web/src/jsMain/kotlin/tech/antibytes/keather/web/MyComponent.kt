@@ -20,7 +20,7 @@ import io.kvision.require
 
 object MyComponent {
     init {
-        // require("./sass/MyComponent.scss")
+        require("./sass/MyComponent.scss")
     }
 
     @Component
