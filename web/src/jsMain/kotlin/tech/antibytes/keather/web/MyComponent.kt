@@ -24,11 +24,13 @@ object MyComponent {
     }
 
     @Component
-    fun Container.MyComponent() {
+    fun Container.MyComponent(
+        injectedText: String = "World"
+    ) {
         div {
             setAttribute("data-name", "MyComponent")
             p {
-                content = "Hello World indeed!"
+                content = "Hello $injectedText indeed!"
             }
         }
     }

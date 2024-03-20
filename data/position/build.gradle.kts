@@ -72,14 +72,16 @@ kotlin {
         val libraryName = "Locator"
         val libraryPath = "$rootDir/data/position/$libraryName/build/Build/Products/Release-$platform"
         val frameworksPath = libraryPath
+        val buildIosTask = ":data:position:Locator:build${platform.capitalize()}"
+        val definitionFile = "$projectDir/src/nativeInterop/cinterop/Locator.def"
 
         compilations.getByName("main") {
             cinterops.create("Locator") {
                 val interopTask = tasks[interopProcessingTaskName]
-                interopTask.dependsOn(":data:position:Locator:build${platform.capitalize()}")
+                interopTask.dependsOn(buildIosTask)
+                interopTask.mustRunAfter(buildIosTask)
 
-                // Path to .def file
-                defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
+                defFile(definitionFile)
                 includeDirs(libraryPath)
             }
         }
@@ -87,10 +89,10 @@ kotlin {
         compilations.getByName("test") {
             cinterops.create("Locator") {
                 val interopTask = tasks[interopProcessingTaskName]
-                interopTask.dependsOn(":data:position:Locator:build${platform.capitalize()}")
+                interopTask.dependsOn(buildIosTask)
+                interopTask.mustRunAfter(buildIosTask)
 
-                // Path to .def file
-                defFile("$projectDir/src/nativeInterop/cinterop/Locator.def")
+                defFile(definitionFile)
                 includeDirs.headerFilterOnly(libraryPath)
             }
         }
@@ -166,7 +168,7 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
-                implementation(antibytesCatalog.js.kotlin.wrappers.browser)
+                implementation(antibytesCatalog.js.kotlinx.wrappers.browser)
 
             }
         }

@@ -121,7 +121,7 @@ kotlin {
             dependencies {
                 implementation(antibytesCatalog.js.kotlin.stdlib)
                 implementation(antibytesCatalog.js.kotlinx.nodeJs)
-                implementation(antibytesCatalog.js.kotlin.wrappers.browser)
+                implementation(antibytesCatalog.js.kotlinx.wrappers.browser)
                 implementation(antibytesCatalog.js.square.sqldelight.driver)
                 nodeProductionPackage(antibytesCatalog.node.sqlJs)
                 nodeDevelopmentPackage(antibytesCatalog.node.copyWebpackPlugin)

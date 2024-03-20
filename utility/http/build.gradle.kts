@@ -7,8 +7,6 @@
 import tech.antibytes.gradle.configuration.apple.ensureAppleDeviceCompatibility
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import tech.antibytes.gradle.configuration.sourcesets.iosx
-import tech.antibytes.gradle.project.config.compability.javaCompatibilityVersion
-import tech.antibytes.gradle.project.config.compability.javaVersion
 
 plugins {
     alias(antibytesCatalog.plugins.gradle.antibytes.kmpConfiguration)
